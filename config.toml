@@ -1,0 +1,4 @@
+baseURL = "http://senyosimpson.github.io/"
+languageCode = "en-us"
+title = "Bloom"
+theme = "ananke"
