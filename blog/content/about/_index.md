@@ -1,6 +1,6 @@
 ---
 title: "About"
-description: "Senyo Simpson about page"
+description: ""
 ---
 
 Hello! My name is Senyo Simpson. I am a 22 year old machine learning engineer residing in the beautiful city Cape Town, South Africa. Currently, I am working at an amazing startup,

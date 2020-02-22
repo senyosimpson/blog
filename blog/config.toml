@@ -3,6 +3,9 @@ languageCode = "en-us"
 title = "Bloom"
 theme = "ananke"
 publishdir = "../"
+MetaDataFormat = "yaml"
+DefaultContentLanguage = "en"
+SectionPagesMenu = "main"
 
 [params]
   favicon = ""
