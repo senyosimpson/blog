@@ -4,7 +4,7 @@ date: 2020-02-21T19:27:05+02:00
 draft: false
 ---
 
-In my final year of undergraduate studies, I had the opportunity to work part-time for [Aerobotics](https://aerobotics.com/) ― an agritech startup. With a passion for development, an eagerness to learn and a curiosity for machine learning in the wild, I embraced the opportunity fully, despite having some reservations. How would I manage my final year of undergraduate studies and simultaneously deliver at an acceptable standard at work? As concerned as I was, it turned out to be an exceedingly positive and rewarding experience. This post aims to highlight some of the lessons I learned from this experience. It is an extension of a thread of tweets found here (insert link). So, let's get into it!
+In my final year of undergraduate studies, I had the opportunity to work part-time for [Aerobotics](https://aerobotics.com/) ― an agritech startup. With a passion for development, an eagerness to learn and a curiosity for machine learning in the wild, I embraced the opportunity fully, despite having some reservations. How would I manage my final year of undergraduate studies and simultaneously deliver at an acceptable standard at work? As concerned as I was, it turned out to be an exceedingly positive and rewarding experience. This post aims to highlight some of the lessons I learned from this experience. It is an extension of a thread of [tweets](https://twitter.com/senyo_simpson/status/1158140495484325892). So, let's get into it!
 
 ## Choose the right company
 

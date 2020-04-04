@@ -5,6 +5,7 @@ draft: true
 
 [comment]: # (https://a16z.com/2020/02/16/the-new-business-of-ai-and-how-its-different-from-traditional-software/)
 [comment]: # (https://medium.com/@nlauchande/review-notes-of-ml-platforms-uber-michelangelo-e133eb6031da)
+[comment]: # (hidden technical debt of machine learning)
 
 Machine learning promises to be transformational for many industries, ranging from financial services to healthcare to agriculture. The resurgence of machine learning, due to the astonishing performance of deep learning in computer vision and natural language processing, has prompted industry to jump on the bandwagon and use machine learning in their businesses. In fact, entire startups are being built around machine learning alone, promising that their new found algorithms will vastly improve and outperform existing products and services.
 
@@ -21,7 +22,7 @@ When embarking on a journey to introduce machine learning into your product, it 
 
 ## Data Quality
 
-Garbage in, garbage out. Possibly the most important aspect of machine learning is the data used to train models. Without quality data, no amount of sophistication and creativity will help your machine learning model perform accurately. The source of truth for a machine learning model is its
+Garbage in, garbage out. Possibly the most important aspect of machine learning is the data used to train models. Without quality data, no amount of sophistication and creativity will help your machine learning model perform accurately. The source of truth for a machine learning model is the data it is fed. It knows absolutely nothing outside of that data, it is its entire world. It is imperative that
 
 ## Concept Drift
 
