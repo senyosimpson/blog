@@ -22,7 +22,7 @@ When embarking on a journey to introduce machine learning into your product, it 
 
 ## Data Quality
 
-Garbage in, garbage out. Possibly the most important aspect of machine learning is the data used to train models. Without quality data, no amount of sophistication and creativity will help your machine learning model perform accurately. The source of truth for a machine learning model is the data it is fed. It knows absolutely nothing outside of that data, it is its entire world. It is imperative that
+Garbage in, garbage out. Possibly the most important aspect of machine learning is the data used to train models. Without quality data, no amount of sophistication and creativity will help your machine learning model perform accurately. The source of truth for a machine learning model is the data it is fed. It knows absolutely nothing outside of that data, it is its entire world. It is imperative that the data you train your models on is 
 
 ## Concept Drift
 
