@@ -1,5 +1,6 @@
 ---
 title: "Machine learning in the wild"
+show_reading_time: True
 date: 2020-05-30
 draft: false
 ---

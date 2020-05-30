@@ -1,6 +1,7 @@
 ---
 title: "Lessons learned juggling working and studying"
 date: 2020-02-21
+show_reading_time: True
 draft: false
 ---
 
