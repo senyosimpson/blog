@@ -12,7 +12,7 @@ Machine learning promises to be transformational, providing much needed innovati
 
 Whilst new state of the art algorithms are being published week-on-week, using them in a production setting is non-trivial. The additional complexity of using machine learning to power products cannot be understated. It may come as a surprise to new practitioners that most of this complexity has very little to do with the model itself but rather with the infrastructure supporting it. In fact, a common trope is that the development of machine learning models comprises only a small part of the puzzle. So what makes machine learning complex? Data cleaning and warehousing, data versioning, model versioning, distributed training (in the event you are training large models), reproducibility, concept drift, inference speed and optimizing the right thing, to name a *few*.
 
-{{< figure src="blog/static/images/ml-wild/production-ml-2.png" caption="Real world machine learning system" >}}
+{{< figure src="/images/ml-wild/production-ml-2.png" caption="Real world machine learning system" >}}
 
 Fortunately, this makes for an extremely rewarding engineering experience. As engineers, we are drawn to technically challenging problems - at least, I'd like to think so! Machine learning in the wild does not fall short in any regard. It is truly stimulating. Though it might cause you to lose a few hairs, destroy your laptop and move to Motuo - consider yourself warned. In this post, I illuminate some of the core challenges faced in walking the distance with machine learning.
 
