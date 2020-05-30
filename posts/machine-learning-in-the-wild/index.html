@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Bloom  | Machine learning in the wild</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.62.2" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Machine learning in the wild" />
+<meta property="og:description" content="Machine learning promises to be transformational, providing much needed innovation across industries ranging from financial services to healthcare to agriculture. The resurgence of machine learning owing to the astonishing performance of deep learning in computer vision and natural language processing has prompted industry to jump on the bandwagon and utilise machine learning in their businesses. In fact, entire startups are being built around machine learning alone, promising that their new found algorithms will vastly improve and outperform existing products and services." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://senyosimpson.github.io/posts/machine-learning-in-the-wild/" />
+<meta property="article:published_time" content="2020-05-30T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-30T00:00:00+00:00" />
+<meta itemprop="name" content="Machine learning in the wild">
+<meta itemprop="description" content="Machine learning promises to be transformational, providing much needed innovation across industries ranging from financial services to healthcare to agriculture. The resurgence of machine learning owing to the astonishing performance of deep learning in computer vision and natural language processing has prompted industry to jump on the bandwagon and utilise machine learning in their businesses. In fact, entire startups are being built around machine learning alone, promising that their new found algorithms will vastly improve and outperform existing products and services.">
+<meta itemprop="datePublished" content="2020-05-30T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-05-30T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2168">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Machine learning in the wild"/>
+<meta name="twitter:description" content="Machine learning promises to be transformational, providing much needed innovation across industries ranging from financial services to healthcare to agriculture. The resurgence of machine learning owing to the astonishing performance of deep learning in computer vision and natural language processing has prompted industry to jump on the bandwagon and utilise machine learning in their businesses. In fact, entire startups are being built around machine learning alone, promising that their new found algorithms will vastly improve and outperform existing products and services."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://senyosimpson.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Bloom
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="About page">
+              About
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Posts page">
+              Posts
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+<a href="https://twitter.com/senyo_simpson" target="_blank" class="link-transition twitter link dib z-999 pt3 pt0-l mr1" title="Twitter link" rel="noopener" aria-label="follow on Twitter——Opens in a new window">
+  <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+<a href="https://www.linkedin.com/in/senyo-simpson-997951157/" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/senyosimpson" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=http://senyosimpson.github.io/posts/machine-learning-in-the-wild/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=http://senyosimpson.github.io/posts/machine-learning-in-the-wild/&amp;text=Machine%20learning%20in%20the%20wild" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://senyosimpson.github.io/posts/machine-learning-in-the-wild/&amp;title=Machine%20learning%20in%20the%20wild" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">Machine learning in the wild</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2020-05-30T00:00:00Z">May 30, 2020</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy avenir bg-near-white f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Machine learning promises to be transformational, providing much needed innovation across industries ranging from financial services to healthcare to agriculture. The resurgence of machine learning owing to the astonishing performance of deep learning in computer vision and natural language processing has prompted industry to jump on the bandwagon and utilise machine learning in their businesses. In fact, entire startups are being built around machine learning alone, promising that their new found algorithms will vastly improve and outperform existing products and services.</p>
+<p>Whilst new state of the art algorithms are being published week-on-week, using them in a production setting is non-trivial. The additional complexity of using machine learning to power products cannot be understated. It may come as a surprise to new practitioners that most of this complexity has very little to do with the model itself but rather with the infrastructure supporting it. In fact, a common trope is that the development of machine learning models comprises only a small part of the puzzle. So what makes machine learning complex? Data cleaning and warehousing, data versioning, model versioning, distributed training (in the event you are training large models), reproducibility, concept drift, inference speed and optimizing the right thing, to name a <em>few</em>.</p>
+<figure>
+    <img src="/static/images/ml-wild/production-ml-2.png"
+         alt="Real world machine learning system"/> <figcaption>
+            <p>Real world machine learning system</p>
+        </figcaption>
+</figure>
+
+<p>Fortunately, this makes for an extremely rewarding engineering experience. As engineers, we are drawn to technically challenging problems - at least, I'd like to think so! Machine learning in the wild does not fall short in any regard. It is truly stimulating. Though it might cause you to lose a few hairs, destroy your laptop and move to Motuo - consider yourself warned. In this post, I illuminate some of the core challenges faced in walking the distance with machine learning.</p>
+<h2 id="data-quality">Data Quality</h2>
+<p>What is machine learning without data? The answer is nothing. Absolutely nothing. As the common saying goes, &ldquo;garbage in, garbage out&rdquo;. Perhaps the most important aspect of machine learning is the data used to train models. Without quality data, no amount of sophistication and creativity will help your machine learning model perform accurately. Whether you agree with the below tweet
+or not, it does provide an interesting angle on what a model is - a view of the data it was trained on. <blockquote class="twitter-tweet"><p lang="en" dir="ltr">As soon as you realise an ML model is just a view of the data it&#39;s been trained on you start getting real interested in datasets</p>&mdash; Jacob Menick (@jacobmenick) <a href="https://twitter.com/jacobmenick/status/1260658763687538688?ref_src=twsrc%5Etfw">May 13, 2020</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</p>
+<p>Data is the source of truth for your model. Every phenomenon it learns is encompassed by that data. Given this stance, you'd be crazy to not ensure that your model is trained on the highest quality data you can create or get your hands on. Unfortunately, ensuring data quality is difficult, expensive and laborious. Rather than trying to circumvent this, it should be incorporated into the company/team strategy. Making the necessary capacity and budget provisions will  make this manageable. Ideally, ensuring data quality should be reduced to a mere nuisance as opposed to a blocking point to deploying machine learning models.</p>
+<h2 id="concept-drift">Concept Drift</h2>
+<p>Real-life data is akin to a living organism. It is dynamic and changes over time, drifting further and further away from the data that came before it. This is called concept drift and is a common challenge in machine learning. In its simplest form it is not difficult to deal with as it only requires training on the new batch of data. The complexity arises on an infrastructural level. To handle this effectively, it requires models to be continuously retrained as their performance starts deteriorating in production. Setting up the correct infrastructure to facilitate easy training to deployment and monitoring in production can be difficult depending on the velocity at which this needs to happen. In <a href="https://netflixtechblog.com/system-architectures-for-personalization-and-recommendation-e081aa94b5d8">this blog post</a> by Netflix, they discuss their system architecture for recommendations. Interesting to note is their separation of offline, online and nearline computation. Offline is the most common paradigm in machine learning today where data is stored and models are trained on the new data. However, they reached limitations with this approach as it often took time between updates to the models, impacting their recency. They solve this problem using online computation which reacts to the latest changes in the data in real-time. Nearline computation is a hybrid of these two approaches. Considering Netflix's scale, most of us would not need such comprehensive architectures to run machine learning in production but it certainly highlights the complexity that can arise.</p>
+<p>To drive concept drift home, I'll  walk through an example. Keeping with the  theme of Netflix, imagine you worked there and trained a recommendation model in January. At this time, life was good and relaxed. The majority of customers were watching comedy shows. The model was able to learn this. its performance was admirable and subsequently deployed into production. It is now June and you realise the model is underperforming. The world is going through a pandemic and in response, people have shifted away from  comedy shows toward thrillers and horrors. Evidently, this behavioural change implies that the dataset that was used to train the model in January is outdated. To bring the model up to date, you train it on the latest data and as expected, your magic algorithm is performing well once again. Hooray!</p>
+<h2 id="versioning">Versioning</h2>
+<p>Versioning is an essential part of software engineering. Git has largely solved this problem for traditional software development. In machine learning, we not only have to version our code but also the parameters of our model and the data that was used to train the model.</p>
+<p>Data versioning is a new challenge that machine learning brings to the table. As discussed earlier, data is the source of truth for a model. When models are trained on different data, we naturally expect differences in their performance. Without keeping track of which data a model was trained on, we cannot make any significant claims on its performance relative to another model. Alongside that, without knowing which dataset a model was evaluated on, we cannot fairly compare competing models. Finally, we cannot reproduce experiments if we do not version our data. Reproducibility is a growing concern in the machine learning community and rightfully so - ensuring we create the best environment for it is important. From this, it is clear that data provenance is of  utmost importance in machine learning efforts. At this current time, there is no industry standard for data versioning. There are many options available in the market. A few of them include <a href="https://dvc.org/">dvc</a>, <a href="https://www.liquidata.co/">dolt</a> and <a href="https://www.pachyderm.com/data-lineage/">pachyderm</a>. They do not all fall within the same use cases but there is extensive overlap between them.</p>
+<p>One example of a scenario in which poor data versioning can play against you is during the experimentation phase. Let's suppose you  decide to create an object detection system. You train a model with dataset A. You decide to change the data slightly and train a model on this data; dataset B. You repeat this data alteration process twice more, creating dataset C and D. After these experiments, you find that the models trained on dataset A and C perform the best. Unfortunately, you did not record the differences  between these datasets and only possess the data with the most recent  changes (i.e. dataset D). It is now impossible for you to reproduce  the best performing model. Alongside this, you  cannot understand why datasets A and C result in the best models, reducing your  understanding and confidence in the model's performance. This highlights the importance of data versioning and why it is critical to the machine learning process.</p>
+<h2 id="experimentation-platforms">Experimentation Platforms</h2>
+<p>Experimentation platforms refer to the necessary platforms needed to use machine learning as effectively as possible. It is not necessary in the beginning of the machine learning journey but as a company begins to scale up their machine learning efforts, it becomes critical. Thousands of experiments need to be run and evaluated. Having the correct infrastructure and tools makes the iteration speed fast and allows models to make it into production.</p>
+<p>Let's walk through an example to highlight its importance. You've decided that you need to create and train a new model for fraud detection. You whip out your trusty jupyter notebook and set off on the adventure of a lifetime. On completion of your model and dataset, you proceed to train the model on a virtual server provided by the company on their prefered cloud provider. The virtual server is not configured, has no fault tolerance and requires many manual steps (ssh into it, install all dependencies, monitor it, etc). Naturally, these steps present many points of potential failure as well as general headaches, slowing down development. The company realises that this is inefficient and invests into tooling to ease the machine learning development process. There are a whole host of tools such as <a href="https://www.kubeflow.org/">Kubeflow</a>, <a href="https://www.comet.ml">Comet</a>, <a href="https://www.wandb.com">Weights &amp; Biases</a>, <a href="https://mlflow.org">MLflow</a> to name a few. These are utilised to create a machine learning platform that makes the machine learning lifecycle easier to manage. Now you have the instant ability to monitor progress, visualise training and validation loss and view the results on a user-friendly dashboard. Clearly, this has improved the iteration speed, removed the need to understand infrastructure and provided the necessary amount of visibility. By using the correct platform, the time taken between iterations has decreased substantially.</p>
+<p>Eventually, there is an upfront cost that must be paid in scaling out machine learning efforts by providing the necessary platforms. Data scientists and machine learning engineers need to be empowered to do their work effectively and this is one step in that direction. Alongside this, it allows them to add more value by being able to improve their models in a shorter period of time.</p>
+<h2 id="optimizing-the-right-thing">Optimizing the Right Thing</h2>
+<p>In many product offerings, the core goal of machine learning is to improve the <em>customer</em> experience. In a music company such as Spotify, examples of improving the customer experience include song recommendations and personalisation based on music taste. In a medical imaging company, it could help doctors make more accurate diagnoses or provide diagnoses themselves. Metrics provide an objective way of ranking the performance of models and ensuring you have the latest and greatest model in production. Unfortunately, a common pitfall is optimizing the wrong metric meaning that the metric does not translate to an improvement in the <em>customer</em> experience. A simple question to ask is: what does a 10% improvement of this metric mean for the customer? It is often quite simple to analyse your model against standard metrics in that line of work, however, it does not always translate to a tangible improvement  for the purpose they were designed to serve.</p>
+<p>A simple case to illuminate this is in medical diagnosis. Imagine you are the patient and this revolutionary AI is used to provide you with a  diagnosis. If the model predicts that you have a disease and you do not, the overall harm inflicted by the incorrect diagnosis is minimal. Despite being incorrect, you  will survive and hopefully live for many years. Now imagine the model predicts that you do not have a disease that you do in fact have . In response to this prediction,  the doctor lets you off into the world to fend for yourself without medication or treatment. Evidently, this is a harmful situation which will likely have  severe consequences. How does this relate to optimizing the right thing? Imagine being responsible for creating the model that performs this task and your chosen metric is accuracy. Accuracy measures the total number of correct predictions out of total predictions. Your new model is 5% better than your old model and so you release it into production -happy days! Unfortunately, that metric does not communicate the most important value to you: how often your model predicts an individual does not have a disease when they actually do! The appropriate metric here is recall. Contextually, perfect recall means that the model successfully predicts every case where an  individual has a disease, however it makes some mistakes where it incorrectly predicts that individuals have a disease that they do not have.</p>
+<p>If only it was as easy as the example makes it seem! In most cases, metrics will have to be designed with the aim of improving the extent to which metrics translate to an improvement in the customer experience. This talk by <a href="https://medium.com/@alienelf">Jade Abbott</a> walks through an example of this. 
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/keai5wCGAgs?start=904" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+</p>
+<p>The main takeaway is that metrics should be carefully designed and give an indication of the model's impact on the customer. Additionally, it allows the rest of the business to understand the value of the work you are doing. Then they will also celebrate when your model improves by 0.01%!</p>
+<h2 id="greener-pastures">Greener Pastures</h2>
+<p>Machine learning in the wild is difficult! This should not discourage us by any means. While difficult, it is extremely rewarding and if you're the kind of engineer I hope you are, it is exciting! With all difficult things comes the joy of working on technically challenging problems.</p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://senyosimpson.github.io/" >
+    &copy;  Bloom 2020 
+  </a>
+    <div>
+
+
+
+
+<a href="https://twitter.com/senyo_simpson" target="_blank" class="link-transition twitter link dib z-999 pt3 pt0-l mr1" title="Twitter link" rel="noopener" aria-label="follow on Twitter——Opens in a new window">
+  <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+<a href="https://www.linkedin.com/in/senyo-simpson-997951157/" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/senyosimpson" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

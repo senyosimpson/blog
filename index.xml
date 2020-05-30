@@ -6,15 +6,24 @@
     <description>Recent content in A Tale of Growth on Bloom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 21 Feb 2020 19:27:05 +0200</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://senyosimpson.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Machine learning in the wild</title>
+      <link>http://senyosimpson.github.io/posts/machine-learning-in-the-wild/</link>
+      <pubDate>Sat, 30 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://senyosimpson.github.io/posts/machine-learning-in-the-wild/</guid>
+      <description>Machine learning promises to be transformational, providing much needed innovation across industries ranging from financial services to healthcare to agriculture. The resurgence of machine learning owing to the astonishing performance of deep learning in computer vision and natural language processing has prompted industry to jump on the bandwagon and utilise machine learning in their businesses. In fact, entire startups are being built around machine learning alone, promising that their new found algorithms will vastly improve and outperform existing products and services.</description>
+    </item>
+    
+    <item>
       <title>Lessons learned juggling working and studying</title>
       <link>http://senyosimpson.github.io/posts/working-and-studying/</link>
-      <pubDate>Fri, 21 Feb 2020 19:27:05 +0200</pubDate>
+      <pubDate>Fri, 21 Feb 2020 00:00:00 +0000</pubDate>
       
       <guid>http://senyosimpson.github.io/posts/working-and-studying/</guid>
       <description>In my final year of undergraduate studies, I had the opportunity to work part-time for Aerobotics ― an agritech startup. With a passion for development, an eagerness to learn and a curiosity for machine learning in the wild, I embraced the opportunity fully, despite having some reservations. How would I manage my final year of undergraduate studies and simultaneously deliver at an acceptable standard at work? As concerned as I was, it turned out to be an exceedingly positive and rewarding experience.</description>
