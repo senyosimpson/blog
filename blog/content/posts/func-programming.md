@@ -5,7 +5,7 @@ date: 2020-06-21
 draft: true
 ---
 
-This year, one of my gaols was to learn a functional programming language. I carried this over from last year because who actually achieves their goals, right? To be fair, I did make an attempt - I began learning Haskell. Let's just say, I'll try again one day! Around April this year, on recommendation from one of my mentors, I decided to look into Clojure. It turned out to be a great suggestion and I've been enjoying hacking away in Clojure ever since! With all that being said, I have been pleasantly surprised by the language, learning plenty along the way.
+This year, one of my goals was to learn a functional programming language. I carried this over from last year because who actually achieves their goals, right? To be fair, I did make an attempt - I began learning Haskell. Let's just say, I'll try again one day! Around April this year, on recommendation from one of my mentors, I decided to look into Clojure. It turned out to be a great suggestion and I've been enjoying hacking away in Clojure ever since! With all that being said, I have been pleasantly surprised by the language, learning plenty along the way.
 
 Clojure is a functional programming language *and* a dialect of [Lisp](https://en.wikipedia.org/wiki/Lisp_(programming_language)). Coming from an object-oriented and imperative coding background, both of these ideas were new to me. I'll dedicate the first portion of this post to the Lisp aspects of Clojure and the second portion to functional programming.
 
