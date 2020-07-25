@@ -5,17 +5,17 @@ date: 2020-06-21
 draft: true
 ---
 
-This year I had a goal to learn a functional programming language, carried over from last year because who actually achieves their goals, right? To be fair, I did make an attempt - I began learning Haskell. That did not fair well as I really could not figure out how to create anything with Haskell after going through a brief introduction. I am a hands-on learner so I gave up quickly after that. Around April this year, on recommendation from one of my mentors, I decided to look into Clojure. It turned out to be a great suggestion and I've been enjoying hacking away in Clojure ever since! With all that being said, I have been pleasantly surprised by the language, learning plenty along my way.
+This year, one of my gaols was to learn a functional programming language. I carried this over from last year because who actually achieves their goals, right? To be fair, I did make an attempt - I began learning Haskell. Let's just say, I'll try again one day! Around April this year, on recommendation from one of my mentors, I decided to look into Clojure. It turned out to be a great suggestion and I've been enjoying hacking away in Clojure ever since! With all that being said, I have been pleasantly surprised by the language, learning plenty along the way.
 
 Clojure is a functional programming language *and* a dialect of [Lisp](https://en.wikipedia.org/wiki/Lisp_(programming_language)). Coming from an object-oriented and imperative coding background, both of these ideas were new to me. I'll dedicate the first portion of this post to the Lisp aspects of Clojure and the second portion to functional programming.
 
 ## Lisp
 
-List processing (Lisp) is a programming language created by John McCarthy in 1958. It was designed to make processing lists simple and efficient (hence the name). It was mostly used in artificial intelligence research. Clojure is a dialect of Lisp, giving it some useful properties common to all Lisp languages.
+List processing (Lisp) is a programming language created by John McCarthy in 1958. It is designed to make processing lists simple and efficient (hence the name). During its peak, its main use case was in artificial intelligence research. Clojure is a dialect of Lisp, giving it some useful properties common to all Lisp languages.
 
 ### S-Expressions
 
-A symbolic expression (s-expression) is the syntax used in the Lisp language and its variants. It provides a representation of a nested list of data. In Lisp, both code and data are represented as s-expressions which leads to the philosophy of code as data. Examples of s-expressions
+A symbolic expression (s-expression) is the syntax used in the Lisp language and its variants. It provides a representation of a nested list of data. In Lisp, both code and data are represented as s-expressions which leads to the philosophy of *code as data*. Examples of s-expressions
 
 ```clojure
 (+ 2 3)
@@ -56,7 +56,7 @@ Now we have a list with the elements `+, 4, (+ 2 3)`. One can imagine we can rea
 
 ## Functional Programming
 
-Functional programming is a programming paradigm that is based on the composition and application of functions - the core construct in the paradigm. Programs are built from composing multiple pure functions together. Given this structure, functional programming does not maintain or mutate state. This is in stark contrast to object-oriented programming where code is built around objects that have state and that can be mutated. The core tenets of functional programming are
+Functional programming is a programming paradigm that is based on the composition and application of functions - the core construct in the paradigm. Programs are built from composing multiple pure functions together. Given this structure, functional programming does not maintain or mutate state. This is in stark contrast to object-oriented programming where code is built around objects that have state and that state can be mutated. The core tenets of functional programming are
 
 * Pure functions
 * No side effects
@@ -110,7 +110,7 @@ x = x + 1
 ```
 This is not possible in functional programming. In functional programming we can create a *new* variable but we can't update an already instantiated variable. This, again, brings the benefit of making it easier to reason about code and understand the flow of data through a program. Another advantage of immutable data structures is that it makes concurrency much easier to implement. Since objects cannot change once defined, they can be shared amongst threads without qualm.
 
-Naturally, a common question is how do you write any useful code without mutable data structures. This requires a mental shift in the way you write programs - instead of having objects that are mutated as a program executes, you have data which you transform as the program executes. Every time the data is transformed, a new output is created which falls in line with immutable data structures. Clojure provides backdoors to mutability when necessary but it is not idiomatic Clojure. To formalise this, lets look at the same code done in a mutable manner and an immutable manner
+Naturally, a common question is how do you write any useful code without mutable data structures. This requires a mental shift in the way you write programs - instead of having objects that are mutated as a program executes, you have data that is transformed as the program executes. Every time the data is transformed, a new output is created, leaving the input as it was. Clojure provides backdoors to mutability when necessary but it is not idiomatic Clojure. To formalise this, lets look at the same code done in a mutable manner and an immutable manner
 
 ```python
 class Car:
@@ -129,7 +129,6 @@ car.engine_on == False
 car.start()
 car.engine_on == True
 # => True
-
 car.stop()
 car.engine_on == False
 # => True
@@ -139,30 +138,37 @@ In this case, we have an object and we mutated its state (i.e the `engine_on` va
 Functional programming languages do not have classes. Instead, we store this data as a hash map/dictionary.
 
 ```clojure
-; this defines a variable called car with a keyword engine-on set as false
+; this defines a variable called car with a key engine-on set
+; as false
 (def car {:engine-on  false})
 
-; a function that switches a car engine on. In this case, the assoc function returns a new map with the key
+; a function that switches a car engine on. In this case,
+; the assoc function returns a new map with the key
 ; updated to true
 (defn switch-engine-on [car]
   (assoc car :engine-on true))
 
-; a function that switches a car engine off. In this case, the assoc function returns a new map with the key
+; a function that switches a car engine off. In this case,
+; the assoc function returns a new map with the key
 ; updated to false
 (defn switch-engine-off [car]
   (assoc car :engine-on false))
 
-; the car is passed into the function switch-engine-on which returns a new map with the key updated to true.
-; the next operation fetches the value of engine-on. Finally true? checks whether the value is true
+; the car is passed into the function switch-engine-on
+; which returns a new map with the key updated to true.
+; the next operation fetches the value of engine-on.
+; Finally true? checks whether the value is true
 (true? (:engine-on (switch-engine-on car)))
 ; => true
 
-; because that function returned a new car map, the original car map still has the value engine-on set to false
+; because that function returned a new car map, the
+; original car map still has the value engine-on set to false
 (false? (:engine-on car))
 ; => true
 
 ; we can chain commands to switch the car on and off
-; first the engine is switched on, then it is switched off. Then we get the value of the key engine-on.
+; first the engine is switched on, then it is switched
+; off. Then we get the value of the key engine-on.
 ; finally we check if it is false
 (false? (:engine-on (switch-engine-off (switch-engine-on car))))
 ; => true
