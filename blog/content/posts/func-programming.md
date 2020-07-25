@@ -1,5 +1,5 @@
 ---
-title: "Takeaways from a dive into Clojure"
+title: "Takeaways from learning Clojure"
 show_reading_time: True
 date: 2020-06-21
 draft: true
@@ -190,9 +190,9 @@ def add(a, b):
     return a + b
 
 # bind the argument a to the value 2. Adder is now a new function
-adder = partial(add, a=2)
+adder = partial(add, b=2)
 
-# we can use adder now and only specify one argument (i.e b)
+# we can use adder now and only specify one argument (i.e a)
 adder(4)
 # => 6
 adder(1)
@@ -201,8 +201,8 @@ adder(-2)
 # => 0
 
 # In essence the partial function has done this
-def adder(b):
-    return add(2, b)
+def adder(a):
+    return add(a, 2)
 ```
 Similarly in Clojure
 
@@ -231,7 +231,7 @@ We can replace that function with its return value and the calling program will 
     (println "Sum function works") ; executes if true
     (println "Error in sum function"))) ; executes if false
 
-; => sum functions works
+; => Sum functions works
 ```
 It is clear that if we replace `a` with `4`, the program would work the same, printing `sum function works`. Now imagine we defined the `add` functions as 
 
