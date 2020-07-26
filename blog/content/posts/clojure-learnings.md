@@ -217,7 +217,7 @@ Similarly in Clojure
 
 ### Referential Transparency
 
-Referential transparency is when a function can be replaced with the value it returns without changing the program's behaviour. This is dependent on the fact that functions are *pure*. Breaking function purity breaks referential transparency. The main advantages it brings are that it makes code easier to reason about, test, refactor and optimize. A simple example of a referentially transparent function is an addition function
+Referential transparency is when a function can be replaced with the value it returns without changing the program's behaviour. This is dependent on the fact that functions are *pure*. Breaking function purity breaks referential transparency. The main advantage it brings is that it makes code easier to reason about, test, refactor and optimize. A simple example of a referentially transparent function is an addition function
 
 ```clojure
 (defn add [a b] 
