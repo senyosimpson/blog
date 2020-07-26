@@ -1,5 +1,5 @@
 ---
-title: "Takeaways from learning Clojure"
+title: "Concepts I learned from diving into Clojure"
 show_reading_time: True
 date: 2020-06-21
 draft: true
@@ -110,7 +110,7 @@ x = x + 1
 ```
 This is not possible in functional programming. In functional programming we can create a *new* variable but we can't update an already instantiated variable. This, again, brings the benefit of making it easier to reason about code and understand the flow of data through a program. Another advantage of immutable data structures is that it makes concurrency much easier to implement. Since objects cannot change once defined, they can be shared amongst threads without qualm.
 
-Naturally, a common question is how do you write any useful code without mutable data structures. This requires a mental shift in the way you write programs - instead of having objects that are mutated as a program executes, you have data that is transformed as the program executes. Every time the data is transformed, a new output is created, leaving the input as it was. Clojure provides backdoors to mutability when necessary but it is not idiomatic Clojure. To formalise this, lets look at the same code done in a mutable manner and an immutable manner
+Naturally, a common question is how do you write any useful code without mutable data structures. This requires a mental shift in the way you write programs - instead of having objects that are mutated as a program executes, you have data that is transformed as the program executes. Every time the data is transformed, a new output is created, leaving the input as it was. Clojure provides backdoors to mutability when necessary but it is not idiomatic Clojure. To formalise this, let's look at the same code done in a mutable manner and an immutable manner
 
 ```python
 class Car:
@@ -177,11 +177,11 @@ Functional programming languages do not have classes. Instead, we store this dat
 
 ### Function Composition
 
-Function composition is the act of combining multiple (simple) functions to build more complex functions. Due to functional programming emphasis on purity and mitigating side effects, it lends itself to the pattern of creating multiple small functions which are then combined into bigger functions. We have already seen examples of function composition in previous Clojure code. Function composition is not unique to functional programming, however, the paradigm makes it feel natural. Alongside this, its support for first-class function makes function composition all the more powerful.
+Function composition is the act of combining multiple (simple) functions to build more complex functions. Due to functional programming emphasis on purity and mitigating side effects, it lends itself well to this pattern. We have already seen examples of function composition in previous Clojure code. Function composition is not unique to functional programming, however, the paradigm makes it feel natural. Alongside this, its support for first-class function makes function composition all the more powerful.
 
 ### First-class Functions
 
-In simple terms, first-class functions are functions that are treated as variables. This means they can be passed into other functions as arguments, be returned from functions and be saved in variables. First-class functions allow developers to create higher-level with abstractions with functions alone and enables function composition. Other programming languages such as Python also support first-class functions. An interesting use case for first-class functions is the `partial` function. This function takes in a function, binds a set of arguments to the specified values and returns the updated function. Since Python has this function, lets look at it in both Python and Clojure.
+In simple terms, first-class functions are functions that are treated as variables. This means they can be passed into other functions as arguments, be returned from functions and be saved in variables. First-class functions allow developers to create higher-level with abstractions with functions alone and enables function composition. Other programming languages such as Python also support first-class functions. An interesting use case for first-class functions is the `partial` function. This function takes in a function, binds a set of arguments to the specified values and returns the updated function. Since Python has this function, let's look at it in both Python and Clojure.
 
 ```python
 from functools import partial
@@ -240,7 +240,7 @@ It is clear that if we replace `a` with `4`, the program would work the same, pr
   (println "Adding" a "and" b)
   (+ a b))
 ```
-In this case, the program would first print `Adding 2 and 2` and then `sum function works`. If we replaced `a` with `4`, we would not get the first print message. This has altered the program and therefore it is not referentially transparent.
+In this case, the program would first print `Adding 2 and 2`, then `Adding 4 and 4` and finally `Sum function works`. If we replaced `a` with `4`, we would not get the first print message. This has altered the program and therefore it is not referentially transparent.
 
 ## To more Clojure
 
