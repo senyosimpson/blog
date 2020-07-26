@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Bloom  | Concepts I learned from diving into Clojure</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.72.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.1cb140d8ba31d5b2f1114537dd04802a.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Concepts I learned from diving into Clojure" />
+<meta property="og:description" content="This year, one of my goals was to learn a functional programming language. I carried this over from last year because who actually achieves their goals, right? To be fair, I did make an attempt - I began learning Haskell. Let&rsquo;s just say, I&rsquo;ll try again one day! Around April this year, on recommendation from one of my mentors, I decided to look into Clojure. It turned out to be a great suggestion and I&rsquo;ve been enjoying hacking away in Clojure ever since!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://senyosimpson.github.io/posts/clojure-learnings/" />
+<meta property="article:published_time" content="2020-06-21T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-06-21T00:00:00+00:00" />
+<meta itemprop="name" content="Concepts I learned from diving into Clojure">
+<meta itemprop="description" content="This year, one of my goals was to learn a functional programming language. I carried this over from last year because who actually achieves their goals, right? To be fair, I did make an attempt - I began learning Haskell. Let&rsquo;s just say, I&rsquo;ll try again one day! Around April this year, on recommendation from one of my mentors, I decided to look into Clojure. It turned out to be a great suggestion and I&rsquo;ve been enjoying hacking away in Clojure ever since!">
+<meta itemprop="datePublished" content="2020-06-21T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-06-21T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2222">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Concepts I learned from diving into Clojure"/>
+<meta name="twitter:description" content="This year, one of my goals was to learn a functional programming language. I carried this over from last year because who actually achieves their goals, right? To be fair, I did make an attempt - I began learning Haskell. Let&rsquo;s just say, I&rsquo;ll try again one day! Around April this year, on recommendation from one of my mentors, I decided to look into Clojure. It turned out to be a great suggestion and I&rsquo;ve been enjoying hacking away in Clojure ever since!"/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://senyosimpson.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Bloom
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="About page">
+              About
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Posts page">
+              Posts
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+<a href="https://twitter.com/senyo_simpson" target="_blank" class="link-transition twitter link dib z-999 pt3 pt0-l mr1" title="Twitter link" rel="noopener" aria-label="follow on Twitter——Opens in a new window">
+  <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+<a href="https://www.linkedin.com/in/senyo-simpson-997951157/" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/senyosimpson" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=http://senyosimpson.github.io/posts/clojure-learnings/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=http://senyosimpson.github.io/posts/clojure-learnings/&amp;text=Concepts%20I%20learned%20from%20diving%20into%20Clojure" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://senyosimpson.github.io/posts/clojure-learnings/&amp;title=Concepts%20I%20learned%20from%20diving%20into%20Clojure" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+      <h1 class="f1 athelas mt3 mb1">Concepts I learned from diving into Clojure</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2020-06-21T00:00:00Z">June 21, 2020</time>
+
+      
+      
+        <span class="f6 mv4 dib tracked"> - 11 minutes read</span>
+        <span class="f6 mv4 dib tracked"> - 2222 words</span>
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy avenir bg-near-white f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>This year, one of my goals was to learn a functional programming language. I carried this over from last year because who actually achieves their goals, right? To be fair, I did make an attempt - I began learning Haskell. Let&rsquo;s just say, I&rsquo;ll try again one day! Around April this year, on recommendation from one of my mentors, I decided to look into Clojure. It turned out to be a great suggestion and I&rsquo;ve been enjoying hacking away in Clojure ever since! With all that being said, I have been pleasantly surprised by the language, learning plenty along the way.</p>
+<p>Clojure is a functional programming language <em>and</em> a dialect of <a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)">Lisp</a>. Coming from an object-oriented and imperative coding background, both of these ideas were new to me. I&rsquo;ll dedicate the first portion of this post to the Lisp aspects of Clojure and the second portion to functional programming.</p>
+<h2 id="lisp">Lisp</h2>
+<p>List processing (Lisp) is a programming language created by John McCarthy in 1958. It is designed to make processing lists simple and efficient (hence the name). During its peak, its main use case was in artificial intelligence research. Clojure is a dialect of Lisp, giving it some useful properties common to all Lisp languages.</p>
+<h3 id="s-expressions">S-Expressions</h3>
+<p>A symbolic expression (s-expression) is the syntax used in the Lisp language and its variants. It provides a representation of a nested list of data. In Lisp, both code and data are represented as s-expressions which leads to the philosophy of <em>code as data</em>. Examples of s-expressions</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(+ <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>)
+<span style="color:#75715e">; =&gt; 5</span>
+(+ <span style="color:#ae81ff">2</span> (+ <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">3</span>))
+<span style="color:#75715e">; =&gt; (+ 2 6) =&gt; 8</span>
+</code></pre></div><p>A useful property of s-expressions is that they provide a uniform structure. All syntax follows the structure <code>(operator arg1 arg2 ...)</code>. This maps well to tree-structured data (as will be discussed further on) and makes writing compilers more trivial. In the above example, the first line adds numbers 2 and 3 to give 5. In the second line, we have a nested list. The inner operation is performed first and then the outer operation - first 3 and 3 are added to give 6 and then 2 and 6 are added to give the final result of 8.</p>
+<p>For most programmers, this syntax is strange - I certainly found it awkward to work with in the beginning. After some time with it, I really began to enjoy it. The simple structure of the language makes reading and writing code straightforward. It lends itself to concise and readable functional code which made the process of learning functional programming easier. Considering we often want to chain a set of functions to apply to some data, having this uniform syntax made the mental model of how to achieve your goal simple. For example</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#a6e22e">add</span> <span style="color:#ae81ff">4</span> (<span style="color:#a6e22e">multiply</span> <span style="color:#ae81ff">3</span> (<span style="color:#a6e22e">subtract</span> <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">4</span>)))
+<span style="color:#75715e">; =&gt; (add 4 (multiply 3 4)) - (subtract 8 4) is computed to give 4</span>
+<span style="color:#75715e">; =&gt; (add 4 12) - (multiply 3 4) is computed to give 12</span>
+<span style="color:#75715e">; =&gt; 16 ; the final output is 16 as we add 4 and 12</span>
+</code></pre></div><h3 id="code-as-data-data-as-code">Code as Data, Data as Code</h3>
+<p>One of the central philosophies in Lisp is the idea of homoiconicity, commonly known as <em>code as data</em>. A homoiconic language is one that treats code as regular data that can be manipulated by the language itself. The main advantage of a homoiconic language is that it is easy to extend the language through the use of macros - new features or additions to the language can be easily created by manipulating already known constructs in the language. There is no inherent need to wait for new versions of the language to be introduced to gain features you need urgently, you can just create them yourself.</p>
+<p>Concretely, Lisp code is stored as a valid data structure, an <a href="https://en.wikipedia.org/wiki/Abstract_syntax_tree">abstract syntax tree</a> (ast). One of the design goals of the language was to make the correspondence between the syntax and the resulting ast as direct as possible. Consider the Clojure code</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(+ <span style="color:#ae81ff">4</span> (+ <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>))
+</code></pre></div><p>This generates the ast</p>
+<figure>
+    <img src="/images/clojure/ast.png"
+         alt="Abstract Syntax Tree" width="50px" height="100px"/> <figcaption>
+            <p>Abstract Syntax Tree</p>
+        </figcaption>
+</figure>
+
+<p>This is the internal representation and is evaluated when the code is executed. However, given that <code>+</code> is just a function and the rest are literals, the expression can be stored as a list</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure"><span style="color:#f92672">&#39;</span>(+ <span style="color:#ae81ff">4</span> (+ <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>))
+</code></pre></div><p>Now we have a list with the elements <code>+, 4, (+ 2 3)</code>. One can imagine we can rearrange this, replace the first operator, replace the second function, etc. This will result in a list that can be converted into the adequate ast. Through this capability, we arrive at <em>code as data, data as code</em>.</p>
+<h2 id="functional-programming">Functional Programming</h2>
+<p>Functional programming is a programming paradigm that is based on the composition and application of functions - the core construct in the paradigm. Programs are built from composing multiple pure functions together. Given this structure, functional programming does not maintain or mutate state. This is in stark contrast to object-oriented programming where code is built around objects that have state and that state can be mutated. The core tenets of functional programming are</p>
+<ul>
+<li>Pure functions</li>
+<li>No side effects</li>
+<li>Immutability</li>
+<li>Function composition</li>
+<li>First-class functions</li>
+<li>Referential transparency</li>
+</ul>
+<h3 id="pure-functions">Pure Functions</h3>
+<p>Pure functions are functions that return the same output for a given input. An example of a pure function is</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure"><span style="color:#75715e">; this function squares a number</span>
+<span style="color:#75715e">; in Clojure, the last evaluated expression is returned</span>
+(<span style="color:#66d9ef">defn </span>square-num [x]
+  (* x x))
+
+(<span style="color:#a6e22e">square-num</span> <span style="color:#ae81ff">2</span>)
+<span style="color:#75715e">; =&gt; 4</span>
+</code></pre></div><p>This function will <em>always</em> give the same output if the same input is given no matter how many times it is invoked. The other important aspect of a pure function is that is has no side effects (i.e it does not mutate state).</p>
+<h3 id="no-side-effects">No Side Effects</h3>
+<p>Side effects occur when a function mutates state out of its context. Side effects make it harder to reason about code; it is not always easy to understand the flow of data. Example of side effects are reading or writing files, updating databases, creating database connections, printing to the console, so on and so forth. Naturally, functional programs cannot completely rid themselves of side effects, however, they are often separated from the data and are integrated in a principled manner. An example of a function with a side effect</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">defn </span>add-numbers [a b]
+  (<span style="color:#66d9ef">let </span>[num (+ a b)] <span style="color:#75715e">; binds the value (+ 4 3) to num</span>
+    (println <span style="color:#e6db74">&#34;hello&#34;</span>)
+    num) <span style="color:#75715e">; to return the number</span>
+)
+
+(<span style="color:#a6e22e">add-numbers</span> <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">3</span>)
+<span style="color:#75715e">; =&gt; hello</span>
+<span style="color:#75715e">; =&gt; 7</span>
+</code></pre></div><p>This example, while simple, adequately highlights a side effect. When adding the numbers, &ldquo;hello&rdquo; is printed to the console. In this case, it is a fairly harmless side effect. In other situations it may be detrimental. Imagine the function updated a database with the calculated number. The outcome of the function is different every time it is executed as it is adding data to a database. The reason that this can be difficult to reason about is that the function gives no indication such an effect would occur.</p>
+<h3 id="immutability">Immutability</h3>
+<p>Functional programming relies heavily on immutability. This means once declared, structures cannot be modified. For example in a mutable language, you can do</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+x <span style="color:#f92672">=</span> x <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</code></pre></div><p>This is not possible in functional programming. In functional programming we can create a <em>new</em> variable but we can&rsquo;t update an already instantiated variable. This, again, brings the benefit of making it easier to reason about code and understand the flow of data through a program. Another advantage of immutable data structures is that it makes concurrency much easier to implement. Since objects cannot change once defined, they can be shared amongst threads without qualm.</p>
+<p>Naturally, a common question is how do you write any useful code without mutable data structures. This requires a mental shift in the way you write programs - instead of having objects that are mutated as a program executes, you have data that is transformed as the program executes. Every time the data is transformed, a new output is created, leaving the input as it was. Clojure provides backdoors to mutability when necessary but it is not idiomatic Clojure. To formalise this, let&rsquo;s look at the same code done in a mutable manner and an immutable manner</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Car</span>:
+    <span style="color:#66d9ef">def</span> __init__(self, engine_on<span style="color:#f92672">=</span>False):
+        self<span style="color:#f92672">.</span>engine_on <span style="color:#f92672">=</span> engine_on
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">start</span>(self):
+        self<span style="color:#f92672">.</span>engine_on <span style="color:#f92672">=</span> True
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">stop</span>(self):
+        self<span style="color:#f92672">.</span>engine_on <span style="color:#f92672">=</span> False
+
+car <span style="color:#f92672">=</span> Car(False)
+car<span style="color:#f92672">.</span>engine_on <span style="color:#f92672">==</span> False
+<span style="color:#75715e"># =&gt; True</span>
+car<span style="color:#f92672">.</span>start()
+car<span style="color:#f92672">.</span>engine_on <span style="color:#f92672">==</span> True
+<span style="color:#75715e"># =&gt; True</span>
+car<span style="color:#f92672">.</span>stop()
+car<span style="color:#f92672">.</span>engine_on <span style="color:#f92672">==</span> False
+<span style="color:#75715e"># =&gt; True</span>
+</code></pre></div><p>In this case, we have an object and we mutated its state (i.e the <code>engine_on</code> variable).</p>
+<p>Functional programming languages do not have classes. Instead, we store this data as a hash map/dictionary.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure"><span style="color:#75715e">; this defines a variable called car with a key engine-on set</span>
+<span style="color:#75715e">; as false</span>
+(<span style="color:#66d9ef">def </span>car {<span style="color:#e6db74">:engine-on</span>  false})
+
+<span style="color:#75715e">; a function that switches a car engine on. In this case,</span>
+<span style="color:#75715e">; the assoc function returns a new map with the key</span>
+<span style="color:#75715e">; updated to true</span>
+(<span style="color:#66d9ef">defn </span>switch-engine-on [car]
+  (assoc car <span style="color:#e6db74">:engine-on</span> true))
+
+<span style="color:#75715e">; a function that switches a car engine off. In this case,</span>
+<span style="color:#75715e">; the assoc function returns a new map with the key</span>
+<span style="color:#75715e">; updated to false</span>
+(<span style="color:#66d9ef">defn </span>switch-engine-off [car]
+  (assoc car <span style="color:#e6db74">:engine-on</span> false))
+
+<span style="color:#75715e">; the car is passed into the function switch-engine-on</span>
+<span style="color:#75715e">; which returns a new map with the key updated to true.</span>
+<span style="color:#75715e">; the next operation fetches the value of engine-on.</span>
+<span style="color:#75715e">; Finally true? checks whether the value is true</span>
+(true? (<span style="color:#e6db74">:engine-on</span> (<span style="color:#a6e22e">switch-engine-on</span> car)))
+<span style="color:#75715e">; =&gt; true</span>
+
+<span style="color:#75715e">; because that function returned a new car map, the</span>
+<span style="color:#75715e">; original car map still has the value engine-on set to false</span>
+(false? (<span style="color:#e6db74">:engine-on</span> car))
+<span style="color:#75715e">; =&gt; true</span>
+
+<span style="color:#75715e">; we can chain commands to switch the car on and off</span>
+<span style="color:#75715e">; first the engine is switched on, then it is switched</span>
+<span style="color:#75715e">; off. Then we get the value of the key engine-on.</span>
+<span style="color:#75715e">; finally we check if it is false</span>
+(false? (<span style="color:#e6db74">:engine-on</span> (<span style="color:#a6e22e">switch-engine-off</span> (<span style="color:#a6e22e">switch-engine-on</span> car))))
+<span style="color:#75715e">; =&gt; true</span>
+</code></pre></div><h3 id="function-composition">Function Composition</h3>
+<p>Function composition is the act of combining multiple (simple) functions to build more complex functions. Due to functional programming emphasis on purity and mitigating side effects, it lends itself well to this pattern. We have already seen examples of function composition in previous Clojure code. Function composition is not unique to functional programming, however, the paradigm makes it feel natural. Alongside this, its support for first-class function makes function composition all the more powerful.</p>
+<h3 id="first-class-functions">First-class Functions</h3>
+<p>In simple terms, first-class functions are functions that are treated as variables. This means they can be passed into other functions as arguments, be returned from functions and be saved in variables. First-class functions allow developers to create higher-level with abstractions with functions alone and enables function composition. Other programming languages such as Python also support first-class functions. An interesting use case for first-class functions is the <code>partial</code> function. This function takes in a function, binds a set of arguments to the specified values and returns the updated function. Since Python has this function, let&rsquo;s look at it in both Python and Clojure.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> functools <span style="color:#f92672">import</span> partial
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add</span>(a, b):
+    <span style="color:#66d9ef">return</span> a <span style="color:#f92672">+</span> b
+
+<span style="color:#75715e"># bind the argument a to the value 2. Adder is now a new function</span>
+adder <span style="color:#f92672">=</span> partial(add, b<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+
+<span style="color:#75715e"># we can use adder now and only specify one argument (i.e a)</span>
+adder(<span style="color:#ae81ff">4</span>)
+<span style="color:#75715e"># =&gt; 6</span>
+adder(<span style="color:#ae81ff">1</span>)
+<span style="color:#75715e"># =&gt; 3</span>
+adder(<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>)
+<span style="color:#75715e"># =&gt; 0</span>
+
+<span style="color:#75715e"># In essence the partial function has done this</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">adder</span>(a):
+    <span style="color:#66d9ef">return</span> add(a, <span style="color:#ae81ff">2</span>)
+</code></pre></div><p>Similarly in Clojure</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">((partial + <span style="color:#ae81ff">2</span>) <span style="color:#ae81ff">4</span>)
+<span style="color:#75715e">; =&gt; 6</span>
+((partial + <span style="color:#ae81ff">2</span>) <span style="color:#ae81ff">1</span>)
+<span style="color:#75715e">; =&gt; 3</span>
+((partial + <span style="color:#ae81ff">2</span>) <span style="color:#ae81ff">-2</span>)
+<span style="color:#75715e">; =&gt; 0</span>
+</code></pre></div><h3 id="referential-transparency">Referential Transparency</h3>
+<p>Referential transparency is when a function can be replaced with the value it returns without changing the program&rsquo;s behaviour. This is dependent on the fact that functions are <em>pure</em>. Breaking function purity breaks referential transparency. The main advantages it brings are that it makes code easier to reason about, test, refactor and optimize. A simple example of a referentially transparent function is an addition function</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">defn </span>add [a b] 
+  (+ a b))
+</code></pre></div><p>We can replace that function with its return value and the calling program will still function the same.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">let </span>[a (<span style="color:#a6e22e">add</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span>)]
+  (<span style="color:#66d9ef">if </span>(= (<span style="color:#a6e22e">add</span> a a) <span style="color:#ae81ff">8</span>) <span style="color:#75715e">; in this case, adds a to itself and then compares if it is equal to 8</span>
+    (println <span style="color:#e6db74">&#34;Sum function works&#34;</span>) <span style="color:#75715e">; executes if true</span>
+    (println <span style="color:#e6db74">&#34;Error in sum function&#34;</span>))) <span style="color:#75715e">; executes if false</span>
+
+<span style="color:#75715e">; =&gt; Sum functions works</span>
+</code></pre></div><p>It is clear that if we replace <code>a</code> with <code>4</code>, the program would work the same, printing <code>sum function works</code>. Now imagine we defined the <code>add</code> functions as</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">defn </span>add [a b]
+  (println <span style="color:#e6db74">&#34;Adding&#34;</span> a <span style="color:#e6db74">&#34;and&#34;</span> b)
+  (+ a b))
+</code></pre></div><p>In this case, the program would first print <code>Adding 2 and 2</code>, then <code>Adding 4 and 4</code> and finally <code>Sum function works</code>. If we replaced <code>a</code> with <code>4</code>, we would not get the first print message. This has altered the program and therefore it is not referentially transparent.</p>
+<h2 id="to-more-clojure">To more Clojure</h2>
+<p>Learning Clojure has been an enlightening experience. I hope you found some of the takeaways equally as awe-inspiring. It&rsquo;s an awesome language to learn to expand your horizons as a developer and at the same time, is a powerful language in its own right. I&rsquo;ve found it to be one of the most productive languages I&rsquo;ve used. To more Clojure!</p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://senyosimpson.github.io/" >
+    &copy;  Bloom 2020 
+  </a>
+    <div>
+
+
+
+
+<a href="https://twitter.com/senyo_simpson" target="_blank" class="link-transition twitter link dib z-999 pt3 pt0-l mr1" title="Twitter link" rel="noopener" aria-label="follow on Twitter——Opens in a new window">
+  <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+<a href="https://www.linkedin.com/in/senyo-simpson-997951157/" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/senyosimpson" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

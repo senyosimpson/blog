@@ -2,7 +2,7 @@
 title: "Concepts I learned from diving into Clojure"
 show_reading_time: True
 date: 2020-06-21
-draft: true
+draft: false
 ---
 
 This year, one of my goals was to learn a functional programming language. I carried this over from last year because who actually achieves their goals, right? To be fair, I did make an attempt - I began learning Haskell. Let's just say, I'll try again one day! Around April this year, on recommendation from one of my mentors, I decided to look into Clojure. It turned out to be a great suggestion and I've been enjoying hacking away in Clojure ever since! With all that being said, I have been pleasantly surprised by the language, learning plenty along the way.

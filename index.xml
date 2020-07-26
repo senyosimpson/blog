@@ -6,10 +6,19 @@
     <description>Recent content in A Tale of Growth on Bloom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://senyosimpson.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Concepts I learned from diving into Clojure</title>
+      <link>http://senyosimpson.github.io/posts/clojure-learnings/</link>
+      <pubDate>Sun, 21 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://senyosimpson.github.io/posts/clojure-learnings/</guid>
+      <description>This year, one of my goals was to learn a functional programming language. I carried this over from last year because who actually achieves their goals, right? To be fair, I did make an attempt - I began learning Haskell. Let&amp;rsquo;s just say, I&amp;rsquo;ll try again one day! Around April this year, on recommendation from one of my mentors, I decided to look into Clojure. It turned out to be a great suggestion and I&amp;rsquo;ve been enjoying hacking away in Clojure ever since!</description>
+    </item>
     
     <item>
       <title>Machine learning in the wild</title>
