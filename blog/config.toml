@@ -23,7 +23,7 @@ email = "simpsonsenyo@gmail.com"
 linkedin = "senyo-simpson-997951157"
 
 [params.social.config]
-platforms = ["github","twitter","email","linkedin"]
+platforms = ["twitter", "github","linkedin","email"]
 
 [taxonomies]
 tag ="tags"
