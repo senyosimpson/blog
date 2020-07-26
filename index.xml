@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>A Tale of Growth on Bloom</title>
+    <title>Bloom</title>
     <link>http://senyosimpson.github.io/</link>
-    <description>Recent content in A Tale of Growth on Bloom</description>
+    <description>Recent content on Bloom</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 21 Jun 2020 00:00:00 +0000</lastBuildDate>
@@ -36,6 +36,15 @@
       
       <guid>http://senyosimpson.github.io/posts/working-and-studying/</guid>
       <description>In my final year of undergraduate studies, I had the opportunity to work part-time for Aerobotics ― an agritech startup. With a passion for development, an eagerness to learn and a curiosity for machine learning in the wild, I embraced the opportunity fully, despite having some reservations. How would I manage my final year of undergraduate studies and simultaneously deliver at an acceptable standard at work? As concerned as I was, it turned out to be an exceedingly positive and rewarding experience.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://senyosimpson.github.io/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://senyosimpson.github.io/about/</guid>
+      <description>Wagwan, I&amp;rsquo;m Senyo! I am a 23 year old machine learning engineer residing in the beautiful city of Cape Town, South Africa. I work at Aerobotics where we are building the next generation of smart technology in the agriculture industry. From an academic standpoint, my interests lie in statistical machine learning. Topics such as probabilisitic generative modeling, approximate inference, density estimation and the likes are fascinating and the theory is beautiful to say the least (if only I understood it properly 😆).</description>
     </item>
     
   </channel>

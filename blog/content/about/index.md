@@ -1,9 +1,8 @@
 ---
-title: "About"
-description: ""
+hidden: true
 ---
 
-Wagwan, I'm Senyo Simpson. I am a 23 year old machine learning engineer residing in the beautiful city of Cape Town, South Africa. I work at [Aerobotics](https://aerobotics.com) where we are building the next generation of smart technology in the agriculture industry. From an academic standpoint, my interests lie in 
+Wagwan, I'm Senyo! I am a 23 year old machine learning engineer residing in the beautiful city of Cape Town, South Africa. I work at [Aerobotics](https://aerobotics.com) where we are building the next generation of smart technology in the agriculture industry. From an academic standpoint, my interests lie in 
 statistical machine learning. Topics such as probabilisitic generative modeling, approximate inference, density estimation and the likes are fascinating and the theory is beautiful to
 say the least (if only I understood it properly 😆). From an industry perspective, I am passionate about building highly available and scalable systems with machine learning at their center.
 
