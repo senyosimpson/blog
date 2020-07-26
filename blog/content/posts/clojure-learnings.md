@@ -45,7 +45,7 @@ Concretely, Lisp code is stored as a valid data structure, an [abstract syntax t
 ```
 This generates the ast
 
-{{< figure src="/images/clojure/ast.png" caption="Abstract Syntax Tree" height="100px" width="50px" >}}
+{{< figure src="/images/clojure/ast.png" caption="Abstract Syntax Tree" >}}
 
 This is the internal representation and is evaluated when the code is executed. However, given that `+` is just a function and the rest are literals, the expression can be stored as a list
 
