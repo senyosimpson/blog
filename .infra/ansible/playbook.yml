@@ -48,4 +48,6 @@
       docker_container:
         name: blog
         image: senyo/blog:latest
+        ports:
+          - "80:80"
         state: started
