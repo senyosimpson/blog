@@ -9,3 +9,4 @@ COPY docker/sites-available /etc/nginx/sites-available
 RUN mkdir /etc/nginx/sites-enabled
 RUN ln -s /etc/nginx/sites-available/senyosimpson.com /etc/nginx/sites-enabled/senyosimpson.com
 
+EXPOSE 80 80
