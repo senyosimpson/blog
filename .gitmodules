@@ -1,3 +1,3 @@
 [submodule "blog/themes/kiss"]
 	path = blog/themes/kiss
-	url = https://github.com/senyosimpson/kiss
+	url =  git@github.com:senyosimpson/kiss.git
