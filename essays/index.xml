@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Essays on Bloom</title>
+    <link>http://senyosimpson.github.io/essays/</link>
+    <description>Recent content in Essays on Bloom</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 16 Aug 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://senyosimpson.github.io/essays/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Just start</title>
+      <link>http://senyosimpson.github.io/essays/just-start/</link>
+      <pubDate>Sun, 16 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://senyosimpson.github.io/essays/just-start/</guid>
+      <description>Having unlimited time to think about yourself and your life for months on end is, and I emphasise, fun. While mostly frustrating, I believe that the Covid-19-induced lockdown has granted us much needed time to critically introspect. Being naturally introspective, I have been in overdrive, reflecting on my shortcomings and my future. Evaluating both critically has yielded some gems. One of them can be summarised into two words, just start. Another way of saying it is, &amp;ldquo;just do it&amp;rdquo; as Nike so fervently reminds us.</description>
+    </item>
+    
+  </channel>
+</rss>

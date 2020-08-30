@@ -26,7 +26,8 @@ linkedin = "senyo-simpson-997951157"
 platforms = ["twitter", "github","linkedin","email"]
 
 [taxonomies]
-tag ="tags"
+tag = "tags"
 
 [params.sections_left]
 "/about" = "About"
+"/essays" = "Essays"
