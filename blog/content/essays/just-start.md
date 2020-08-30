@@ -1,7 +1,8 @@
 ---
-title: "Just start"
+title: Just start
 date: 2020-08-16
 draft: false
+type: essay
 ---
 
 Having unlimited time to think about yourself and your life for months on end is, and I emphasise, fun. While mostly frustrating, I believe that the Covid-19-induced lockdown has granted us much needed time to critically introspect. Being naturally introspective, I have been in overdrive, reflecting on my shortcomings and my future. Evaluating both critically has yielded some gems. One of them can be summarised into two words, just start. Another way of saying it is, "just do it" as Nike so fervently reminds us. For me, just start is the realisation that if you have dreams, especially the kind of dreams that keep you up at night because you have not started walking a journey towards realising them, you have to stop making excuses and get going. This is easier said than done, life has a way of creating insurmountable challenges. However, this is to say that dreams should never easily be left in the graveyard. You just have to start, no matter how small the initial steps - progress is progress.
