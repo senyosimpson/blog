@@ -18,6 +18,7 @@
       docker_image:
         name: senyo/blog
         tag: latest
+        force_source: yes
         source: pull
 
     - name: Create container
@@ -30,3 +31,9 @@
         restart: yes
         restart_policy: on-failure
         restart_retries: 1
+
+    - name: Docker prune
+      docker_prune:
+        images: yes
+        containers: yes
+        networks: yes
