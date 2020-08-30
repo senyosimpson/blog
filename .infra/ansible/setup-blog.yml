@@ -1,0 +1,32 @@
+#################################################
+# DO Community Playbooks: Docker
+#################################################
+---
+- hosts: digitalocean
+  remote_user: root
+  become: true
+  vars_files:
+    - secrets.yml
+
+  tasks:
+    - name: Login into Docker
+      docker_login:
+        username: "{{ docker_username }}"
+        password: "{{ docker_password }}"
+
+    - name: Pull Docker image
+      docker_image:
+        name: senyo/blog
+        tag: latest
+        source: pull
+
+    - name: Create container
+      docker_container:
+        name: blog
+        image: senyo/blog:latest
+        ports:
+          - "80:80"
+        state: started
+        restart: yes
+        restart_policy: on-failure
+        restart_retries: 1
