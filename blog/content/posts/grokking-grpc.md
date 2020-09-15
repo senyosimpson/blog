@@ -4,6 +4,8 @@ date: 2020-09-14
 draft: true
 ---
 
+If you're like me, you've kept hearing about gRPC but have little idea of what it actually is, what its use cases are and why everyone keeps speaking about it. Initially, I thought it must be another buzzword being thrown around. Fortunately, I was wrong - there is plenty of merit behind gRPC. I finally found some time to look into it. This blog post is a summary of all I've learned over the last few days. I hope you enjoy it! 
+
 # What is Remote Procedure Call?
 
 Remote Procedure Call (RPC) is a communication protocol used between web services. The central idea around RPC is to allow a client application to execute a procedure (function) on a server application as if it were running locally. The networking details are abstracted away from the developer. RPC is commonly used for service-to-service communications.
@@ -41,7 +43,7 @@ As stated above, protocol buffers are a method for the serializing/deserializing
 
 # What happened to REST?
 
-REST is the canonical standard for communications over the web. It has been battle-tested in production, extensive tooling exists for implementing RESTful services and most developers are comfortable with designing, building and maintaining RESTful services. Naturally the big question is what is so great about gRPC that we'd forego creating a RESTful service. The answer is fairly straightforward - performance. While there other benefits of using gRPC (HTTP/2, bidirectonal streaming), for the standard use case, performance is the central reason for using it. JSON is much slower to serialize/deserialize than protobufs. At scale, this can lead to a noticeable degradation in performance of the overall system. As protobufs are a binary format, they are much faster to serialize/deserialize - some articles saying there is an improvement of 5-6 times. 
+REST is the canonical standard for communications over the web. It has been battle-tested in production, extensive tooling exists for implementing RESTful services and most developers are comfortable with designing, building and maintaining RESTful services. Naturally the big question is what is so great about gRPC that we'd forego creating a RESTful service? The answer is fairly straightforward: performance. While there other benefits of using gRPC such as the use of HTTP/2 or bidirectonal streaming, for the standard use case, performance is the central reason for using it. JSON is much slower to serialize/deserialize than protobufs. At scale, this can lead to a noticeable degradation in performance of the overall system. As protobufs are a binary format, they are much faster to serialize/deserialize - some articles saying there is an improvement of 5-6 times. 
 
 # gRPC by example
 
@@ -207,25 +209,22 @@ And that's it! I hope you've taken something valuable out of this walkthrough of
 
 # References
 
-## RPC
+### RPC
 
-1. https://www.tutorialspoint.com/remote-procedure-call-rpc
-2. https://www.geeksforgeeks.org/remote-procedure-call-rpc-in-operating-system/
-3. https://searchapparchitecture.techtarget.com/definition/Remote-Procedure-Call-RPC
-4. https://en.wikipedia.org/wiki/Remote_procedure_call
-5. 
+1. [Remote Procedure Call - Tutorialspoint](https://www.tutorialspoint.com/remote-procedure-call-rpc)
+2. [Remote Procedure Call - Geeks for Geeks](https://www.geeksforgeeks.org/remote-procedure-call-rpc-in-operating-system/)
+3. [Remote Procedure Call - Wikipedia](https://en.wikipedia.org/wiki/Remote_procedure_call)
 
-## RPC VS rest
+### gRPC VS REST
 
-1. https://wecode.wepay.com/posts/migrating-apis-from-rest-to-grpc-at-wepay
+1. [Migrating APIs from REST to gRPC](https://wecode.wepay.com/posts/migrating-apis-from-rest-to-grpc-at-wepay)
 
-## gRPC 
+### gRPC 
 
-1. https://grpc.io
-2. https://en.wikipedia.org/wiki/GRPC
+2. [gRPC - Wikipedia](https://en.wikipedia.org/wiki/GRPC)
+1. [gRPC Official Website](https://grpc.io)
 
-# Protocol Buffers
+### Protocol Buffers
 
-1. https://en.wikipedia.org/wiki/Protocol_Buffers
-2. https://codeclimate.com/blog/choose-protocol-buffers/
-3. https://medium.com/better-programming/understanding-protocol-buffers-43c5bced0d47
+1. [Protocol buffers - Wikipedia](https://en.wikipedia.org/wiki/Protocol_Buffers)
+2. [5 Reasons to use protocol buffers](https://codeclimate.com/blog/choose-protocol-buffers/)
