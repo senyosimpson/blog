@@ -4,56 +4,75 @@ date: 2020-09-14
 draft: true
 ---
 
-If you're like me, you've kept hearing about gRPC but have little idea of what it actually is, what its use cases are and why everyone keeps speaking about it. Initially, I thought it must be another buzzword being thrown around. Fortunately, I was wrong - there is plenty of merit behind gRPC. I finally found some time to look into it. This blog post is a summary of all I've learned over the last few days. I hope you enjoy it! 
+If you are similar to me, you've kept hearing about gRPC but have little idea of what it actually is, what its use cases are and why everyone keeps speaking about it. Initially, I thought it must be *another* buzzword being thrown around. Fortunately, I was wrong 😆. I've spent a couple of days reading and learning more about it. This blog post is a comprehensive summary of all I've learned. I hope you enjoy it! 
 
 # What is Remote Procedure Call?
 
-Remote Procedure Call (RPC) is a communication protocol used between web services. The central idea around RPC is to allow a client application to execute a procedure (function) on a server application as if it were running locally. The networking details are abstracted away from the developer. RPC is commonly used for service-to-service communications.
+Remote Procedure Call (RPC) is a communication protocol used between web services. The central idea around RPC is to allow a client application to execute a procedure (function) on a server application as if the procedure was running locally. The networking details are abstracted away from the developer making it simple to use.
 
-To concretize it, we walk through a typical RPC flow
+To concretize it, a bird's eye view of a typical RPC flow:
 
 1. A client calls a function
-2. The function is actually an RPC. A request is made to a server to execute the procedure
+2. The function is actually a remote procedure call. A request is made to a server to execute the procedure
 3. The request contains the parameters to be passed into the procedure
 4. The procedure is executed on the server
 5. A response is returned to the client containing the result of the procedure execution
 
 From the client's perspective, the procedure seems as if it is running locally. Naturally with any communcation protocol, there are advantages and disadvantages. Martin Kleppmann, in his book [Designing Data-Intensive Applications](https://dataintensive.net), highlights some of the differences between remote and local procedure calls.
 
-* A local function call is predictable and its success depends on factors under your control. In contrast, a networking request is unpredictable and fails to various reasons.
-* A local function returns a result, throws an exception or never returns. A networking request, additionally, can return without a result due to a timeout. In this scenario, there is no way to know what occured.
+* A local function call is predictable and its success depends on factors under your control. In contrast, a networking request is unpredictable and fails for various reasons.
+* A local function returns a result, throws an exception or never returns. A networking request, in addition, can return without a result due to a timeout. In this scenario, there is no way to know what occured.
 * A network request may be received and execute but only the network *response* fails. Network request failures are often handled by retries but unfortunately in this case, the function would be executed multiple times as you would not know only the responses are getting lost.
-* A local function takes a similar amount of time to execute every time it is invoked. Network requests has variable latency due to networking specific issues - network is congested, server is at maximum capacity, etc.
+* A local function takes a similar amount of time to execute every time it is invoked. Network requests have variable latency due to networking specific issues - network is congested, server is at maximum capacity etc.
 
 Add something about other adv/disadv (performance, human readable)
 
-## gRPC
+## What is gRPC?
 
 The [gRPC website](https://grpc.io) describes it as a, "modern, open source remote procedure call (RPC) framework that can run anywhere. It enables client and server applications to communicate transparently, and makes it easier to build connected systems". It was created by Google and subsequently open-sourced in 2016. gRPC has driven the resurgence of communications using RPC. With the move towards service-oriented architectures, it has found a natural home in service-to-service communications.
 
-gRPC, by default, uses protocol buffers (protobufs) - a method for serializing/deserializing structured data. Protocol buffer messages are encoded in a binary format. This makes it fast to send information over the wire; at least in comparison to textual formats such as JSON. This, however, comes at the cost of human readability.
+gRPC uses protocol buffers (protobufs) - a method for serializing/deserializing structured data. Protocol buffer messages are encoded in a binary format. This makes it fast to send information over the wire; at least in comparison to textual formats such as JSON. The use of protocol buffers alongside the great and easy to use tooling around gRPC has made it the preferred framework for implementing RPC.
 
 # Protocol Buffers
 
-As stated above, protocol buffers are a method for the serializing/deserializing structured data. They are defined using a schema. An example of a protocol buffer
+As stated above, protocol buffers are a method for the serializing/deserializing structured data. Protocol buffer messages are defined using a schema consisting of key-value pairs.
 
 ```protobuf
+message Person {
+  string name = 1;
+  int32 id = 2;
+  string email = 3;
+}
+```
+
+You can think of Person as a struct. Each field is a key-value pair and is annotated with their respective data type. Each field has a number associated to it which is used as the key. In actual fact, the key contains the field number and information about the type of data being encoded/decoded in order to determine the length of the value. This is commonly referred to as the tag. As an example, if we have a protobuf message
+
+```protobuf
+message Test2 {
+  string b = 2;
+}
+```
+with the value of `b` set to `testing`, the corresponding encoding will be
 
 ```
+12 07 74 65 73 74 69 6e 67
+```
+
+The bytes `12` and `07` form the tag. The value `12` is decoded to give the field number 2 and the data type string. The value `07` is decoded to give the length of the value which is 7 in this case. As you can see, there are 7 bytes remaining which give the value of the string. If you are interested, you can find more information about the protocol buffer encoding from the [official guide](https://developers.google.com/protocol-buffers/docs/encoding). This example is actually from there albeit with much less detail.
 
 # What happened to REST?
 
-REST is the canonical standard for communications over the web. It has been battle-tested in production, extensive tooling exists for implementing RESTful services and most developers are comfortable with designing, building and maintaining RESTful services. Naturally the big question is what is so great about gRPC that we'd forego creating a RESTful service? The answer is fairly straightforward: performance. While there other benefits of using gRPC such as the use of HTTP/2 or bidirectonal streaming, for the standard use case, performance is the central reason for using it. JSON is much slower to serialize/deserialize than protobufs. At scale, this can lead to a noticeable degradation in performance of the overall system. As protobufs are a binary format, they are much faster to serialize/deserialize - some articles saying there is an improvement of 5-6 times. 
+REST is the canonical standard for communications over the web. It has been battle-tested in production, extensive tooling exists for implementing RESTful services and most developers are comfortable with designing, building and maintaining RESTful services. Naturally the big question is what is so great about gRPC that we would forego creating a RESTful service? The answer is fairly straightforward: performance. While there are other benefits of using gRPC such as the use of HTTP/2 or bidirectonal streaming, for the standard use case, performance is the central reason for adopting it. JSON is much slower to serialize/deserialize than protobufs. At scale, this can lead to a noticeable degradation in performance of the overall system. As protobufs are a binary format, they are much faster to serialize/deserialize. some articles claiming there is an improvement of 5-6 times. 
 
 # gRPC by example
 
-Nothing is ever complete without some code examples! I've tried to make this as easy to follow as possible. Let me know if any improvements can be made. All the code can be found [here](https://github.com/senyosimpson/tutorials/tree/master/grokkingrpc). We will implement the service in the [Quick Start](https://grpc.io/docs/languages/go/quickstart/) section of the gRPC website. We're using Golang for the purposes of this tutorial.
+Nothing is ever complete without some code examples! I've tried to make this as easy to follow as possible. Let me know if any improvements can be made. All the code can be found [here](https://github.com/senyosimpson/tutorials/tree/master/grokkingrpc). We will implement the service in the [Quick Start](https://grpc.io/docs/languages/go/quickstart/) section of the gRPC website. I'm using Golang for this tutorial.
 
-One snag that got me was related to the automatic code generation from the proto files. There is a move towards a new Golang plugin for the protobuf compiler (it performs the automatic code generation). The old (which I used) and new version output slightly different files and so I couldn't follow the code in the [examples](https://github.com/grpc/grpc-go/tree/master/examples/helloworld) repository. To make things simple, this tutorial uses the old Golang plugin. Awesome, let's get into it!
+One snag that got me was related to the automatic code generation from the proto files. There is a move towards a new Golang plugin for the protobuf compiler (it performs the automatic code generation). The old (which I used) and new version output slightly different files and so I couldn't follow the code in the official grpc [examples](https://github.com/grpc/grpc-go/tree/master/examples/helloworld) repository. To make things simple, this tutorial uses the old Golang plugin. Awesome, let's get into it 🥳
 
 ***
 
-The service is really simple - it greets a person. The client can send a request containing a name to the server. The server greets that person with a simple message, ```"Hello <name>"```. To recap, the server is responsible for executing the procedure and returning the result to the client. From the client's perspective, the procedure ran locally.
+The service is really simple, all it does is greet a person. The client can send a request containing a name to the server. The server produces a simple message, `"Hello <name>"`. To recap, the server is responsible for executing the procedure and returning the result to the client. From the client's perspective, the procedure ran locally.
 
 
 First things first, the dependencies need to be installed. 
@@ -106,14 +125,14 @@ type HelloWorldServer interface {
 	Greet(context.Context, *HelloRequest) (*HelloReply, error)
 ```
 
-We have to implement this interface to define our service. In the implementation, the server prints out that it receieved a given name. It returns a reply message that contains the greeting, `Hello <name>`.
+We have to implement this interface to define our service. In the implementation, the server prints out that it received a given name. It returns a reply message that contains the greeting, `Hello <name>`.
 
 ```go
 type helloWorldService struct {}
 
-func (s *HelloWorldServer) (ctx context.Context, request *pb.HelloRequest) (*pb.HelloReply, error) {
-    log.Printf("Received: %v", request.GetName())
-	return &pb.HelloReply{Message: "Hello " + request.GetName()}, nil
+func (s *HelloWorldServer) Greet(ctx context.Context, r *pb.HelloRequest) (*pb.HelloReply, error) {
+    log.Printf("Received: %v", r.GetName())
+	return &pb.HelloReply{Message: "Hello " + r.GetName()}, nil
 }
 ```
 As an fyi, the function `GetName` is automatically generated. This can be found in the `helloworld.pb.go` file.
@@ -133,9 +152,9 @@ import (
 
 type helloWorldServer struct{}
 
-func (s *helloWorldServer) Greet(ctx context.Context, request *pb.HelloRequest) (*pb.HelloReply, error) {
-	log.Printf("Received: %v", request.GetName())
-	return &pb.HelloReply{Message: "Hello " + request.GetName()}, nil
+func (s *helloWorldServer) Greet(ctx context.Context, r *pb.HelloRequest) (*pb.HelloReply, error) {
+	log.Printf("Received: %v", r.GetName())
+	return &pb.HelloReply{Message: "Hello " + r.GetName()}, nil
 }
 
 func main() {
@@ -143,6 +162,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
+
 	server := grpc.NewServer()
 	pb.RegisterHelloWorldServer(server, &helloWorldServer{})
 	if err := server.Serve(lis); err != nil {
@@ -221,8 +241,8 @@ And that's it! I hope you've taken something valuable out of this walkthrough of
 
 ### gRPC 
 
-2. [gRPC - Wikipedia](https://en.wikipedia.org/wiki/GRPC)
 1. [gRPC Official Website](https://grpc.io)
+2. [gRPC - Wikipedia](https://en.wikipedia.org/wiki/GRPC)
 
 ### Protocol Buffers
 
