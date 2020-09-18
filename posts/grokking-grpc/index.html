@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en-us">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Grokking gRPC | Bloom</title>
+
+<meta property='og:title' content='Grokking gRPC - Bloom'>
+<meta property='og:description' content='If you are similar to me, you&rsquo;ve kept hearing about gRPC but have little idea of what it actually is, what its use cases are and why everyone keeps speaking about it. Initially, I thought it must be another buzzword being thrown around. Fortunately, I was wrong 😆. I&rsquo;ve spent a couple of days reading and learning more about it. This blog post is a comprehensive summary of all I&rsquo;ve learned.'>
+<meta property='og:url' content='http://senyosimpson.com/posts/grokking-grpc/'>
+<meta property='og:site_name' content='Bloom'>
+<meta property='og:type' content='article'><meta property='og:image' content='https://www.gravatar.com/avatar/81047a9b0da5b3df8c57a62fb05a0b59?s=256'><meta property='article:section' content='Posts'><meta property='article:published_time' content='2020-09-14T00:00:00Z'/><meta property='article:modified_time' content='2020-09-14T00:00:00Z'/><meta name='twitter:card' content='summary'><meta name='twitter:site' content='@senyo_simpson'><meta name='twitter:creator' content='@senyo_simpson'>
+
+
+<link rel="stylesheet" href="/css/style.css"/><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="canonical" href="http://senyosimpson.com/posts/grokking-grpc/">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<section class="section">
+  <div class="container">
+    <nav id="nav-main" class="nav">
+      <div id="nav-name" class="nav-left">
+        <a id="nav-anchor" class="nav-item" href="http://senyosimpson.com">
+          <h1 id="nav-heading" class="title is-4">Bloom</h1>
+        </a>
+      </div>
+      <div class="nav-right">
+        <nav id="nav-items" class="nav-item level is-mobile"><a class="level-item" aria-label="twitter" href='https://twitter.com/senyo_simpson'
+            target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="github" href='https://github.com/senyosimpson'
+            target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="linkedin" href='https://linkedin.com/in/senyo-simpson-997951157'
+            target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path stroke-width="1.8" d="m5.839218,4.101561c0,1.211972 -0.974141,2.194011 -2.176459,2.194011s-2.176459,-0.982039 -2.176459,-2.194011c0,-1.211094 0.974141,-2.194011 2.176459,-2.194011s2.176459,0.982917 2.176459,2.194011zm0.017552,3.94922l-4.388022,0l0,14.04167l4.388022,0l0,-14.04167zm7.005038,0l-4.359939,0l0,14.04167l4.360816,0l0,-7.370999c0,-4.098413 5.291077,-4.433657 5.291077,0l0,7.370999l4.377491,0l0,-8.89101c0,-6.915523 -7.829986,-6.66365 -9.669445,-3.259423l0,-1.891237z"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="email" href='mailto:simpsonsenyo@gmail.com'
+            target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+            </span>
+          </a></nav>
+      </div>
+    </nav>
+
+    <nav class="nav">
+      
+      <div class="nav-left"><a class="nav-item" href="/about">
+          <h2 class="title is-5">About</h2>
+        </a><a class="nav-item" href="/essays">
+          <h2 class="title is-5">Essays</h2>
+        </a></div>
+      
+
+      
+    </nav>
+
+  </div>
+  <script src="/js/navicon-shift.js"></script>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="subtitle tags is-6 is-pulled-right">
+      
+    </div>
+    <h2 class="subtitle is-6">September 14, 2020</h2>
+    <h1 class="title">Grokking gRPC</h1>
+    
+    <div class="content">
+      <p>If you are similar to me, you&rsquo;ve kept hearing about gRPC but have little idea of what it actually is, what its use cases are and why everyone keeps speaking about it. Initially, I thought it must be <em>another</em> buzzword being thrown around. Fortunately, I was wrong 😆. I&rsquo;ve spent a couple of days reading and learning more about it. This blog post is a comprehensive summary of all I&rsquo;ve learned. I hope you enjoy it!</p>
+<h1 id="what-is-remote-procedure-call">What is Remote Procedure Call?</h1>
+<p>Remote Procedure Call (RPC) is a communication protocol used between web services. The central idea around RPC is to allow a client application to execute a procedure (function) on a server application as if the procedure was running locally. The networking details are abstracted away from the developer making it simple to use.</p>
+<p>To concretize it, a bird&rsquo;s eye view of a typical RPC flow:</p>
+<ol>
+<li>A client calls a function</li>
+<li>The function is actually a remote procedure call. A request is made to a server to execute the procedure</li>
+<li>The request contains the parameters to be passed into the procedure</li>
+<li>The procedure is executed on the server</li>
+<li>A response is returned to the client containing the result of the procedure execution</li>
+</ol>
+<p>From the client&rsquo;s perspective, the procedure seems as if it is running locally. Naturally with any communcation protocol, there are advantages and disadvantages. Martin Kleppmann, in his book <a href="https://dataintensive.net" target="_blank" rel="noreferrer noopener">Designing Data-Intensive Applications</a>, highlights some of the differences between remote and local procedure calls.</p>
+<ul>
+<li>A local function call is predictable and its success depends on factors under your control. In contrast, a networking request is unpredictable and fails for various reasons.</li>
+<li>A local function returns a result, throws an exception or never returns. A networking request, in addition, can return without a result due to a timeout. In this scenario, there is no way to know what occured.</li>
+<li>A network request may be received and execute but only the network <em>response</em> fails. Network request failures are often handled by retries but unfortunately in this case, the function would be executed multiple times as you would not know only the responses are getting lost.</li>
+<li>A local function takes a similar amount of time to execute every time it is invoked. Network requests have variable latency due to networking specific issues - network is congested, server is at maximum capacity etc.</li>
+</ul>
+<p>This <a href="https://docs.microsoft.com/en-us/aspnet/core/grpc/comparison?view=aspnetcore-3.1" target="_blank" rel="noreferrer noopener">article</a> by Microsoft highlights some of the advantages and disadvantages of gRPC. In summary</p>
+<p><strong>gRPC Advantages</strong></p>
+<ul>
+<li>Performance - gRPC is fast in comparison to other protocols</li>
+<li>Code generation - server and client code is automatically generated from a single file</li>
+<li>Streaming - gRPC supports HTTP streaming</li>
+</ul>
+<p><strong>gRPC Disadvantages</strong></p>
+<ul>
+<li>Limited browser support - there is limited support for HTTP/2 in the browser</li>
+<li>Not human readable - gRPC uses a binary format and therefore is not human readable.</li>
+</ul>
+<h2 id="what-is-grpc">What is gRPC?</h2>
+<p>The <a href="https://grpc.io" target="_blank" rel="noreferrer noopener">gRPC website</a> describes it as a, &ldquo;modern, open source remote procedure call (RPC) framework that can run anywhere. It enables client and server applications to communicate transparently, and makes it easier to build connected systems&rdquo;. It was created by Google and subsequently open-sourced in 2016. gRPC has driven the resurgence of communications using RPC. With the move towards service-oriented architectures, it has found a natural home in service-to-service communications.</p>
+<p>gRPC uses protocol buffers (protobufs) - a method for serializing/deserializing structured data. Protocol buffer messages are encoded in a binary format. This makes it fast to send information over the wire; at least in comparison to textual formats such as JSON. The use of protocol buffers alongside the great and easy to use tooling around gRPC has made it the preferred framework for implementing RPC.</p>
+<h1 id="protocol-buffers">Protocol Buffers</h1>
+<p>As stated above, protocol buffers are a method for the serializing/deserializing structured data. Protocol buffer messages are defined using a schema consisting of key-value pairs.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-protobuf" data-lang="protobuf"><span style="color:#66d9ef">message</span> <span style="color:#a6e22e">Person</span> {<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">string</span> name <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">int32</span> id <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">string</span> email <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>You can think of Person as a struct. Each field is a key-value pair and is annotated with their respective data type. Each field has a number associated to it which is used as the key. In actual fact, the key contains the field number and information about the type of data being encoded/decoded in order to determine the length of the value. This is commonly referred to as the tag. As an example, if we have a protobuf message</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-protobuf" data-lang="protobuf"><span style="color:#66d9ef">message</span> <span style="color:#a6e22e">Test2</span> {<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">string</span> b <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>with the value of <code>b</code> set to <code>testing</code>, the corresponding encoding will be</p>
+<pre><code>12 07 74 65 73 74 69 6e 67
+</code></pre><p>The bytes <code>12</code> and <code>07</code> form the tag. The value <code>12</code> is decoded to give the field number 2 and the data type string. The value <code>07</code> is decoded to give the length of the value which is 7 in this case. As you can see, there are 7 bytes remaining which give the value of the string. If you are interested, you can find more information about the protocol buffer encoding from the <a href="https://developers.google.com/protocol-buffers/docs/encoding" target="_blank" rel="noreferrer noopener">official guide</a>. This example is actually from there albeit with much less detail.</p>
+<h1 id="what-happened-to-rest">What happened to REST?</h1>
+<p>REST is the canonical standard for communications over the web. It has been battle-tested in production, extensive tooling exists for implementing RESTful services and most developers are comfortable with designing, building and maintaining RESTful services. Naturally the big question is what is so great about gRPC that we would forego creating a RESTful service? The answer is fairly straightforward: performance. While there are other benefits of using gRPC such as the use of HTTP/2 or bidirectonal streaming, for the standard use case, performance is the central reason for adopting it. JSON is much slower to serialize/deserialize than protobufs. At scale, this can lead to a noticeable degradation in performance of the overall system. As protobufs are a binary format, they are much faster to serialize/deserialize. some articles claiming there is an improvement of 5-6 times.</p>
+<h1 id="grpc-by-example">gRPC by example</h1>
+<p>Nothing is ever complete without some code examples! I&rsquo;ve tried to make this as easy to follow as possible. Let me know if any improvements can be made. All the code can be found <a href="https://github.com/senyosimpson/tutorials/tree/master/grokkingrpc" target="_blank" rel="noreferrer noopener">here</a>. We will implement the service in the <a href="https://grpc.io/docs/languages/go/quickstart/" target="_blank" rel="noreferrer noopener">Quick Start</a> section of the gRPC website. I&rsquo;m using Golang for this tutorial.</p>
+<p>One snag that got me was related to the automatic code generation from the proto files. There is a move towards a new Golang plugin for the protobuf compiler (it performs the automatic code generation). The old (which I used) and new version output slightly different files and so I couldn&rsquo;t follow the code in the official grpc <a href="https://github.com/grpc/grpc-go/tree/master/examples/helloworld" target="_blank" rel="noreferrer noopener">examples</a> repository. To make things simple, this tutorial uses the old Golang plugin. Awesome, let&rsquo;s get into it 🥳</p>
+<hr>
+<p>The service is really simple, all it does is greet a person. The client can send a request containing a name to the server. The server produces a simple message, <code>&quot;Hello &lt;name&gt;&quot;</code>. To recap, the server is responsible for executing the procedure and returning the result to the client. From the client&rsquo;s perspective, the procedure ran locally.</p>
+<p>First things first, the dependencies need to be installed.</p>
+<ol>
+<li>Protobuf compiler - installation <a href="https://grpc.io/docs/protoc-installation/" target="_blank" rel="noreferrer noopener">instructions</a></li>
+<li>Golang plugin for the Protobuf compiler - installation <a href="https://grpc.io/docs/languages/go/quickstart/" target="_blank" rel="noreferrer noopener">instructions</a></li>
+</ol>
+<p>We create our protobuf schema <code>helloworld.proto</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-protobuf" data-lang="protobuf">syntax <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;proto3&#34;</span>; <span style="color:#75715e">// This denotes the protobuf version
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">// All protobufs have a package name. This is to avoid name clashes with other protocol
+</span><span style="color:#75715e">// message types. In Golang, the package name is used as the Go package name for the
+</span><span style="color:#75715e">// generated files. This is however overwritten if you specify the go_package option
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> helloworld; <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">// This option is specifies the full import path of the Go package that contains
+</span><span style="color:#75715e">// the generated code.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">option</span> go_package <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;github.com/senyosimpson/tutorials/grokkingrpc/helloworld&#34;</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">// This defines the service. In a service, you define rpc methods. These are
+</span><span style="color:#75715e">// method signatures that contain their request and response types.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">service</span> HelloWorld {<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">rpc</span> Greet(HelloRequest) <span style="color:#66d9ef">returns</span> (HelloReply) {}<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">// Messages are defined by specifying their type and name of the variables it holds.
+</span><span style="color:#75715e">// These are enumerated from 1 to n.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">message</span> <span style="color:#a6e22e">HelloRequest</span> {<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">string</span> name <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">message</span> <span style="color:#a6e22e">HelloReply</span> {<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">string</span> <span style="color:#66d9ef">message</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>Now that we have our protobuf schema, we can generate the Go files. These files will have an extension <code>.pb.go</code>. To do so, execute the command</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">protoc -I helloworld/ helloworld/helloworld.proto --go_out<span style="color:#f92672">=</span>plugins<span style="color:#f92672">=</span>grpc:helloworld --go_opt<span style="color:#f92672">=</span>paths<span style="color:#f92672">=</span>source_relative
+</code></pre></div><p>Now that we have our generated files, we&rsquo;re ready to create our server. If you look in the generated file, <code>helloworld.pb.go</code>, you should find an interface named <code>HelloWorldServer</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// HelloWorldServer is the server API for HelloWorld service.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">HelloWorldServer</span> <span style="color:#66d9ef">interface</span> {
+	<span style="color:#a6e22e">Greet</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">HelloRequest</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">HelloReply</span>, <span style="color:#66d9ef">error</span>)
+</code></pre></div><p>We have to implement this interface to define our service. In the implementation, the server prints out that it received a given name. It returns a reply message that contains the greeting, <code>Hello &lt;name&gt;</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">helloWorldService</span> <span style="color:#66d9ef">struct</span> {}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">HelloWorldServer</span>) <span style="color:#a6e22e">Greet</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">HelloRequest</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">HelloReply</span>, <span style="color:#66d9ef">error</span>) {
+    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Received: %v&#34;</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">GetName</span>())
+	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">HelloReply</span>{<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Hello &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">GetName</span>()}, <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><p>As an fyi, the function <code>GetName</code> is automatically generated. This can be found in the <code>helloworld.pb.go</code> file.</p>
+<p>The rest of the necessary code is implementing the server itself. The full code</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;context&#34;</span>
+	<span style="color:#e6db74">&#34;log&#34;</span>
+	<span style="color:#e6db74">&#34;net&#34;</span>
+
+	<span style="color:#a6e22e">pb</span> <span style="color:#e6db74">&#34;github.com/senyosimpson/tutorials/grokkingrpc/helloworld&#34;</span>
+	<span style="color:#e6db74">&#34;google.golang.org/grpc&#34;</span>
+)
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">helloWorldServer</span> <span style="color:#66d9ef">struct</span>{}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">helloWorldServer</span>) <span style="color:#a6e22e">Greet</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">HelloRequest</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">HelloReply</span>, <span style="color:#66d9ef">error</span>) {
+	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Received: %v&#34;</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">GetName</span>())
+	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">HelloReply</span>{<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Hello &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">GetName</span>()}, <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">lis</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Listen</span>(<span style="color:#e6db74">&#34;tcp&#34;</span>, <span style="color:#e6db74">&#34;:50051&#34;</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;failed to listen: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+	}
+
+	<span style="color:#a6e22e">server</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">NewServer</span>()
+	<span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">RegisterHelloWorldServer</span>(<span style="color:#a6e22e">server</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">helloWorldServer</span>{})
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">Serve</span>(<span style="color:#a6e22e">lis</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;failed to serve: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+	}
+}
+</code></pre></div><p>The client is straightforward, I just copied it from the examples repository. The main line of consequence is the request to the server.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">r</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">Greet</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">HelloRequest</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#a6e22e">name</span>})
+</code></pre></div><p>Here we see the client calling the <code>Greet</code> method. A request message is passed in with a specified name.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;context&#34;</span>
+	<span style="color:#e6db74">&#34;log&#34;</span>
+	<span style="color:#e6db74">&#34;os&#34;</span>
+	<span style="color:#e6db74">&#34;time&#34;</span>
+
+	<span style="color:#e6db74">&#34;google.golang.org/grpc&#34;</span>
+	<span style="color:#a6e22e">pb</span> <span style="color:#e6db74">&#34;github.com/senyosimpson/tutorials/grokkingrpc/helloworld&#34;</span>
+)
+
+<span style="color:#66d9ef">const</span> (
+	<span style="color:#a6e22e">address</span> = <span style="color:#e6db74">&#34;localhost:50051&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#75715e">// Set up a connection to the server.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">conn</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">Dial</span>(<span style="color:#a6e22e">address</span>, <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">WithInsecure</span>(), <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">WithBlock</span>())
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;did not connect: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+	}
+	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">conn</span>.<span style="color:#a6e22e">Close</span>()
+	<span style="color:#a6e22e">client</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">NewHelloWorldClient</span>(<span style="color:#a6e22e">conn</span>)
+
+	<span style="color:#75715e">// Contact the server and print out its response.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">name</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;Bas&#34;</span>
+	<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Args</span>) &gt; <span style="color:#ae81ff">1</span> {
+		<span style="color:#a6e22e">name</span> = <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Args</span>[<span style="color:#ae81ff">1</span>]
+	}
+
+	<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">cancel</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithTimeout</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">cancel</span>()
+	<span style="color:#a6e22e">r</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">Greet</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">HelloRequest</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#a6e22e">name</span>})
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;could not greet: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+	}
+	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Greeting: %s&#34;</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">GetMessage</span>())
+}
+</code></pre></div><p>We&rsquo;re now ready to test it! In one terminal, start the server. In the other, we can run the client code and make requests to the server. In the image below, the server is on the left and client on the right. We can see the client gets back the reply message and prints the message to the console.</p>
+<figure>
+    <img src="/images/grokkingrpc/two.png" height="50px"/> 
+</figure>
+
+<p>And that&rsquo;s it! I hope you&rsquo;ve taken something valuable out of this walkthrough of the basics of gRPC. I&rsquo;ve certainly enjoyed learning and writing about it.</p>
+<h1 id="references">References</h1>
+<h3 id="rpc">RPC</h3>
+<ol>
+<li><a href="https://www.tutorialspoint.com/remote-procedure-call-rpc" target="_blank" rel="noreferrer noopener">Remote Procedure Call - Tutorialspoint</a></li>
+<li><a href="https://www.geeksforgeeks.org/remote-procedure-call-rpc-in-operating-system/" target="_blank" rel="noreferrer noopener">Remote Procedure Call - Geeks for Geeks</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Remote_procedure_call" target="_blank" rel="noreferrer noopener">Remote Procedure Call - Wikipedia</a></li>
+</ol>
+<h3 id="grpc-vs-rest">gRPC VS REST</h3>
+<ol>
+<li><a href="https://wecode.wepay.com/posts/migrating-apis-from-rest-to-grpc-at-wepay" target="_blank" rel="noreferrer noopener">Migrating APIs from REST to gRPC</a></li>
+</ol>
+<h3 id="grpc">gRPC</h3>
+<ol>
+<li><a href="https://grpc.io" target="_blank" rel="noreferrer noopener">gRPC Official Website</a></li>
+<li><a href="https://en.wikipedia.org/wiki/GRPC" target="_blank" rel="noreferrer noopener">gRPC - Wikipedia</a></li>
+</ol>
+<h3 id="protocol-buffers-1">Protocol Buffers</h3>
+<ol>
+<li><a href="https://en.wikipedia.org/wiki/Protocol_Buffers" target="_blank" rel="noreferrer noopener">Protocol buffers - Wikipedia</a></li>
+<li><a href="https://codeclimate.com/blog/choose-protocol-buffers/" target="_blank" rel="noreferrer noopener">5 Reasons to use protocol buffers</a></li>
+</ol>
+
+      
+    </div>
+    
+  </div>
+</section>
+
+    <script src="/js/copycode.js"></script>
+
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p></p>
+    
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/ribice/kiss">Kiss</a>.</p>
+    
+  </div>
+</section>
+
+
+
+</body>
+</html>
+
