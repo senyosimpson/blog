@@ -31,3 +31,7 @@ tag = "tags"
 [params.sections_left]
 "/about" = "About"
 "/essays" = "Essays"
+
+[markup]
+  [markup.highlight]
+      style = "manni"
