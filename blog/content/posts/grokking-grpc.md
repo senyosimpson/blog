@@ -25,7 +25,18 @@ From the client's perspective, the procedure seems as if it is running locally. 
 * A network request may be received and execute but only the network *response* fails. Network request failures are often handled by retries but unfortunately in this case, the function would be executed multiple times as you would not know only the responses are getting lost.
 * A local function takes a similar amount of time to execute every time it is invoked. Network requests have variable latency due to networking specific issues - network is congested, server is at maximum capacity etc.
 
-Add something about other adv/disadv (performance, human readable)
+This [article](https://docs.microsoft.com/en-us/aspnet/core/grpc/comparison?view=aspnetcore-3.1) by Microsoft highlights some of the advantages and disadvantages of gRPC. In summary
+
+**gRPC Advantages**
+
+* Performance - gRPC is fast in comparison to other protocols
+* Code generation - server and client code is automatically generated from a single file
+* Streaming - gRPC supports HTTP streaming
+
+**gRPC Disadvantages**
+
+* Limited browser support - there is limited support for HTTP/2 in the browser
+* Not human readable - gRPC uses a binary format and therefore is not human readable.
 
 ## What is gRPC?
 
@@ -171,7 +182,7 @@ func main() {
 }
 ```
 
-The client is straightforward - in fact I just copied it from the examples repository. The main line of consequence is the request to the server.
+The client is straightforward, I just copied it from the examples repository. The main line of consequence is the request to the server.
 
 ```go
 r, err := client.Greet(ctx, &pb.HelloRequest{Name: name})
