@@ -108,14 +108,17 @@
 <li>The procedure is executed on the server</li>
 <li>A response is returned to the client containing the result of the procedure execution</li>
 </ol>
-<p>From the client&rsquo;s perspective, the procedure seems as if it is running locally. Naturally with any communcation protocol, there are advantages and disadvantages. Martin Kleppmann, in his book <a href="https://dataintensive.net" target="_blank" rel="noreferrer noopener">Designing Data-Intensive Applications</a>, highlights some of the differences between remote and local procedure calls.</p>
+<p>From the client&rsquo;s perspective, the procedure seems as if it is running locally. This is a great abstraction, however there are pitfalls. Martin Kleppmann, in his book <a href="https://dataintensive.net" target="_blank" rel="noreferrer noopener">Designing Data-Intensive Applications</a>, highlights some of the differences between remote and local procedure calls.</p>
 <ul>
 <li>A local function call is predictable and its success depends on factors under your control. In contrast, a networking request is unpredictable and fails for various reasons.</li>
 <li>A local function returns a result, throws an exception or never returns. A networking request, in addition, can return without a result due to a timeout. In this scenario, there is no way to know what occured.</li>
 <li>A network request may be received and execute but only the network <em>response</em> fails. Network request failures are often handled by retries but unfortunately in this case, the function would be executed multiple times as you would not know only the responses are getting lost.</li>
 <li>A local function takes a similar amount of time to execute every time it is invoked. Network requests have variable latency due to networking specific issues - network is congested, server is at maximum capacity etc.</li>
 </ul>
-<p>This <a href="https://docs.microsoft.com/en-us/aspnet/core/grpc/comparison?view=aspnetcore-3.1" target="_blank" rel="noreferrer noopener">article</a> by Microsoft highlights some of the advantages and disadvantages of gRPC. In summary</p>
+<h2 id="what-is-grpc">What is gRPC?</h2>
+<p>The <a href="https://grpc.io" target="_blank" rel="noreferrer noopener">gRPC website</a> describes it as a, &ldquo;modern, open source remote procedure call (RPC) framework that can run anywhere. It enables client and server applications to communicate transparently, and makes it easier to build connected systems&rdquo;. It was created by Google and subsequently open-sourced in 2016. gRPC has driven the resurgence of communications using RPC. With the move towards service-oriented architectures, it has found a natural home in service-to-service communications.</p>
+<p>gRPC uses protocol buffers (protobufs) - a method for serializing/deserializing structured data. Protocol buffer messages are encoded in a binary format. This makes it fast to send information over the wire; at least in comparison to textual formats such as JSON. The use of protocol buffers alongside the great and easy to use tooling around gRPC has made it the preferred framework for implementing RPC.</p>
+<p>As with any technology, there are advantages and disadvantages. This <a href="https://docs.microsoft.com/en-us/aspnet/core/grpc/comparison?view=aspnetcore-3.1" target="_blank" rel="noreferrer noopener">article</a> by Microsoft highlights some of the them. In summary</p>
 <p><strong>gRPC Advantages</strong></p>
 <ul>
 <li>Performance - gRPC is fast in comparison to other protocols</li>
@@ -127,9 +130,6 @@
 <li>Limited browser support - there is limited support for HTTP/2 in the browser</li>
 <li>Not human readable - gRPC uses a binary format and therefore is not human readable.</li>
 </ul>
-<h2 id="what-is-grpc">What is gRPC?</h2>
-<p>The <a href="https://grpc.io" target="_blank" rel="noreferrer noopener">gRPC website</a> describes it as a, &ldquo;modern, open source remote procedure call (RPC) framework that can run anywhere. It enables client and server applications to communicate transparently, and makes it easier to build connected systems&rdquo;. It was created by Google and subsequently open-sourced in 2016. gRPC has driven the resurgence of communications using RPC. With the move towards service-oriented architectures, it has found a natural home in service-to-service communications.</p>
-<p>gRPC uses protocol buffers (protobufs) - a method for serializing/deserializing structured data. Protocol buffer messages are encoded in a binary format. This makes it fast to send information over the wire; at least in comparison to textual formats such as JSON. The use of protocol buffers alongside the great and easy to use tooling around gRPC has made it the preferred framework for implementing RPC.</p>
 <h1 id="protocol-buffers">Protocol Buffers</h1>
 <p>As stated above, protocol buffers are a method for the serializing/deserializing structured data. Protocol buffer messages are defined using a schema consisting of key-value pairs.</p>
 <div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-protobuf" data-lang="protobuf"><span style="color:#069;font-weight:bold">message</span> <span style="color:#0a8;font-weight:bold">Person</span> {<span style="color:#a00;background-color:#faa">
