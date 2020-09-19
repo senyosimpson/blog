@@ -2,7 +2,7 @@
 title: "Grokking gRPC"
 date: 2020-09-14
 draft: false
-image: https://grpc.io/img/icons/feature-3.svg
+image: https://images.idgesg.net/images/article/2017/08/networking-100733179-large.jpg
 ---
 
 If you are similar to me, you've heard about gRPC countless times but have little idea of what it actually is, what its use cases are and why everyone keeps speaking about it. Initially, I thought it must be *another* buzzword being thrown around. Fortunately, I was wrong 😆. I've spent a couple of days reading and learning more about it. This blog post is a summary of all I've learned. I hope you enjoy it! 
