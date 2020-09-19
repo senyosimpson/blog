@@ -7,7 +7,7 @@
 <title>Grokking gRPC | Bloom</title>
 
 <meta property='og:title' content='Grokking gRPC - Bloom'>
-<meta property='og:description' content='If you are similar to me, you&rsquo;ve kept hearing about gRPC but have little idea of what it actually is, what its use cases are and why everyone keeps speaking about it. Initially, I thought it must be another buzzword being thrown around. Fortunately, I was wrong 😆. I&rsquo;ve spent a couple of days reading and learning more about it. This blog post is a comprehensive summary of all I&rsquo;ve learned.'>
+<meta property='og:description' content='If you are similar to me, you&rsquo;ve heard about gRPC countless times but have little idea of what it actually is, what its use cases are and why everyone keeps speaking about it. Initially, I thought it must be another buzzword being thrown around. Fortunately, I was wrong 😆. I&rsquo;ve spent a couple of days reading and learning more about it. This blog post is a summary of all I&rsquo;ve learned.'>
 <meta property='og:url' content='http://senyosimpson.com/posts/grokking-grpc/'>
 <meta property='og:site_name' content='Bloom'>
 <meta property='og:type' content='article'><meta property='og:image' content='https://grpc.io/img/icons/feature-3.svg'><meta property='article:published_time' content='2020-09-14T00:00:00Z'/><meta property='article:modified_time' content='2020-09-14T00:00:00Z'/><meta name='twitter:card' content='summary_large_image'><meta name='twitter:site' content='@senyo_simpson'><meta name='twitter:creator' content='@senyo_simpson'>
@@ -97,9 +97,9 @@
     <h1 class="title">Grokking gRPC</h1>
     
     <div class="content">
-      <p>If you are similar to me, you&rsquo;ve kept hearing about gRPC but have little idea of what it actually is, what its use cases are and why everyone keeps speaking about it. Initially, I thought it must be <em>another</em> buzzword being thrown around. Fortunately, I was wrong 😆. I&rsquo;ve spent a couple of days reading and learning more about it. This blog post is a comprehensive summary of all I&rsquo;ve learned. I hope you enjoy it!</p>
-<h1 id="what-is-remote-procedure-call">What is Remote Procedure Call?</h1>
-<p>Remote Procedure Call (RPC) is a communication protocol used between web services. The central idea around RPC is to allow a client application to execute a procedure (function) on a server application as if the procedure was running locally. The networking details are abstracted away from the developer making it simple to use.</p>
+      <p>If you are similar to me, you&rsquo;ve heard about gRPC countless times but have little idea of what it actually is, what its use cases are and why everyone keeps speaking about it. Initially, I thought it must be <em>another</em> buzzword being thrown around. Fortunately, I was wrong 😆. I&rsquo;ve spent a couple of days reading and learning more about it. This blog post is a summary of all I&rsquo;ve learned. I hope you enjoy it!</p>
+<h1 id="what-is-remote-procedure-call">What is Remote procedure call?</h1>
+<p>Remote procedure call (RPC) is a communication protocol used between web services. The central idea around RPC is to allow a client application to execute a procedure (function) on a server application as if the procedure is running locally. The networking details are abstracted away from the developer making it simple to use.</p>
 <p>To concretize it, a bird&rsquo;s eye view of a typical RPC flow:</p>
 <ol>
 <li>A client calls a function</li>
@@ -131,13 +131,13 @@
 <li>Not human readable - gRPC uses a binary format and therefore is not human readable.</li>
 </ul>
 <h1 id="protocol-buffers">Protocol Buffers</h1>
-<p>As stated above, protocol buffers are a method for the serializing/deserializing structured data. Protocol buffer messages are defined using a schema consisting of key-value pairs.</p>
+<p>As stated above, protocol buffers are a method for serializing/deserializing structured data. Protocol buffer messages are defined using a schema consisting of key-value pairs.</p>
 <div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-protobuf" data-lang="protobuf"><span style="color:#069;font-weight:bold">message</span> <span style="color:#0a8;font-weight:bold">Person</span> {<span style="color:#a00;background-color:#faa">
 </span><span style="color:#a00;background-color:#faa"></span>  <span style="color:#078;font-weight:bold">string</span> name <span style="color:#555">=</span> <span style="color:#f60">1</span>;<span style="color:#a00;background-color:#faa">
 </span><span style="color:#a00;background-color:#faa"></span>  <span style="color:#078;font-weight:bold">int32</span> id <span style="color:#555">=</span> <span style="color:#f60">2</span>;<span style="color:#a00;background-color:#faa">
 </span><span style="color:#a00;background-color:#faa"></span>  <span style="color:#078;font-weight:bold">string</span> email <span style="color:#555">=</span> <span style="color:#f60">3</span>;<span style="color:#a00;background-color:#faa">
 </span><span style="color:#a00;background-color:#faa"></span>}<span style="color:#a00;background-color:#faa">
-</span></code></pre></div><p>You can think of Person as a struct. Each field is a key-value pair and is annotated with their respective data type. Each field has a number associated to it which is used as the key. In actual fact, the key contains the field number and information about the type of data being encoded/decoded in order to determine the length of the value. This is commonly referred to as the tag. As an example, if we have a protobuf message</p>
+</span></code></pre></div><p>You can think of Person as a struct. Each field is a key-value pair and is annotated with their respective data type. Each field has a number associated to it which is used as the key. In actual fact, the key contains the field number and information about the type of data being encoded in order to determine the length of the value. This is commonly referred to as the tag. As an example, if we have a protobuf message</p>
 <div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-protobuf" data-lang="protobuf"><span style="color:#069;font-weight:bold">message</span> <span style="color:#0a8;font-weight:bold">Test2</span> {<span style="color:#a00;background-color:#faa">
 </span><span style="color:#a00;background-color:#faa"></span>  <span style="color:#078;font-weight:bold">string</span> b <span style="color:#555">=</span> <span style="color:#f60">2</span>;<span style="color:#a00;background-color:#faa">
 </span><span style="color:#a00;background-color:#faa"></span>}<span style="color:#a00;background-color:#faa">
@@ -148,7 +148,7 @@
 <p>REST is the canonical standard for communications over the web. It has been battle-tested in production, extensive tooling exists for implementing RESTful services and most developers are comfortable with designing, building and maintaining RESTful services. Naturally the big question is what is so great about gRPC that we would forego creating a RESTful service? The answer is fairly straightforward: performance. While there are other benefits of using gRPC such as the use of HTTP/2 or bidirectonal streaming, for the standard use case, performance is the central reason for adopting it. JSON is much slower to serialize/deserialize than protobufs. At scale, this can lead to a noticeable degradation in performance of the overall system. As protobufs are a binary format, they are much faster to serialize/deserialize. some articles claiming there is an improvement of 5-6 times.</p>
 <h1 id="grpc-by-example">gRPC by example</h1>
 <p>Nothing is ever complete without some code examples! I&rsquo;ve tried to make this as easy to follow as possible. Let me know if any improvements can be made. All the code can be found <a href="https://github.com/senyosimpson/tutorials/tree/master/grokkingrpc" target="_blank" rel="noreferrer noopener">here</a>. We will implement the service in the <a href="https://grpc.io/docs/languages/go/quickstart/" target="_blank" rel="noreferrer noopener">Quick Start</a> section of the gRPC website. I&rsquo;m using Golang for this tutorial.</p>
-<p>One snag that got me was related to the automatic code generation from the proto files. There is a move towards a new Golang plugin for the protobuf compiler (it performs the automatic code generation). The old (which I used) and new version output slightly different files and so I couldn&rsquo;t follow the code in the official grpc <a href="https://github.com/grpc/grpc-go/tree/master/examples/helloworld" target="_blank" rel="noreferrer noopener">examples</a> repository. To make things simple, this tutorial uses the old Golang plugin. Awesome, let&rsquo;s get into it 🥳</p>
+<p>One snag that got me was the automatic code generation from the proto files. There is a move towards a new Golang plugin for the protobuf compiler (it performs the automatic code generation). The old (which I used) and new version output slightly different files and so I couldn&rsquo;t follow the code in the official grpc <a href="https://github.com/grpc/grpc-go/tree/master/examples/helloworld" target="_blank" rel="noreferrer noopener">examples</a> repository. To make things simple, this tutorial uses the old Golang plugin. Awesome, let&rsquo;s get into it 🥳</p>
 <hr>
 <p>The service is really simple, all it does is greet a person. The client can send a request containing a name to the server. The server produces a simple message, <code>&quot;Hello &lt;name&gt;&quot;</code>. To recap, the server is responsible for executing the procedure and returning the result to the client. From the client&rsquo;s perspective, the procedure ran locally.</p>
 <p>First things first, the dependencies need to be installed.</p>
@@ -156,6 +156,7 @@
 <li>Protobuf compiler - installation <a href="https://grpc.io/docs/protoc-installation/" target="_blank" rel="noreferrer noopener">instructions</a></li>
 <li>Golang plugin for the Protobuf compiler - installation <a href="https://grpc.io/docs/languages/go/quickstart/" target="_blank" rel="noreferrer noopener">instructions</a></li>
 </ol>
+<p>The protobuf compiler and Golang plugin are used for code generation. They automatically implement the server and client code, only leaving the functions definitions up to the developer.</p>
 <p>We create our protobuf schema <code>helloworld.proto</code>.</p>
 <div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-protobuf" data-lang="protobuf">syntax <span style="color:#555">=</span> <span style="color:#c30">&#34;proto3&#34;</span>; <span style="color:#09f;font-style:italic">// This denotes the protobuf version
 </span><span style="color:#09f;font-style:italic"></span><span style="color:#a00;background-color:#faa">
@@ -272,7 +273,7 @@
 }
 </code></pre></div><p>We&rsquo;re now ready to test it! In one terminal, start the server. In the other, we can run the client code and make requests to the server. In the image below, the server is on the left and client on the right. We can see the client gets back the reply message and prints the message to the console.</p>
 <figure>
-    <img src="/images/grokkingrpc/two.png" height="50px"/> 
+    <img src="/images/grokkingrpc/two.png" height="70px"/> 
 </figure>
 
 <p>And that&rsquo;s it! I hope you&rsquo;ve taken something valuable out of this walkthrough of the basics of gRPC. I&rsquo;ve certainly enjoyed learning and writing about it.</p>

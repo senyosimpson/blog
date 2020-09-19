@@ -5,11 +5,11 @@ draft: false
 image: https://grpc.io/img/icons/feature-3.svg
 ---
 
-If you are similar to me, you've kept hearing about gRPC but have little idea of what it actually is, what its use cases are and why everyone keeps speaking about it. Initially, I thought it must be *another* buzzword being thrown around. Fortunately, I was wrong 😆. I've spent a couple of days reading and learning more about it. This blog post is a comprehensive summary of all I've learned. I hope you enjoy it! 
+If you are similar to me, you've heard about gRPC countless times but have little idea of what it actually is, what its use cases are and why everyone keeps speaking about it. Initially, I thought it must be *another* buzzword being thrown around. Fortunately, I was wrong 😆. I've spent a couple of days reading and learning more about it. This blog post is a summary of all I've learned. I hope you enjoy it! 
 
-# What is Remote Procedure Call?
+# What is Remote procedure call?
 
-Remote Procedure Call (RPC) is a communication protocol used between web services. The central idea around RPC is to allow a client application to execute a procedure (function) on a server application as if the procedure was running locally. The networking details are abstracted away from the developer making it simple to use.
+Remote procedure call (RPC) is a communication protocol used between web services. The central idea around RPC is to allow a client application to execute a procedure (function) on a server application as if the procedure is running locally. The networking details are abstracted away from the developer making it simple to use.
 
 To concretize it, a bird's eye view of a typical RPC flow:
 
@@ -47,7 +47,7 @@ As with any technology, there are advantages and disadvantages. This [article](h
 
 # Protocol Buffers
 
-As stated above, protocol buffers are a method for the serializing/deserializing structured data. Protocol buffer messages are defined using a schema consisting of key-value pairs.
+As stated above, protocol buffers are a method for serializing/deserializing structured data. Protocol buffer messages are defined using a schema consisting of key-value pairs.
 
 ```protobuf
 message Person {
@@ -57,7 +57,7 @@ message Person {
 }
 ```
 
-You can think of Person as a struct. Each field is a key-value pair and is annotated with their respective data type. Each field has a number associated to it which is used as the key. In actual fact, the key contains the field number and information about the type of data being encoded/decoded in order to determine the length of the value. This is commonly referred to as the tag. As an example, if we have a protobuf message
+You can think of Person as a struct. Each field is a key-value pair and is annotated with their respective data type. Each field has a number associated to it which is used as the key. In actual fact, the key contains the field number and information about the type of data being encoded in order to determine the length of the value. This is commonly referred to as the tag. As an example, if we have a protobuf message
 
 ```protobuf
 message Test2 {
@@ -80,7 +80,7 @@ REST is the canonical standard for communications over the web. It has been batt
 
 Nothing is ever complete without some code examples! I've tried to make this as easy to follow as possible. Let me know if any improvements can be made. All the code can be found [here](https://github.com/senyosimpson/tutorials/tree/master/grokkingrpc). We will implement the service in the [Quick Start](https://grpc.io/docs/languages/go/quickstart/) section of the gRPC website. I'm using Golang for this tutorial.
 
-One snag that got me was related to the automatic code generation from the proto files. There is a move towards a new Golang plugin for the protobuf compiler (it performs the automatic code generation). The old (which I used) and new version output slightly different files and so I couldn't follow the code in the official grpc [examples](https://github.com/grpc/grpc-go/tree/master/examples/helloworld) repository. To make things simple, this tutorial uses the old Golang plugin. Awesome, let's get into it 🥳
+One snag that got me was the automatic code generation from the proto files. There is a move towards a new Golang plugin for the protobuf compiler (it performs the automatic code generation). The old (which I used) and new version output slightly different files and so I couldn't follow the code in the official grpc [examples](https://github.com/grpc/grpc-go/tree/master/examples/helloworld) repository. To make things simple, this tutorial uses the old Golang plugin. Awesome, let's get into it 🥳
 
 ***
 
@@ -91,6 +91,8 @@ First things first, the dependencies need to be installed.
 
 1. Protobuf compiler - installation [instructions](https://grpc.io/docs/protoc-installation/)
 2. Golang plugin for the Protobuf compiler - installation [instructions](https://grpc.io/docs/languages/go/quickstart/) 
+
+The protobuf compiler and Golang plugin are used for code generation. They automatically implement the server and client code, only leaving the functions definitions up to the developer.
 
 We create our protobuf schema `helloworld.proto`.
 
@@ -234,7 +236,7 @@ func main() {
 
 We're now ready to test it! In one terminal, start the server. In the other, we can run the client code and make requests to the server. In the image below, the server is on the left and client on the right. We can see the client gets back the reply message and prints the message to the console.
 
-{{< figure src="/images/grokkingrpc/two.png" height="50px" >}}
+{{< figure src="/images/grokkingrpc/two.png" height="70px" >}}
 
 And that's it! I hope you've taken something valuable out of this walkthrough of the basics of gRPC. I've certainly enjoyed learning and writing about it.
 
