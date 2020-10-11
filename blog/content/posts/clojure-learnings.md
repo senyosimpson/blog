@@ -189,7 +189,7 @@ from functools import partial
 def add(a, b):
     return a + b
 
-# bind the argument a to the value 2. Adder is now a new function
+# bind the argument b to the value 2. Adder is now a new function
 adder = partial(add, b=2)
 
 # we can use adder now and only specify one argument (i.e a)

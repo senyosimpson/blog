@@ -4,14 +4,14 @@ date: 2020-09-24
 draft: true
 ---
 
-I've been reading the book, [Designing Data-Intensive Applications](https://dataintensive.net) by Martin Kleppmann. One of the chapters dives into the world of data replication in distributed systems. I always assumed data replication is non-trivial but reading the chapter opened my eyes to the true complexity of doing so and the difficult design choices one has to make. I found it interesting and decided to write about it. This post is an attempt to distil the knowledge from that chapter.
+I've been reading the book, [Designing Data-Intensive Applications](https://dataintensive.net) by Martin Kleppmann. One of the chapters dives into the world of data replication in distributed systems. I always assumed data replication is non-trivial but reading the chapter opened my eyes to the true complexity of doing so and the difficult design choices one has to make. This post is just a summary of the chapter - you can consider it a set of notes. 
 
 # What is data replication?
 
 Data replication is the act of copying the *same* data across multiple machines. This is a common practice in the development of highly-available software systems. The two leading reasons for data replication:
 
 * In the event one database stops working, the system can continue operating
-* To improve the performance of the system. By having replicas, load can be balanced across them
+* To improve the performance of the system. By having replicas, load can be distributed across them
 
 The trouble in data replication is due to handling changes to the data. Propagating changes to all replicas and guaranteeing they have arrived at the same state is non-trivial. The three main algorithms for replicating changes are: single-leader, multi-leader and leaderless replication. We will discuss all three of them in finer detail.
 
@@ -92,5 +92,68 @@ The simplest method of handling write conflicts is avoiding them. If an applicat
 * Give each replica a unique ID. The one with the highest ID takes precedence over the others. Its write is applied while the others are discarded.
 * Record the conflict elsewhere and write application code that handles the conflict.
 
-## Leaderless replication
+# Leaderless replication
 
+In leaderless replication systems, any replica can process writes. The advantage of a leaderless system is improved fault-tolerance. 
+
+## Writing when a node is down
+
+In a leaderless system, writes are sent to each replica in parallel. Imagine a scenario where we have 3 replicas and 1 is down. When a write request enters the system, two of the three replicas successfully process the request. The system is configured such that if two out of three replicas process the request, the request is considered successful. If the unavailable replica recovers and comes online again, if it receives read requests, it will return stale data. To solve this, read requests are sent in parallel to each replica and the most recent value is returned to the client.
+
+### Achieving consistency
+
+In the above scenario, it is important that we achieve eventual consistency - all replicas have the most recent data. There are two common mechanisms for this, *read repair* and *anti-entropy process*. In read repair, the database system can detect stale data on read and subsequently update it. This is an effective technique when data is read frequently. An anti-entropy process is a continuous process that looks for differences in data across all replicas and copies any missing data to stale replicas to keep them up to date.
+
+## Quorum
+
+In the scenario above, we considered a write request successful if two out of three replicas processed the request. This may seem counter-intuitive; how do we guarantee we will never receive stale data? In the scheme we have, at any time, one replica can be stale. However, if a read request is processed by at least two replicas, we can guarantee one of the responses will be up to date.
+
+We can formalize this concept. If there are $n$ replicas, each write must be processed successfully by $w$ nodes and reads must be processed by at least $r$ nodes. We can guarantee up to date reads if $w + r > n$. For our example, we had $n=3, w=2, r=2$. This satisfies the constraint. Reads and writes that abide by this constraint are called *quorum* reads and writes. The quorom condition allows the system to process requests if nodes are unavailable:
+
+* If $w < n$, we can still process write requests
+* If $r < n$, we can still process read requests
+
+If fewer than $r$ or $w$ replicas are available, then we cannot process reads or writes.
+
+### Limitations of quorum consistency
+
+Even with the quorum condition satisfied, there are edge cases that can arise. These are often unrelated to quorum itself but the nature of distributed systems.
+
+* If sloppy quorum is used, the replicas written to and read from are not guaranteed to overlap.
+* If a write and read happen concurrently, it is undetermined whether the read response is of the old or new value.
+* If a write succeeds on fewer than *w* replicas, the write is not rolled back on the replicas it succeeded on. When a read request occurs, it may or may not return the value from the read
+* If a replica with a new value fails and is restored from a replica with an old value, the number of replicas storing the new value may fall below $w$.  
+
+### Sloppy Quorum
+
+As mentioned earlier, quorum is not as fault-tolerant as it is said to be due to the nature of distributed systems. This results in some difficult design decisions. Imagine we have a cluster with 9 replicas. Even though we have 9 replicas, we set $n$ to 3 and $w=r=2$. In this scheme, we effectively have 3 partitions each containing 3 replicas. Of that, a write/read only needs to exist on one of those partitions and satisfy the quorum constraint to ensure we always have up to date responses. This, however, can go wrong. A network interruption occurs which cuts off a client to a number of replicas. The replicas its cut off from contain *some* of the replicas needed to guarantee the quorum condition is met. For example, of the 9 replicas, it is cut off from 4 and 2 of those are from one partition needed to ensure quorum for a particular read request. In this case we have a design choice:
+
+1. We return errors to all requests as we cannot reach quorum
+2. We process write requests and write to them to nodes that are reachable but are not part of the partition where the value is located
+
+The second option is referred to as *sloppy quorum*. We still need to satisfy the quorum condition but there is no guarantee the replicas are from the partition where the value is located. Once the other replicas are online again, the writes are sent to those replicas. This is known as *hinted handoff*.
+
+Sloppy quorum is useful when there is a requirement for high-availability for writes. In reality, sloppy quorum is not quorum - it does not guarantee you will read the most up to date value. It is a guarentee of durability - the data will be stored on $w$ nodes somewhere.
+
+## Detecting concurent writes
+
+Many leaderless replication systems allow for concurrent writes. This will inevitably lead to write conflicts. The main problem is that the order of writes may differ at different replicas. This can be due to multitude of factors: variable network delays, network interruptions, partial failures, etc. In the image below, we have two replicas and two clients, A and B.
+
+* Replica one receives the request from A and then B.
+* Replica two receives the request from B and then A.
+
+The concurrent writes have lead to differing end results in each replica. When a read occurs, replica one will return B but replica two will return A. In order to be eventually consistent, the nodes should converge to the same value. There are some methods for handling this.
+
+### Last write wins
+
+Last write wins uses the most recent write as the convergent value and discards the other values. While it can be implemented, it does not make much sense. As the writes happen concurrently, there is no true "most recent" value. It is done by enforcing an order on the writes. For example, we can use timestamps to enforce this order. Unfortunately, last write wins trades-off durability - data is lost in the conflict resolution process.
+
+### Version Vectors
+
+Version vectors use a set of version numbers to deal with concurrent writes. A version number is a monotonically increasing number that is incremented every time a write operation occurs. This version number is sent with all write requests, allowing the system to determine if a concurrent write occured and then apply a strategy to deal with it. Taking the example from the book, we have two clients buying groceries on an online store, concurrently adding items to the same shopping cart.
+
+1. Client 1 adds *milk* to the cart. This is the first write so the version number is incremented to 1 and the cart is updated to **[milk]**. The version number and the cart state are sent back to the client.
+2. Client 2 adds *eggs* to the cart concurrently. The client did not know milk had been added to the basket already. The version number is incremented to 2 and the milk and eggs are stored as two *separate* values. Therefore the value of the cart is **[[milk], [eggs]]** The server sends back the version number and both the values of the cart.
+3. Client 1 wants to add *flour* to the cart. From their perspective, the cart should contain **[milk, flour]** after the update. When requesting to add the flour, the version number and request are sent to the server. The version number is the one stored on the client side - in this case it is 1. The database can determine that a concurrent write occured. The value **[milk, flour]** occurs after the value of **[milk]**. However, considering the other client added eggs to the cart and that is not contained in the new value, it is straightforward to see that the request to add flour occured concurrently to adding eggs to the cart. The value **[milk, flour]** is assigned version number 3. Version number 1 and its value are overwritten. Version number 2 and its value **[eggs]** is kept.
+
+Version vectors are an extension of this, they contain version numbers of each replica. This ensures it is safe to read from one replica and subse‐ quently write back to another replica.
