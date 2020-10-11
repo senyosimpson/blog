@@ -27,6 +27,20 @@ Data replication can be done in a synchronous or asnychronous fashion. In synchr
 
 ## How to deal with failure
 
+As mentioned, a core advantage of using replication is to improve the availability of the system - it can operate even if replicas become unavailable. There are two scenarios we have to consider: when a *replica* fails and when a *leader* fails.
+
+### Replica failure
+
+Every replica keeps a log of the data changes it has received from the leader on disk. If it fails, it uses its log to identify the last transaction it successfully processed. It can then request all subsequent changes from the leader and apply them. Once it has recovered, it can continue receiving requests. This process is called *catch-up recovery*
+
+### Leader failure
+
+Leader failure is more difficult to handle. If a leader fails, one of the replicas must be promoted to leader, client requests need to be routed to the new leader and the replicas must consume data changes from the new leader. This process is known as *failover*. Failover comes with its own set of challenges:
+
+* If asynchronous replication is used, the new leader may not have receieved all the writes from the old leader before it failed. If the old leader rejoins, the extra writes it has processed have to be dealt with. Commonly this is done by discarding the writes. Unfortunately, this negatively impacts the durability guarantee.
+* It's possible for two replicas to believe they are the leader. This is known as *split brain*. If both begin accepting writes and there is no method for resolving write conflicts, data can be lost or corrupted.
+* How do we know for certain that a leader is dead? Often a timeout is used - if the leader does not respond in a certain amount of time, it is declared dead. If this timeout is too short, we run the risk of performing unnecessary failovers. If it is too long, the system takes longer to recover.
+
 ## Under the hood of leader-based replication
 
 By now, I'm sure you're curious to know how is replication implemented. There are a few common methods for doing so.
