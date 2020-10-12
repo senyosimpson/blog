@@ -4,16 +4,21 @@
   
   <url>
     <loc>http://senyosimpson.com/</loc>
-    <lastmod>2020-09-14T00:00:00+00:00</lastmod>
+    <lastmod>2020-10-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://senyosimpson.com/posts/grokking-grpc/</loc>
-    <lastmod>2020-09-14T00:00:00+00:00</lastmod>
+    <loc>http://senyosimpson.com/posts/data-replication/</loc>
+    <lastmod>2020-10-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>http://senyosimpson.com/posts/</loc>
+    <lastmod>2020-10-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://senyosimpson.com/posts/grokking-grpc/</loc>
     <lastmod>2020-09-14T00:00:00+00:00</lastmod>
   </url>
   

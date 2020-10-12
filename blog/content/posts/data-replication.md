@@ -1,10 +1,11 @@
 ---
 title: "Data replication in distributed systems"
-date: 2020-09-24
-draft: true
+date: 2020-10-12
+draft: false
+image: http://ithare.com/wp-content/uploads/BB_part116_BookChapter017b_v1.png
 ---
 
-I've been reading the book [Designing Data-Intensive Applications](https://dataintensive.net) by Martin Kleppmann.  Chapter 5 of the book takes a deep dive into the world of data replication in distributed systems. I have always carried the assumption that data replication is non-trivial but reading the chapter opened my eyes to its true complexity. This post is a summary of the chapter - it can be considered a set of notes.
+I've been reading the book [Designing Data-Intensive Applications](https://dataintensive.net) by Martin Kleppmann.  Chapter 5 of the book takes a deep dive into the world of data replication in distributed systems. I have always carried the assumption that data replication is non-trivial but reading the chapter opened my eyes to its true complexity. This post is a summary of the chapter - it can be considered a set of notes. Let's do this 🚀
 
 # What is data replication?
 
@@ -155,12 +156,14 @@ As mentioned earlier, quorum is not as fault-tolerant as it is said to be due to
 
 The second option is referred to as *sloppy quorum*. We still need to satisfy the quorum condition but there is no guarantee the replicas are from the partition where the value is located. Once the other replicas are online again, the writes are sent to those replicas. This is known as *hinted handoff*. Sloppy quorum is useful when there is a requirement for high-availability for writes. In reality, sloppy quorum is not quorum - it does not guarantee you will read the most up to date value. It is a guarentee of durability - the data will be stored on $w$ nodes somewhere.
 
-## Detecting concurent writes (needs image)
+## Detecting concurent writes
 
 Many leaderless replication systems allow for concurrent writes. This will inevitably lead to write conflicts. The main problem is that the order of writes may differ at different replicas. This can be due to multitude of factors: variable network delays, network interruptions, partial failures, etc. In the image below, we have two replicas and two clients, A and B.
 
 * Replica one receives the request from A and then B.
 * Replica two receives the request from B and then A.
+
+{{< figure src="/images/data-replication/concurrent-writes.png" >}}
 
 The concurrent writes have lead to differing end results in each replica. When a read occurs, replica one will return B but replica two will return A. In order to be eventually consistent, the nodes should converge to the same value. There are some methods for handling this.
 
@@ -168,12 +171,14 @@ The concurrent writes have lead to differing end results in each replica. When a
 
 Last write wins uses the most recent write as the convergent value and discards the other values. While it can be implemented, it does not make much sense. As the writes happen concurrently, there is no true "most recent" value. It is done by enforcing an order on the writes. For example, we can use timestamps to enforce this order. Unfortunately, last write wins trades-off durability - data is lost in the conflict resolution process.
 
-### Version Vectors (needs image)
+### Version Vectors
 
 Version vectors use a set of version numbers to deal with concurrent writes. A version number is a monotonically increasing number that is incremented every time a write operation occurs. This version number is sent with all write requests, allowing the system to determine if a concurrent write occured and then apply a strategy to deal with it. Taking the example from the book, we have two clients buying groceries on an online store, concurrently adding items to the same shopping cart.
 
 1. Client 1 adds *milk* to the cart. This is the first write so the version number is incremented to 1 and the cart is updated to **[milk]**. The version number and the cart state are sent back to the client.
 2. Client 2 adds *eggs* to the cart concurrently. The client did not know milk had been added to the basket already. The version number is incremented to 2 and the milk and eggs are stored as two *separate* values. Therefore the value of the cart is **[[milk], [eggs]]** The server sends back the version number and both the values of the cart.
 3. Client 1 wants to add *flour* to the cart. From their perspective, the cart should contain **[milk, flour]** after the update. When requesting to add the flour, the version number and request are sent to the server. The version number is the one stored on the client side - in this case it is 1. The database can determine that a concurrent write occured. The value **[milk, flour]** occurs after the value of **[milk]**. However, considering the other client added eggs to the cart and that is not contained in the new value, it is straightforward to see that the request to add flour occured concurrently to adding eggs to the cart. The value **[milk, flour]** is assigned version number 3. Version number 1 and its value are overwritten. Version number 2 and its value **[eggs]** is kept.
+
+{{< figure src="/images/data-replication/version-vectors.png" >}}
 
 Version vectors are an extension of this, they contain version numbers of each replica. This ensures it is safe to read from one replica and subsequently write back to another replica.

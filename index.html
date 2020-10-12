@@ -11,7 +11,7 @@
 <meta property='og:description' content=''>
 <meta property='og:url' content='http://senyosimpson.com/'>
 <meta property='og:site_name' content='Bloom'>
-<meta property='og:type' content='website'><meta property='og:image' content='https://www.gravatar.com/avatar/81047a9b0da5b3df8c57a62fb05a0b59?s=256'><meta property='article:section' content=''><meta property='og:updated_time' content='2020-09-14T00:00:00Z'/><meta name='twitter:card' content='summary'><meta name='twitter:site' content='@senyo_simpson'><meta name='twitter:creator' content='@senyo_simpson'>
+<meta property='og:type' content='website'><meta property='og:image' content='https://www.gravatar.com/avatar/81047a9b0da5b3df8c57a62fb05a0b59?s=256'><meta property='article:section' content=''><meta property='og:updated_time' content='2020-10-12T00:00:00Z'/><meta name='twitter:card' content='summary'><meta name='twitter:site' content='@senyo_simpson'><meta name='twitter:creator' content='@senyo_simpson'>
 
 <link rel="stylesheet" href="/css/style.css"/><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -21,6 +21,28 @@
 <link rel="canonical" href="http://senyosimpson.com/">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
+<script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  
+    window.addEventListener('load', (event) => {
+        document.querySelectorAll("mjx-container").forEach(function(x){
+          x.parentElement.classList += 'has-jax'})
+      });
+  
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <section class="section">
@@ -90,6 +112,27 @@
 </section>
 <section class="section">
   <div class="container">
+    <article>
+      <div class="subtitle tags is-6 is-pulled-right">
+        
+      </div>
+      <h2 class="subtitle is-6 date">October 12, 2020</h2>
+      <h1 class="title"><a href="http://senyosimpson.com/posts/data-replication/">Data replication in distributed systems
+
+  
+    
+  
+</a></h1>
+      <div class="content">
+        I&rsquo;ve been reading the book Designing Data-Intensive Applications by Martin Kleppmann. Chapter 5 of the book takes a deep dive into the world of data replication in distributed systems. I have always carried the assumption that data replication is non-trivial but reading the chapter opened my eyes to its true complexity. This post is a summary of the chapter - it can be considered a set of notes. Let&rsquo;s do this 🚀
+        
+        <a class="button is-link" href="http://senyosimpson.com/posts/data-replication/" style="height:28px">
+          Read more
+        </a>
+        
+      </div>
+    </article>
+    
     <article>
       <div class="subtitle tags is-6 is-pulled-right">
         

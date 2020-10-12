@@ -20,6 +20,28 @@
 <link rel="canonical" href="http://senyosimpson.com/posts/clojure-learnings/">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
+<script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  
+    window.addEventListener('load', (event) => {
+        document.querySelectorAll("mjx-container").forEach(function(x){
+          x.parentElement.classList += 'has-jax'})
+      });
+  
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <section class="section">
@@ -229,7 +251,7 @@ car<span style="color:#555">.</span>engine_on <span style="color:#555">==</span>
 <span style="color:#069;font-weight:bold">def</span> <span style="color:#c0f">add</span>(a, b):
     <span style="color:#069;font-weight:bold">return</span> a <span style="color:#555">+</span> b
 
-<span style="color:#09f;font-style:italic"># bind the argument a to the value 2. Adder is now a new function</span>
+<span style="color:#09f;font-style:italic"># bind the argument b to the value 2. Adder is now a new function</span>
 adder <span style="color:#555">=</span> partial(add, b<span style="color:#555">=</span><span style="color:#f60">2</span>)
 
 <span style="color:#09f;font-style:italic"># we can use adder now and only specify one argument (i.e a)</span>
