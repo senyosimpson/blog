@@ -44,7 +44,7 @@ Leader failure is more difficult to handle. If a leader fails, one of the replic
 
 ## Under the hood of leader-based replication
 
-By now, I'm sure you're curious to know how is replication implemented. There are a few common methods.
+By now, I'm sure you're curious to know how replication is implemented. There are a few common methods.
 
 ### Statement-based replication
 
@@ -93,7 +93,7 @@ Monotonic reads are a guarantee that this effect will never happen i.e if they m
 
 ### Consistent prefix reads
 
-A class of errors can be attributed to violating causality. In this scenario, Kojo and Kwaku are chatting. Another user, Abele is observing the conversation. Kojo asks Kwaku, "How are you doing?". Kwaku replies to Kojo saying, "I'm good". So we have two writes that need to occur. In our database design, there is a leader and follower for Kojo and a separate leader and follower for Kwaku. Since Abele is just reading, his reads come from the respective followers. When Kojo sends his message, it is processed by the leader but the replication lag is longer than normal. Kwaku replies and his message is processed by his leader and is immediately replicated by the replica. When Abele reads, he gets Kwaku's reply first and then later gets Kojo's initial question. The causal link between the messages is now broken.
+A class of errors can be attributed to violating causality. In this scenario, Kojo and Kwaku are chatting. Another user, Abele is observing the conversation. Kojo asks Kwaku, "How are you doing?". Kwaku replies to Kojo saying, "I'm good". So we have two writes that need to occur. In our database design, there is a leader and follower for Kojo and a separate leader and follower for Kwaku. Since Abele is just reading, his reads come from the respective followers. When Kojo sends his message, it is processed by the leader but the replication lag is longer than normal. Kwaku replies and his message is processed by his leader and is immediately processed by the replica. When Abele reads, he gets Kwaku's reply first and then later gets Kojo's initial question. The causal link between the messages is now broken.
 
 {{< figure src="/images/data-replication/consistent-prefix.png" >}}
 
@@ -101,7 +101,7 @@ Consistent prefix reads are a guarantee that anyone reading a set of writes read
 
 ## Multi-leader replication
 
-One obvious shortcoming with single-leader replication is that there is only a single leader. All writes have to be processed by this leader. If it goes down or cannot be reached, you cannot process any writes. A simple extension is to allow for multiple replicas to be leaders. In this setup, a write can be processed by any of the leaders and the changes are propagated to all other replicas (including the other leaders). A multi-leader setup introduces additional complexity. This often outweighs the advantages of using a multi-leader setup, however, there are several use cases where it reasonable to do so. An example is a multi-datacenter database. In this setup, a database is replicated across different datacenters. This is often to handle an entire data center going offline. In a single-leader setup, the leader will be in only *one* datacenter and the changes will need to be replicated across all the datacenters from there. In a multi-leader setup, *each* datacenter has its own leader - the single-leader configuration exists within each datacenter. When a write occurs in a given datacenter, the leader propagates the changes to the other leaders in the other datacenters.
+One obvious shortcoming with single-leader replication is that there is only a single leader. All writes have to be processed by this leader. If it goes down or cannot be reached, you cannot process any writes. A simple extension is to allow for multiple replicas to be leaders. In this setup, a write can be processed by any of the leaders and the changes are propagated to all other replicas (including the other leaders). A multi-leader setup introduces additional complexity. This often outweighs the advantages of using a multi-leader setup, however, there are several use cases where it reasonable to do so. An example is a multi-datacenter database. In this setup, a database is replicated across different datacenters. This is often to handle an entire datacenter going offline. In a single-leader setup, the leader will be in only *one* datacenter and the changes will need to be replicated across all the datacenters from there. In a multi-leader setup, *each* datacenter has its own leader - the single-leader configuration exists within each datacenter. When a write occurs in a given datacenter, the leader propagates the changes to the other leaders in the other datacenters.
 
 ### Write conflicts
 
@@ -111,8 +111,8 @@ One of the biggest challenges with a multi-leader setup is handling write confli
 
 The simplest method of handling write conflicts is avoiding them. If an application ensures that all writes go through the same leader, a write conflict cannot occur. Surprisingly, this is often the recommended approach as dealing with write conflicts is complex. Some other strategies for handling conflicts:
 
-* Give each write a unique ID (e.g timestamp). The one with the highest number ID is used and the other writes are thrown away. This is known *last-write-wins*.
-* Give each replica a unique ID. The one with the highest ID takes precedence over the others. Its write is applied while the others are discarded.
+* Give each **write** a unique ID (e.g timestamp). The one with the highest number ID is used and the other writes are thrown away. This is known *last-write-wins*.
+* Give each **replica** a unique ID. The one with the highest ID takes precedence over the others. Its write is applied while the others are discarded.
 * Record the conflict elsewhere and write application code that handles the conflict.
 
 # Leaderless replication
@@ -140,7 +140,7 @@ If fewer than $r$ or $w$ replicas are available, then we cannot process reads or
 
 ### Limitations of quorum consistency
 
-Even with the quorum condition satisfied, there are edge cases that can arise. These are often unrelated to quorum itself but the nature of distributed systems.
+Even with the quorum condition satisfied, there are edge cases that can arise. These are often unrelated to a quorum itself but the nature of distributed systems.
 
 * If a sloppy quorum is used, the replicas written to and read from are not guaranteed to overlap.
 * If a write and read happen concurrently, it is undetermined whether the read response is of the old or new value.
@@ -149,12 +149,12 @@ Even with the quorum condition satisfied, there are edge cases that can arise. T
 
 ### Sloppy Quorum
 
-As mentioned earlier, quorums are not as fault-tolerant as they are said to be due to the nature of distributed systems. This results in some difficult design decisions. Imagine we have a cluster with 9 replicas. Even though we have 9 replicas, we set $n$ to 3 and $w=r=2$. In this scheme, we effectively have 3 partitions each containing 3 replicas. Of that, a particular value only needs to exist on one of those partitions and satisfy the quorum constraint to ensure we always have up to date responses. This, however, can go wrong. A network interruption occurs which cuts off a client to some replicas. The replicas its cut off from contain *some* of the replicas needed to guarantee the quorum condition is met. For example, of the 9 replicas, it is cut off from 4 and 2 of those are from one partition needed to ensure quorum for a particular read request. In this case we have a design choice:
+As mentioned earlier, quorums are not as fault-tolerant as they are said to be due to the nature of distributed systems. This results in some difficult design decisions. Imagine we have a cluster with 9 replicas. Even though we have 9 replicas, we set $n$ to 3 and $w=r=2$. In this scheme, we effectively have 3 partitions each containing 3 replicas. Of that, a particular value only needs to exist on one of those partitions and satisfy the quorum condition to ensure we always have up to date responses. This, however, can go wrong. A network interruption occurs which cuts off a client to some replicas. The replicas its cut off from contain *some* of the replicas needed to guarantee the quorum condition is met. For example, of the 9 replicas, it is cut off from 4 and 2 of those are from one partition needed to ensure a quorum for a particular read request. In this case we have a design choice:
 
 1. We return errors to all requests as we cannot reach a quorum
 2. We process write requests and write to them to nodes that are reachable but are not part of the partition where the value is located
 
-The second option is referred to as *sloppy quorum*. We still need to satisfy the quorum condition but there is no guarantee the replicas are from the partition where the value is located. Once the other replicas are online again, the writes are sent to those replicas. This is known as *hinted handoff*. Sloppy quorum is useful when there is a requirement for high-availability for writes. In reality, a sloppy quorum is not quorum - it does not guarantee you will read the most up to date value. It is a guarantee of durability - the data will be stored on $w$ nodes somewhere.
+The second option is referred to as a *sloppy quorum*. We still need to satisfy the quorum condition but there is no guarantee the replicas are from the partition where the value is located. Once the other replicas are online again, the writes are sent to those replicas. This is known as *hinted handoff*. Sloppy quorums are useful when there is a requirement for high-availability for writes. In reality, a sloppy quorum is not a quorum - it does not guarantee you will read the most up to date value. It is a guarantee of durability - the data will be stored on $w$ nodes somewhere.
 
 ## Detecting concurrent writes
 
