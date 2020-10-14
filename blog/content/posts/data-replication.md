@@ -1,6 +1,6 @@
 ---
 title: "Data replication in distributed systems"
-date: 2020-09-24
+date: 2020-10-14
 draft: false
 image: http://ithare.com/wp-content/uploads/BB_part116_BookChapter017b_v1.png
 ---
