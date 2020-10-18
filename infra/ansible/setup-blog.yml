@@ -1,36 +1,20 @@
-#################################################
-# DO Community Playbooks: Docker
-#################################################
 ---
 - hosts: digitalocean
   remote_user: root
   become: true
-  vars_files:
-    - secrets.yml
 
   tasks:
-    - name: Login into Docker
-      docker_login:
-        username: "{{ docker_username }}"
-        password: "{{ docker_password }}"
+    - name: Transfer blog to remote
+      ansible.posix.synchronize:
+        src: /media/senyo/senYeezus/Senyo/blog
+        dest: /home/senyo/blog
+        rsync_opts:
+          - "--exclude=.git"
 
-    - name: Pull Docker image
-      docker_image:
-        name: senyo/blog
-        tag: latest
-        force_source: yes
-        source: pull
-
-    - name: Create container
-      docker_container:
-        name: blog
-        image: senyo/blog:latest
-        ports:
-          - "80:80"
-        state: started
-        restart: yes
-        restart_policy: on-failure
-        restart_retries: 1
+    - name: Start docker compose
+      shell:
+        cmd: docker-compose up -d --force-recreate blog
+        chdir: /home/senyo/blog/infra/docker-compose
 
     - name: Docker prune
       docker_prune:

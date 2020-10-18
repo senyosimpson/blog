@@ -1,0 +1,12 @@
+---
+- hosts: digitalocean
+  remote_user: root
+  become: true
+
+  tasks:
+  - name: Add certbot renew process cron
+    cron:
+        name: "renew-certbot"
+        minute: "0"
+        hour: "0"
+        job: "/home/senyo/blog/infra/nginx/renew-certs.sh >> /var/log/cron.log 2>&1"
