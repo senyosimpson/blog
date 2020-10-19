@@ -6,8 +6,9 @@
   tasks:
     - name: Transfer blog to remote
       ansible.posix.synchronize:
-        src: /media/senyo/senYeezus/Senyo/blog
-        dest: /home/senyo/blog
+        src: /media/senyo/senYeezus/Senyo/blog/
+        dest: /home/senyo/blog/
+        delete: yes
         rsync_opts:
           - "--exclude=.git"
 
