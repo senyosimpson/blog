@@ -6,7 +6,7 @@ draft: true
 
 If there is one sentiment all companies share, it is that they want high performing teams. High performance teams do not just emerge. They are a result of deliberate effort. It takes the right culture and environment, a willingness to experiment with new processes, the humility to accept failure and coffee. Really great coffee ☕. Oh and definitely **more** meetings because we do not have enough of those! Am I right or am I right?
 
-I've given some thought into what ingredients go into cooking up a high performance team. While there are infinitely many factors that contribute towards this I'll focus, on aspects that have stood out in my industry journey to date. Some aspects may speak more so to tech teams but I've tried to keep most of it general. This is by no means the gospel on productivity so if your team becomes less productive by taking tips from this, I'm not even a *little* bit sorry 😆.
+I've given some thought into what ingredients go into cooking up a high performance team. While there are infinitely many factors that contribute towards this, I'll focusy on aspects that have stood out in my industry journey to date. Some aspects may speak more so to tech teams but I've tried to keep most of it general. This is by no means the gospel on productivity so if your team becomes less productive by taking tips from this, I'm not even a *little* bit sorry 😆.
 
 # Define a value system
 
@@ -35,6 +35,10 @@ Standards, like processes, should be dynamic and malleable. Companies and teams 
 # Recognize and reward great work
 
 It goes without saying, great work *must* be appreciated, recognized and rewarded. A company and its employees are in a relationship. If individuals feel they are not appreciated and have not been recognized for the hours they've put in, they will find another company that does appreciate and recognize them. Nobody wants to give their maximal effort to a company that does not appreciate all the hard work they've put in.  Recognizing great work goes a long in way in cultivating an amazing culture. From personal experience, it is one facet I've always enjoyed. It's validating to hear that the work you've put in has been noticed and is confirmation that you've *actually* been doing work at a high standard. It's also inspired me to continue giving my best effort. To come full circle, great work should be rewarded. This looks different for everyone - share options, salary increase, promotion. All that matters is that rewards are given when deserved.
+
+# Focus on practical solutions
+
+
 
 # Have less meetings
 
