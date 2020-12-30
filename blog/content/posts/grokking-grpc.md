@@ -7,7 +7,7 @@ image: https://images.idgesg.net/images/article/2017/08/networking-100733179-lar
 
 If you are similar to me, you've heard about gRPC countless times but have little idea of what it actually is, what its use cases are and why everyone keeps speaking about it. Initially, I thought it must be *another* buzzword being thrown around. Fortunately, I was wrong 😆. I've spent a couple of days reading and learning more about it. This blog post is a summary of all I've learned. I hope you enjoy it! 
 
-# What is Remote procedure call?
+## What is Remote procedure call?
 
 Remote procedure call (RPC) is a communication protocol used between web services. The central idea around RPC is to allow a client application to execute a procedure (function) on a server application as if the procedure is running locally. The networking details are abstracted away from the developer making it simple to use.
 
@@ -26,7 +26,7 @@ From the client's perspective, the procedure seems as if it is running locally. 
 * A network request may be received and execute but only the network *response* fails. Network request failures are often handled by retries but unfortunately in this case, the function would be executed multiple times as you would not know only the responses are getting lost.
 * A local function takes a similar amount of time to execute every time it is invoked. Network requests have variable latency due to networking specific issues - network is congested, server is at maximum capacity etc.
 
-## What is gRPC?
+### What is gRPC?
 
 The [gRPC website](https://grpc.io) describes it as a, "modern, open source remote procedure call (RPC) framework that can run anywhere. It enables client and server applications to communicate transparently, and makes it easier to build connected systems". It was created by Google and subsequently open-sourced in 2016. gRPC has driven the resurgence of communications using RPC. With the move towards service-oriented architectures, it has found a natural home in service-to-service communications.
 
@@ -45,7 +45,7 @@ As with any technology, there are advantages and disadvantages. This [article](h
 * Limited browser support - there is limited support for HTTP/2 in the browser
 * Not human readable - gRPC uses a binary format and therefore is not human readable.
 
-# Protocol Buffers
+## Protocol Buffers
 
 As stated above, protocol buffers are a method for serializing/deserializing structured data. Protocol buffer messages are defined using a schema consisting of key-value pairs.
 
@@ -72,11 +72,11 @@ with the value of `b` set to `testing`, the corresponding encoding will be
 
 The bytes `12` and `07` form the tag. The value `12` is decoded to give the field number 2 and the data type string. The value `07` is decoded to give the length of the value which is 7 in this case. As you can see, there are 7 bytes remaining which give the value of the string. If you are interested, you can find more information about the protocol buffer encoding from the [official guide](https://developers.google.com/protocol-buffers/docs/encoding). This example is actually from there albeit with much less detail.
 
-# What happened to REST?
+## What happened to REST?
 
 REST is the canonical standard for communications over the web. It has been battle-tested in production, extensive tooling exists for implementing RESTful services and most developers are comfortable with designing, building and maintaining RESTful services. Naturally the big question is what is so great about gRPC that we would forego creating a RESTful service? The answer is fairly straightforward: performance. While there are other benefits of using gRPC such as the use of HTTP/2 or bidirectonal streaming, for the standard use case, performance is the central reason for adopting it. JSON is much slower to serialize/deserialize than protobufs. At scale, this can lead to a noticeable degradation in performance of the overall system. As protobufs are a binary format, they are much faster to serialize/deserialize. some articles claiming there is an improvement of 5-6 times. 
 
-# gRPC by example
+## gRPC by example
 
 Nothing is ever complete without some code examples! I've tried to make this as easy to follow as possible. Let me know if any improvements can be made. All the code can be found [here](https://github.com/senyosimpson/tutorials/tree/master/grokkingrpc). We will implement the service in the [Quick Start](https://grpc.io/docs/languages/go/quickstart/) section of the gRPC website. I'm using Golang for this tutorial.
 
@@ -241,7 +241,7 @@ We're now ready to test it! In one terminal, start the server. In the other, we 
 And that's it! I hope you've taken something valuable out of this walkthrough of the basics of gRPC. I've certainly enjoyed learning and writing about it.
 
 
-# References
+## References
 
 ### RPC
 

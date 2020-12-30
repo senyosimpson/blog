@@ -31,6 +31,7 @@ tag = "tags"
 [params.sections_left]
 "/about" = "About"
 "/essays" = "Essays"
+"/philosophy" = "Core Philosophy"
 
 [markup]
   [markup.highlight]
