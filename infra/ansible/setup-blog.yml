@@ -6,7 +6,7 @@
   tasks:
     - name: Transfer blog to remote
       ansible.posix.synchronize:
-        src: /media/senyo/senYeezus/Senyo/blog/
+        src: /Users/senyosimpson/Documents/Projects/blog/
         dest: /home/senyo/blog/
         delete: yes
         rsync_opts:

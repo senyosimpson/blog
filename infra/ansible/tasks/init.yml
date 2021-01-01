@@ -1,0 +1,24 @@
+# A set of tasks for initialising the server
+# 1. Create directory for housing the blog
+# 2. Transfer the blog files to the remote location
+# 3. Setup a cron for renewing certificates
+
+- name: Create blog directory on remote host
+  file:
+    path: /home/senyo/blog
+    state: directory
+
+- name: Transfer blog to remote
+  ansible.posix.synchronize:
+    src: /Users/senyosimpson/Documents/Projects/blog/
+    dest: /home/senyo/blog/
+    delete: yes
+    rsync_opts:
+      - "--exclude=.git"
+
+- name: Add certbot renew process cron
+  cron:
+      name: "renew-certbot"
+      minute: "0"
+      hour: "0"
+      job: "/home/senyo/blog/infra/nginx/renew-certs.sh >> /var/log/cron.log 2>&1"
