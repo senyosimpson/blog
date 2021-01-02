@@ -2,6 +2,7 @@
 title: "Year one in tech"
 date: 2020-12-31T12:03:43+02:00
 draft: false
+image: https://c4.wallpaperflare.com/wallpaper/953/787/667/new-year-happy-dark-2020-2019-hd-wallpaper-preview.jpg
 ---
 
 One year into my tech journey as a full-time software engineer - what an amazing ride! I have learnt and grown much more than I expected. I have taken away *way* too many lessons from this year. I often wonder if it ever slows down but my feeling is that it never does. Given it's the end of the year, it's a good time to write about my experience. This is a long post. To make it more palatable, I've split into two sections - the first is core lessons and the second can be thought of as an addendum. I write for you but also for me so consider this a blog post and a journal entry ✍🏾. Time for some reflections!
