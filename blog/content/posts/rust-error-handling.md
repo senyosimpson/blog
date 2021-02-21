@@ -70,23 +70,109 @@ Some advantages of returning errors:
 * There is normal control flow. Since errors are just returned, control flow is easy to follow.
 
 
-
 ## How Rust does error handling
+
+### The Result type
+
+Part of Rust's roots are tied to the ML family of languages. They are functional languages with a strong type system made
+easier to use by solid type inference. One of the constructs common in functional languages is the Result type. A Result
+is an enum that has two possible states: the value of the computation or an error. The benefit here is that Result is its
+own type. To get the value, you have to 'unwrap' the Result. The compiler can enforce that the Result is unwrapped before
+it is used anywhere else. Additionally, the type system won't allow you to do so. For example, `Result<String>` is a different
+type to `String`. A function expecting a string as input will have the signature `do_something(s: String)`. Since `Result<String>`
+is a completely different type, you cannot use it in that function. This system enforces the handling of errors and the compiler
+can check if it has done so. So how we unwrap?
+
+```Rust
+enum Result<T, E> {
+   Ok(T),
+   Err(E),
+}
+```
+
+```Rust
+let mut f = File::create_file("ferris.txt");  // Returns Result<File>
+
+// To unwrap we can match on the enum variants
+let file = match f {
+  Ok(file) => file,
+  Err(e) => panic!("File could not be created")
+};
+
+match file.write_all("Hi Ferris") {
+  Ok(_) => {},
+  Err(e) => panic!("Could not write to file")
+}
+```
+
+Rust has several convenience methods/syntax such as `unwrap`, `expect`, `?` which help to remove
+some of the boilerplate. 
+
+### Panicking
+
+In Rust, irrecoverable errors are signaled using the construct `panic`. When a panic is reached,
+this is essentially saying, "the program execution cannot continue any further after encountering
+this error". Panics are a terminal state; the program crashes as a result. Panics are meant to be
+infrequent, with standard error handling taking care of common cases. we've already seen panic
+being used in Rust in the above example.
+
+```Rust
+match file.write_all("Hi Ferris") {
+  Ok(_) => {},
+  Err(e) => panic!("Could not write to file") // If this branch executes, program crashes
+}
+```
+
+
+### Bubbling errors
+
+In many cases, you do not want an error to be handled by functions further down the stack. Instead,
+we wish to bubble the error back up to the caller. The caller can then decide how to proceed. In Rust,
+we can achieve this using matching
+
+```Rust
+fn init() -> Result<(), io::Error> {
+  let mut file = match File::create_file("ferris.txt") {
+    Ok(f) => f,
+    Err(e) => return Err(e)
+  }
+
+  match file.write_all("Hi Ferris") {
+    Ok(_) => {},
+    Err(e) => return Err(e)
+  }
+}
+
+// Caller of function gets error and then panics on failure
+match init() {
+  Ok(_) => {},
+  Err(_) => panic!("Could not initialise")
+}
+```
+
+### Making it ergonomic
+
+As I mentioned earlier, Rust has a number of convenience methods/syntax to reduce the boilerplate. Let's
+see how we can utilise them.
+
+**unwrap**, **expect**, **?**
+
+### 
 
 ## Errors vs exceptions
 
 ## Making it ergonomic
-[Making it ergonomic]: #making-it-ergonomic
 
 - Result type
 - ? operator
 - panics
 
 ## Making it informative
-
+- Library vs app
 - Chaining errors
 - Adding context
 - Custom errors
+- ErrorKinds
 - https://stackify.com/common-mistakes-handling-java-exception/
 
 ## The future of error handling
