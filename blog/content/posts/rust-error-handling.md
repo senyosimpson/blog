@@ -111,16 +111,15 @@ match file.write_all("Hi Ferris") {
 }
 ```
 
-Rust has several convenience methods/syntax such as `unwrap`, `expect`, `?` which help to remove
-some of the boilerplate.
+Rust has several convenience methods/syntax such as `unwrap`, `expect`, `?` which help to remove some
+of the boilerplate.
 
 ### Panicking
 
-In Rust, irrecoverable errors are signaled using the construct `panic`. When a panic is reached,
-a programmer is essentially saying, "the program execution cannot continue any further after
-encountering this error". Panics are a terminal state; the program crashes as a result. They
-are meant to be infrequent, with standard error handling taking care of common cases. we've
-already seen panic being used in Rust in the above example.
+In Rust, irrecoverable errors are signaled using the construct `panic`. When a panic is reached, a programmer
+is essentially saying, "the program execution cannot continue any further after encountering this error".
+Panics are a terminal state; the program crashes as a result. They are meant to be infrequent, with standard
+error handling taking care of common cases. we've already seen panic being used in Rust in the above example.
 
 ```Rust
 match file.write_all("Hi Ferris") {
@@ -131,10 +130,10 @@ match file.write_all("Hi Ferris") {
 
 ### Bubbling errors
 
-In many cases, you do not want an error to be handled at the point of contact. Instead, you would
-prefer to have that error be handled by the caller of the function, leaving it to the caller to
-decide how to proceed. In programming perlance, we want to "bubble" the error the caller. In Rust,
-we can achieve this using matching
+In many cases, you do not want an error to be handled at the point of contact. Instead, you would prefer
+to have that error be handled by the caller of the function, leaving it to the caller to decide how to
+proceed. In programming perlance, we want to "bubble" the error the caller. In Rust, we can achieve this
+using matching
 
 ```Rust
 fn init() -> Result<(), io::Error> {
@@ -158,16 +157,16 @@ match init() {
 
 ### Making it ergonomic
 
-As I mentioned earlier, Rust has a number of convenience methods/syntax to reduce the boilerplate.
-There are three that are commonly used: `unwrap`, `expect` and `?`.
+As I mentioned earlier, Rust has a number of convenience methods/syntax to reduce the boilerplate. There
+are three that are commonly used: `unwrap`, `expect` and `?`.
 
 #### ?
 
-When bubbling errors, you can imagine that writing the above match statement becomes cumbersome.
-It's boilerplate that the language can handle for you. A similar problem exists in Go. If you
-ask Gophers what line of code they write the most, you'll get the same answer: `if err != nil {}`.
-The Rust language designers took care of matching boilerplate by introducing the `?` syntax. This
-automatically bubbles the error to the caller on an error occuring.
+When bubbling errors, you can imagine that writing the above match statement becomes cumbersome. It's
+boilerplate that the language can handle for you. A similar problem exists in Go. If you ask Gophers
+what line of code they write the most, you'll get the same answer: `if err != nil {}`. The Rust language
+designers took care of matching boilerplate by introducing the `?` syntax. This automatically bubbles
+the error to the caller on an error occuring.
 
 ```Rust
  // Before we would write code like this
@@ -190,17 +189,17 @@ fn init() -> Result<(), io::Error> {
 }
 ```
 
-As you can see from the above example, our syntax is significantly less verbose while being
-functionally identical. This is one of those small things that makes the world of difference
-when writing Rust. It shows the commitment to a friendly developer experience.
+As you can see from the above example, our syntax is significantly less verbose while being functionally
+identical. This is one of those small things that makes the world of difference when writing Rust. It
+shows the commitment to a friendly developer experience.
 
 #### unwrap
 
-There are often scenarios where you want to opt out of error handling. This may be when you're
-prototyping and don't want to go through the effort of setting up robust error handling or when
-you know that a function won't fail (e.g if you need to read a file that you know will always
-exist). To get out of it, you can use the `unwrap()` method. `unwrap` returns the `Ok` variant
-with it's value if the computation succeeds or will panic on error.
+There are often scenarios where you want to opt out of error handling. This may be when you're prototyping
+and don't want to go through the effort of setting up robust error handling or when you know that a function
+won't fail (e.g if you need to read a file that you know will always exist). To get out of it, you can
+use the `unwrap()` method. `unwrap` returns the `Ok` variant with it's value if the computation succeeds
+or will panic on error.
 
 ```Rust
 
@@ -212,8 +211,8 @@ fn init() {
 }
 ```
 
-If we try create a file in a location we do not have permission to access, the code will panic,
-causing the program to crash. An example of a panic message
+If we try create a file in a location we do not have permission to access, the code will panic, causing
+the program to crash. An example of a panic message
 
 ```
 thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Os {
@@ -221,15 +220,15 @@ code: 13, kind: PermissionDenied, message: "Permission denied" }',
 src/main.rs:4:36
 ```
 
-While this provides an easy escape to error handling, it's not recommended for production code.
-There are cases where it is permissible (as with everything). If we can guarantee it won't fail
-or we want execution to panic at that point, it is permissble. One issue with `unwrap` is that
-error messages can be uninformative. We can do one better by using `expect`.
+While this provides an easy escape to error handling, it's not recommended for production code. There
+are cases where it is permissible (as with everything). If we can guarantee it won't fail or we want
+execution to panic at that point, it is permissble. One issue with `unwrap` is that error messages can
+be uninformative. We can do one better by using `expect`.
 
 #### except
 
-The `except()` method is identical to `unwrap()` but it allows you to set an error message. This
-conveys your intent and makes debugging easier.
+The `except()` method is identical to `unwrap()` but it allows you to set an error message. This conveys
+your intent and makes debugging easier.
 
 ```Rust
 
@@ -250,9 +249,69 @@ code: 13, kind: PermissionDenied, message: "Permission denied" }',
 src/main.rs:4:36
 ```
 
-
+As we can see, Rust has a strong focus on making error handling a frictionless experience for the
+developer. There are many other functions that I have not gone through here: `map_err`, `map_or_else`,
+`unwrap_or`, `unwrap_or_else` and many others. If you're new to Rust, I encourage you to give them a
+look. I know I certainly will as I improve the quality of my error handling.
 
 ## Making it informative
+
+As I mentioned in my introduction, error handling is a big deal. One aspect of this is the quality of
+error messages. Without good error messages, debugging becomes extremely difficult. Either that or
+you've learnt how to read horribly cryptic messages. C++ programmers, you're *obviously* suffering
+from Stockholm syndrome given that you survive these crazy error messages 😆.
+
+```
+rtmap.cpp: In function `int main()':
+rtmap.cpp:19: invalid conversion from `int' to `
+   std::_Rb_tree_node<std::pair<const int, double> >*'
+rtmap.cpp:19:   initializing argument 1 of `std::_Rb_tree_iterator<_Val, _Ref,
+   _Ptr>::_Rb_tree_iterator(std::_Rb_tree_node<_Val>*) [with _Val =
+   std::pair<const int, double>, _Ref = std::pair<const int, double>&, _Ptr =
+   std::pair<const int, double>*]'
+rtmap.cpp:20: invalid conversion from `int' to `
+   std::_Rb_tree_node<std::pair<const int, double> >*'
+rtmap.cpp:20:   initializing argument 1 of `std::_Rb_tree_iterator<_Val, _Ref,
+   _Ptr>::_Rb_tree_iterator(std::_Rb_tree_node<_Val>*) [with _Val =
+   std::pair<const int, double>, _Ref = std::pair<const int, double>&, _Ptr =
+   std::pair<const int, double>*]'
+E:/GCC3/include/c++/3.2/bits/stl_tree.h: In member function `void
+   std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::insert_unique(_II,
+    _II) [with _InputIterator = int, _Key = int, _Val = std::pair<const int,
+   double>, _KeyOfValue = std::_Select1st<std::pair<const int, double> >,
+   _Compare = std::less<int>, _Alloc = std::allocator<std::pair<const int,
+   double> >]':
+E:/GCC3/include/c++/3.2/bits/stl_map.h:272:   instantiated from `void std::map<_
+Key, _Tp, _Compare, _Alloc>::insert(_InputIterator, _InputIterator) [with _Input
+Iterator = int, _Key = int, _Tp = double, _Compare = std::less<int>, _Alloc = st
+d::allocator<std::pair<const int, double> >]'
+rtmap.cpp:21:   instantiated from here
+E:/GCC3/include/c++/3.2/bits/stl_tree.h:1161: invalid type argument of `unary *
+```
+
+Regardless,
+error messages should be highly informative and guide a developer to uncover the cause of the error
+without excessive cognitive overhead. Rust has made this core emphasis of the language. The compiler
+is extremely helpful. This tweet summarises it nicely
+
+{{< tweet 1348669062528774148 >}}
+
+Focusing on good error messages has permeated throughout the community. There's even the
+[Error Handling Project Group] if you weren't convinced how committed the language designers
+are to getting this right. There are a number of techniques we can use to make our errors more
+informative. Along the way, we will discuss the crates that can help.
+
+### At the root
+
+The first question we have to ask is:
+
+> "Are we writing an application or a library?"
+
+This was something I had never thought of until I read this [article] on structuring error handling.
+Applications require slightly different error handling capabilities versus libraries.
+
+
+
 
 * Chaining errors
 * Adding context
@@ -276,3 +335,6 @@ src/main.rs:4:36
 * https://dave.cheney.net/2012/01/18/why-go-gets-exceptions-right
 * https://benkay86.github.io/rust-error-tutorial.html#enum_error
 * https://doc.rust-lang.org/std/result/
+
+[article]: https://nick.groenen.me/posts/rust-error-handling/
+[Error Handling Project Group]: https://github.com/rust-lang/project-error-handling
