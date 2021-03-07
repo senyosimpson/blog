@@ -46,7 +46,9 @@ some of them due to my own sloppiness. Some of the reasons I prefer this paradig
   throwing an exception makes sense. Unfortunately, in many cases where exceptions don't need to be
   thrown, they are. In some way, this is a problem with the *programmer* and not the paradigm. However,
   paradigms that can be misused will most likely be and therefore, it's better for it to enforce sane
-  behaviour by its definition.
+  behaviour by its definition. An example I heard of in a discord server was an old old library that threw exceptions
+  on every non 2xx and 3xx response. This a bad use case of exceptions as getting errors is normal case
+  and should be handled properly without throwing.
 * Exceptions are often used for control flow. The problem with using exceptions for control flow is that
   they obscure your code. It makes difficult for a developer to follow the path of execution through
   the code base.
@@ -256,10 +258,10 @@ look. I know I certainly will as I improve the quality of my error handling.
 
 ## Making it informative
 
-As I mentioned in my introduction, error handling is a big deal. One aspect of this is the quality of
-error messages. Without good error messages, debugging becomes extremely difficult. Either that or
-you've learnt how to read horribly cryptic messages. C++ programmers, you're *obviously* suffering
-from Stockholm syndrome given that you survive these crazy error messages 😆.
+An aspect of writing good errors is to make them highly informative. Without good error messages,
+debugging becomes extremely difficult. Either that or you've learnt how to read horribly cryptic
+messages. C++ programmers, you're *obviously* suffering from Stockholm syndrome given that you
+survive these crazy error messages 😆.
 
 ```
 rtmap.cpp: In function `int main()':
@@ -289,27 +291,41 @@ rtmap.cpp:21:   instantiated from here
 E:/GCC3/include/c++/3.2/bits/stl_tree.h:1161: invalid type argument of `unary *
 ```
 
-Regardless,
-error messages should be highly informative and guide a developer to uncover the cause of the error
+Error messages should be highly informative and guide a developer to uncover the cause of the error
 without excessive cognitive overhead. Rust has made this core emphasis of the language. The compiler
 is extremely helpful. This tweet summarises it nicely
 
 {{< tweet 1348669062528774148 >}}
 
 Focusing on good error messages has permeated throughout the community. There's even the
-[Error Handling Project Group] if you weren't convinced how committed the language designers
-are to getting this right. There are a number of techniques we can use to make our errors more
-informative. Along the way, we will discuss the crates that can help.
+[Error Handling Project Group] if you weren't convinced how committed the language designers are to
+getting this right. There are a number of techniques we can use to make our errors more informative.
+Along the way, we will discuss the crates that can help.
 
 ### At the root
 
-The first question we have to ask is:
+The first question we have to ask is
 
-> "Are we writing an application or a library?"
+> Are we writing an application or a library?
 
-This was something I had never thought of until I read this [article] on structuring error handling.
-Applications require slightly different error handling capabilities versus libraries.
+I had never considered that your approach to structuring error handling is different depending on
+whether you are writing an application or library. This [article](https://nick.groenen.me/posts/rust-error-handling/)
+illuminated this difference to me.
 
+Some of the key components of error handling in libraries:
+
+* Libraries should never panic/crash. From the application programmer's point of view, panics are
+  undefined behaviour; there is no expectation that a library call will crash an application.
+  All errors should be bubbled up to the caller and give it the responsibility of handling the error.
+  This is generally a healthier software pattern as it caters for a wide variety of use cases.
+* As far as possible, use custom errors. This two main benefits:
+  * It significantly improves the amount of information captured in the error message. This make it
+    faster to debug sources of error. Finding which library produced the error and what the error means
+    is much easier under this model.
+  * Improves the cardinality of errors in application. If all applications produced the same error types,
+    it would be difficult to analyse error data. Finding out a simple question like, what is contributing
+    to such error rates, becomes non-trivial when they are grouped as one.
+  
 
 
 
@@ -336,5 +352,4 @@ Applications require slightly different error handling capabilities versus libra
 * https://benkay86.github.io/rust-error-tutorial.html#enum_error
 * https://doc.rust-lang.org/std/result/
 
-[article]: https://nick.groenen.me/posts/rust-error-handling/
 [Error Handling Project Group]: https://github.com/rust-lang/project-error-handling
