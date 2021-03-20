@@ -100,19 +100,20 @@ handling.
 
 ## How Rust does error handling
 
+[How Rust does error handling]: #how-rust-does-error-handling
+
 ### The Result type
 
 Rust takes plenty of inspiration from the ML family of languages. They are functional languages with
 a wonderful type system made easier to use by solid type inference. One of the common constructs in
-these languages is the `Result` type. A `Result` is an enum that has two possible states: the value
-of the computation or an error. To get the value, you have to 'unwrap' `Result`. The compiler can enforce
-that `Result` is unwrapped before it is *used* anywhere else. Additionally, the type system won't allow
-you to omit unwrapping. For example, `Result<String>` is a different type to `String`. A function expecting
-a string as input will have the signature `do_something(s: String)`. Since `Result<String>` is a different
-type, you cannot use it in that function. This system enforces the handling of errors. There is no way
-to circumvent it due to it being embedded in the type system. This is why error handling in Rust is great.
-We get to leave the land of exceptions but it does not allow us to be lazy. Let's take a look at the basics
-of error handling in Rust.
+these set of languages is the `Result` type. A `Result` is an enum that has two possible states: the
+value of the computation or an error. To get the value, you have to 'unwrap' `Result`. The compiler
+can enforce that `Result` is unwrapped before it is *used* anywhere else. Additionally, the type system
+won't allow you to omit unwrapping. For example, `Result<String>` is a different type to `String`. A
+function expecting a string as input will have the signature `do_something(s: String)`. Since `Result<String>`
+is a different type, you cannot use it in that function. This system enforces the handling of errors.
+There is no way to circumvent it due to it being embedded in the type system. This is why error handling
+in Rust is great. Let's take a look at basic error handling.
 
 ```Rust
 // This is the result type that either contains the value of 
@@ -140,14 +141,15 @@ match file.write_all("Hi Ferris") {
 ```
 
 Rust has several convenience methods/syntax such as `unwrap`, `expect`, `?` which help to remove some
-of the boilerplate.
+of the boilerplate which we will discuss later in this post.
 
 ### Panicking
 
-In Rust, irrecoverable errors are signaled using the construct `panic`. When a panic is reached, a programmer
-is essentially saying, "the program execution cannot continue any further after encountering this error".
-Panics are a terminal state; the program crashes as a result. They are meant to be infrequent, with standard
-error handling taking care of common cases. we've already seen panic being used in Rust in the above example.
+In Rust, irrecoverable errors are signaled using the `panic` construct. When a panic is invoked, the
+developer is essentially saying, "program execution cannot continue any further after encountering
+this error". Panics are a terminal state; the program crashes as a result. They are meant to be infrequent,
+with standard error handling taking care of common cases. We've already seen panic being used in Rust
+in the above example.
 
 ```Rust
 match file.write_all("Hi Ferris") {
@@ -158,12 +160,14 @@ match file.write_all("Hi Ferris") {
 
 ### Bubbling errors
 
-In many cases, you do not want an error to be handled at the point of contact. Instead, you would prefer
-to have that error be handled by the caller of the function, leaving it to the caller to decide how to
-proceed. In programming perlance, we want to "bubble" the error the caller. In Rust, we can achieve this
-using matching
+In many cases, we do not want an error to be handled at the location it is generated. Instead, we
+would prefer to have that error be handled by the caller of the function, giving it the power to decide
+how to proceed. In programming perlance, we want to "bubble" the error the caller. In Rust, we can achieve
+this using matching.
 
 ```Rust
+// () is the unit type and is used when there is no meaningful
+// value to return
 fn init() -> Result<(), io::Error> {
   let mut file = match File::create("ferris.txt") {
     Ok(f) => f,
@@ -176,6 +180,7 @@ fn init() -> Result<(), io::Error> {
   }
 }
 
+// The executable code
 // Caller of function gets error and then panics on failure
 match init() {
   Ok(_) => {},
@@ -183,12 +188,14 @@ match init() {
 }
 ```
 
-### Making it ergonomic
+## Making it ergonomic
+
+[Making it ergonomic]: #making-it-ergonomic
 
 As I mentioned earlier, Rust has a number of convenience methods/syntax to reduce the boilerplate. There
 are three that are commonly used: `unwrap`, `expect` and `?`.
 
-#### ?
+### ?
 
 When bubbling errors, you can imagine that writing the above match statement becomes cumbersome. It's
 boilerplate that the language can handle for you. A similar problem exists in Go. If you ask Gophers
@@ -219,9 +226,9 @@ fn init() -> Result<(), io::Error> {
 
 As you can see from the above example, our syntax is significantly less verbose while being functionally
 identical. This is one of those small things that makes the world of difference when writing Rust. It
-shows the commitment to a friendly developer experience.
+highlights the commitment to a friendly developer experience.
 
-#### unwrap
+### unwrap
 
 There are often scenarios where you want to opt out of error handling. This may be when you're prototyping
 and don't want to go through the effort of setting up robust error handling or when you know that a function
@@ -248,23 +255,25 @@ code: 13, kind: PermissionDenied, message: "Permission denied" }',
 src/main.rs:4:36
 ```
 
-While this provides an easy escape to error handling, it's not recommended for production code. There
-are cases where it is permissible (as with everything). If we can guarantee it won't fail or we want
-execution to panic at that point, it is permissble. One issue with `unwrap` is that error messages can
-be uninformative. We can do one better by using `expect`.
+Notice how Rust does not give us a get out of jail free card with error handling. Either we write error
+handling logic or we accept our code will panic and subsequently crash (most likely unknowingly to the
+developer). Extensive `unwrap`ing is not recommended for production code. There are cases where it is
+permissible (as with everything), for example if we can guarantee it won't fail or we want execution
+to panic at that location. One issue with `unwrap` is that error messages can be uninformative. We can
+do one better by using `expect`.
 
-#### except
+### except
 
 The `except()` method is identical to `unwrap()` but it allows you to set an error message. This conveys
 your intent and makes debugging easier.
 
 ```Rust
 
-// Notice how we don't need the return type anymore
 fn init() {
-  // We use `unwrap()` to panic if it fails otherwise execution continues
-  let mut file = match File::create("ferris.txt")
+  // Write to a location we do not have permission
+  let mut file = match File::create("/var/ferris.txt")
     .expect("Could not create file `ferris.txt`");
+
   file.write_all("Hi Ferris").expect("Could not write to file");
 }
 ```
@@ -280,14 +289,16 @@ src/main.rs:4:36
 As we can see, Rust has a strong focus on making error handling a frictionless experience for the
 developer. There are many other functions that I have not gone through here: `map_err`, `map_or_else`,
 `unwrap_or`, `unwrap_or_else` and many others. If you're new to Rust, I encourage you to give them a
-look. I know I certainly will as I improve the quality of my error handling.
+look. I certainly will as I improve the quality of my error handling.
 
 ## Making it informative
 
-An aspect of writing good errors is to make them highly informative. Without good error messages,
-debugging becomes extremely difficult. Either that or you've learnt how to read horribly cryptic
+[Making it informative]: #making-it-informative
+
+Writing good errors means making them highly informative. Without good error messages, debugging
+is significantly more difficult. Either that or you've learnt how to read extremely cryptic
 messages. C++ programmers, you're *obviously* suffering from Stockholm syndrome given that you
-survive these crazy error messages 😆.
+eat these crazy error messages for breakfast 😆.
 
 ```
 rtmap.cpp: In function `int main()':
@@ -319,7 +330,7 @@ E:/GCC3/include/c++/3.2/bits/stl_tree.h:1161: invalid type argument of `unary *
 
 Error messages should be highly informative and guide a developer to uncover the cause of the error
 without excessive cognitive overhead. Rust has made this core emphasis of the language. The compiler
-is extremely helpful. This tweet summarises it nicely
+is an example of this. This tweet summarises it nicely
 
 {{< tweet 1348669062528774148 >}}
 
@@ -328,7 +339,7 @@ Focusing on good error messages has permeated throughout the community. There's 
 getting this right. There are a number of techniques we can use to make our errors more informative.
 Along the way, we will discuss the crates that can help.
 
-### At the root
+### What are we writing?
 
 The first question we have to ask is
 
@@ -336,37 +347,110 @@ The first question we have to ask is
 
 I had never considered that your approach to structuring error handling is different depending on
 whether you are writing an application or library. This [article](https://nick.groenen.me/posts/rust-error-handling/)
-illuminated this difference to me.
+illuminated this difference to me. I encourage you to go read it. I will mention the points I found
+particularly insightful with some insight of my own.
 
-Some of the key components of error handling in libraries:
+* As far as possible, libraries should use meaningful custom error types. This has several benefits:
+  * Applications can easily differentiate between various errors. A simple example are the
+    various [IO errors](https://doc.rust-lang.org/std/io/enum.ErrorKind.html) defined in the Rust
+    standard library.
+  * Errors can be wrapped into a custom error defined by the library. Without this, it would be
+    impossible to differentiate between errors from different libraries. An IO error in `Foo`
+    would be indistinguishable from an IO error in `Bar`
+  * It increases the cardinality of errors at the application level. High cardinality data allows
+    us to answer very specific questions, giving us the insights we need. This helps when you need
+    to understand error rates across your system, find areas that need some extra maintenance, debug
+    production issues and so on.
+* Libaries should never panic. From the application programmer's point of view, panics are undefined
+  behaviour; there is no expectation that a library call will crash an application. Errors should be
+  bubbled up to the caller.
+* Applications consume errors and make informed decisions on how to handle them. There is often not a
+  huge need for custom errors at the application level. Additionally, at this level, panicking may be
+  the best option and is therefore a reasonable.
+* Applications are responsible for deciding how errors are formatted and displayed to users.
 
-* Libraries should never panic/crash. From the application programmer's point of view, panics are
-  undefined behaviour; there is no expectation that a library call will crash an application.
-  All errors should be bubbled up to the caller and give it the responsibility of handling the error.
-  This is generally a healthier software pattern as it caters for a wide variety of use cases.
-* As far as possible, use custom errors. This two main benefits:
-  * It significantly improves the amount of information captured in the error message. This make it
-    faster to debug sources of error. Finding which library produced the error and what the error means
-    is much easier under this model.
-  * Improves the cardinality of errors in application. If all applications produced the same error types,
-    it would be difficult to analyse error data. Finding out a simple question like, what is contributing
-    to such error rates, becomes non-trivial when they are grouped as one.
-  
+As we can see, there are subtly different requirements depending on which one you are writing. Rust
+being Rust has crates for both these use cases. The most popular of these are anyhow and thiserror.
+anyhow is used for error reporting in applications while thiserror is used for creating custom
+errors for libraries (and applications). I will go through their use cases in context of important
+aspects of error handling.
 
+### It depends
 
+A while ago, I tweeted this
+
+{{< tweet 1363729866194116608 >}}
+
+As (not) funny as it may be, the truth is that most technical decisions (and arguably most life decisions)
+come down to *context*. If you operate outside of context, you're likely to make a whole host of sub-optimal
+decisions; not because they are inherently incorrect, they're just not applicable to the situation. Similarly,
+if error messages are missing the context in which they are generated, they're likely to send you down
+a spiral of debugging. Most of that time could easily be spent going down dead ends. For errors to be
+informative, they need to include additional context. Taking a simple example, imagine you are trying
+to open a file and it does not exist. If we printed the error, we would get
+
+```
+No such file or directory (os error 2)
+```
+
+This is not barely useful. We know that we have an IO error but no idea what generated it. We also do
+not know which file or directory is the culprit. Alternatively, imagine our error message was like this
+
+```
+Error: Failed to read file /path/to/directory/ferris.txt
+
+Caused by:
+    No such file or directory (os error 2)
+```
+
+Much better! We know which file we are missing and where its located. If we dreamed a bit harder, we
+can think of additional context we could add like a stack trace.
+
+```
+Error: Failed to read file /path/to/directory/ferris.txt
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace_rs::backtrace::libunwind::trace
+             at /rustc/f5f33ec0e0455eefa72fc5567eb1280a4d5ee206/library/std/src/../../backtrace/src/backtrace/libunwind.rs:90:5
+      std::backtrace_rs::backtrace::trace_unsynchronized
+   ...
+   ...
+```
+
+As you can see, adding additional context makes our errors so much more informative. This aids us
+whenever we need to debug our code.
+
+As I mentioned earlier, I said I'd talk about the relevant crates as we go over various topics. Anyhow
+allows us to add additional context to our error messages. The above two error reports are produced by
+anyhow.
+
+```Rust
+use std::fs;
+use anyhow::{self, Context};
+
+fn main() -> anyhow::Result<()>{
+    let path = "ferris.txt";
+    let content = std::fs::read(path)
+        .with_context(|| format!("Failed to read file {}", path))?;
+
+    Ok(())
+}
+```
+
+### Bring your friends along
 
 * Chaining errors
-* Adding context
+
+### As good as Mansory
+
+* thiserror
 * Custom errors
 * ErrorKinds
-* https://stackify.com/common-mistakes-handling-java-exception/
 
-* Chaining errors
-* Library vs app
-* Create custom errors. Thiserror is good for this in library code
-  *therwise you can use anyhow
-* Failure tips for different types of error handling
-* Make them informative. Add context
+* Adding context
 
 ## The future of error handling
 
@@ -374,8 +458,11 @@ Some of the key components of error handling in libraries:
 
 ## Bib
 
+* https://stackify.com/common-mistakes-handling-java-exception/
 * https://dave.cheney.net/2012/01/18/why-go-gets-exceptions-right
 * https://benkay86.github.io/rust-error-tutorial.html#enum_error
 * https://doc.rust-lang.org/std/result/
 
 [Error Handling Project Group]: https://github.com/rust-lang/project-error-handling
+[anyhow]: https://docs.rs/anyhow/1.0.39
+[thiserror]: https://docs.rs/thiserror/1.0.24/thiserror/
