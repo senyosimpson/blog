@@ -370,7 +370,7 @@ particularly insightful with some insight of my own.
 * Applications are responsible for deciding how errors are formatted and displayed to users.
 
 As we can see, there are subtly different requirements depending on which one you are writing. Rust
-being Rust has crates for both these use cases. The most popular of these are anyhow and thiserror.
+being Rust has crates for both these use cases. The most popular of these are [anyhow] and [thiserror].
 anyhow is used for error reporting in applications while thiserror is used for creating custom
 errors for libraries (and applications). I will go through their use cases in context of important
 aspects of error handling.
@@ -423,7 +423,7 @@ Stack backtrace:
 As you can see, adding additional context makes our errors so much more informative. This aids us
 whenever we need to debug our code.
 
-As I mentioned earlier, I said I'd talk about the relevant crates as we go over various topics. Anyhow
+As I mentioned earlier, I said I'd talk about the relevant crates as we go over various topics. anyhow
 allows us to add additional context to our error messages. The above two error reports are produced by
 anyhow.
 
@@ -444,17 +444,49 @@ fn main() -> anyhow::Result<()>{
 
 * Chaining errors
 
-### As good as Mansory
+### Be like Mansory
 
-* thiserror
-* Custom errors
-* ErrorKinds
+[Mansory](https://en.wikipedia.org/wiki/Mansory) is a luxury car modification company. Their cars are
+something to behold and I'm not even that into cars. In the same way they make crazy custom cars, we
+should strive to make crazy custom errors (but not *too* crazy). Libraries should have their own set
+of custom errors that are meaningful. In other cases, they should wrap standard errors. As mentioned,
+this ensures we can differentiate between similar classes of errors between libraries. You can also take
+the approach [tokio] took and [re-export types](https://docs.rs/tokio/1.4.0/tokio/io/index.html#reexports)
+so they are accessible through your library but still differentiated from another library. When you strip
+it down to its core essence, the point of all of this is communication. We want our libraries to faithfully
+communicate to the developer what is happening when things go wrong.
 
-* Adding context
+Rust requires a bit of ceremony to [define custom types](https://learning-rust.github.io/docs/e7.custom_error_types.html).
+It is worth digging into before using a library to do the heavy lifting for you. thiserror is a library
+used for creating custom errors. I've found it enjoyable to use, albeit I have not had to do anything
+advanced. Imagine we have a library `beatmaker` that generates music using midi. The errors we care about:
+
+* The notes are invalid music notes i.e they are not between A & G
+* The format of the file containing the notes is invalid
+* The instrument is invalid - it's not in the set of instruments we have
+* IO errors e.g the file is missing. For IO errors, we want to wrap the IO error into one of our own
+  errors.
+
+```Rust
+use thiserror::Error;
+
+#[derive(Error, Debug)]
+enum BeatMakerError{
+  #[error("The music notes are not all valid. Please ensure they are between A & G")]
+  InvalidNotes,
+  #[error("The format of your .bm file is invalid. Check the guide to learn how to create .bm files")]
+  InvalidFormat,
+  #[error("The name of your instrument is invalid. Please check the instrument list for all valid instruments")]
+  InvalidInstrumentName,
+  // This wraps all IO errors produced by the std lib into our defined IOError
+  IOError(#[from] std::io::Error), 
+}
+```
 
 ## The future of error handling
 
 * Error reporting - eyre
+* withoutboats try catch syntax
 
 ## Bib
 
@@ -466,3 +498,4 @@ fn main() -> anyhow::Result<()>{
 [Error Handling Project Group]: https://github.com/rust-lang/project-error-handling
 [anyhow]: https://docs.rs/anyhow/1.0.39
 [thiserror]: https://docs.rs/thiserror/1.0.24/thiserror/
+[tokio]: https://docs.rs/tokio/1.4.0/tokio/
