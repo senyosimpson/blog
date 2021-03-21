@@ -385,16 +385,16 @@ As (not) funny as it may be, the truth is that most technical decisions (and arg
 come down to *context*. If you operate outside of context, you're likely to make a whole host of sub-optimal
 decisions; not because they are inherently incorrect, they're just not applicable to the situation. Similarly,
 if error messages are missing the context in which they are generated, they're likely to send you down
-a spiral of debugging. Most of that time could easily be spent going down dead ends. For errors to be
-informative, they need to include additional context. Taking a simple example, imagine you are trying
-to open a file and it does not exist. If we printed the error, we would get
+a spiral of debugging. Most of that time unfortunately might be spent exploring dead ends. For errors
+to be informative, they need to include additional context. Taking a simple example, imagine you are
+trying to open a file and it does not exist. If we printed the error, we would get
 
 ```
 No such file or directory (os error 2)
 ```
 
-This is not barely useful. We know that we have an IO error but no idea what generated it. We also do
-not know which file or directory is the culprit. Alternatively, imagine our error message was like this
+This is barely useful. We know that we have an IO error but no idea what generated it. We also do not
+know which file or directory is the culprit. Imagine our error message was like this
 
 ```
 Error: Failed to read file /path/to/directory/ferris.txt
@@ -403,8 +403,8 @@ Caused by:
     No such file or directory (os error 2)
 ```
 
-Much better! We know which file we are missing and where its located. If we dreamed a bit harder, we
-can think of additional context we could add like a stack trace.
+Much better! We know which file we are missing and where it's located. If we let our imagination run
+unbounded, we can think of additional context we could add - like a stack backtrace.
 
 ```
 Error: Failed to read file /path/to/directory/ferris.txt
@@ -439,10 +439,6 @@ fn main() -> anyhow::Result<()>{
     Ok(())
 }
 ```
-
-### Bring your friends along
-
-* Chaining errors
 
 ### Be like Mansory
 
@@ -483,19 +479,96 @@ enum BeatMakerError{
 }
 ```
 
-## The future of error handling
+## The future of errors
 
-* Error reporting - eyre
-* withoutboats try catch syntax
+[The future of errors]: #the-future-of-errors
 
-## Bib
+One aspect of Rust's community I really enjoy is its grandiose imagination. In particular, Rust's language
+designers have a seemingly unbounded imagination. They dream of designing a language that is overwhelmingly
+pleasant to use. In many ways, they are getting this right - adoption for the language is growing even
+in the face of complex parts such as the borrow checker. Error handling is no different. In reading more
+about error handling, I came across [Jane Lusby]'s RustConf 2020 talk, [Error handling Isn't All About
+Errors]. She wrote a [Eyre], a fork of anyhow that adds support for customised error reports. I encourage
+you to watch the video and check out the library. The core focus of eyre is to further improve error
+messages/reports. It's imagining even more informative errors in Rust.
 
-* https://stackify.com/common-mistakes-handling-java-exception/
-* https://dave.cheney.net/2012/01/18/why-go-gets-exceptions-right
-* https://benkay86.github.io/rust-error-tutorial.html#enum_error
-* https://doc.rust-lang.org/std/result/
+```
+Error:
+   0: Unable to read config
+   1: cmd exited with non-zero status code
+
+Location:
+   src/main.rs:50
+
+Stderr:
+   cat: fake_file: No such file or directory
+
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ BACKTRACE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                                ⋮ 10 frames hidden ⋮
+  11: <std::process::Command as solo::Output>::output2::h8837a51b9856a548
+      at /Users/senyosimpson/Projects/test/solo/src/main.rs:50
+  12: solo::read_file::h21ce0bfb8b0da736
+      at /Users/senyosimpson/Projects/test/solo/src/main.rs:88
+  13: solo::read_config::h048c15951f2a6b11
+      at /Users/senyosimpson/Projects/test/solo/src/main.rs:93
+  14: solo::main::hec1c621ee896fc4a
+      at /Users/senyosimpson/Projects/test/solo/src/main.rs:65
+  15: core::ops::function::FnOnce::call_once::h94986c4cb4784c0a
+      at /Users/senyosimpson/.rustup/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/...
+                                ⋮ 9 frames hidden ⋮
+
+Suggestion: try using a file that exists next time
+```
+
+The above error report is an example of this. There are some nice novelties. The error contains both
+the error messages and the order in which they occured in a nice format. There is also a suggestion
+which is something we do not see often in standard error reports. The other information we are used
+to seeing but it is nicely formatted. It really contains all the information you need in a nice and
+succint format. There's even possibilities of extending this further. If we have a chain of errors,
+we can generate a report like this
+
+```
+Error:
+   0: encountered multiple errors
+
+Location:
+   src/main.rs:47
+
+Error:
+   0: The task could not be completed
+   1: The task you ran encountered an error
+
+Error:
+   0: The machine is unreachable
+   1: The machine you're connecting to is actively on fire
+
+Error:
+   0: The file could not be parsed
+   1: The file you're parsing is literally written in c++ instead of rust, what the hell
+
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ BACKTRACE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                                ⋮ 10 frames hidden ⋮
+  11: solo::join_errors::hd118537501e8ddf7
+      at /Users/senyosimpson/Projects/test/solo/src/main.rs:47
+  12: solo::main::hec1c621ee896fc4a
+      at /Users/senyosimpson/Projects/test/solo/src/main.rs:35
+  13: core::ops::function::FnOnce::call_once::h94986c4cb4784c0a
+      at /Users/senyosimpson/.rustup/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/...
+                                ⋮ 9 frames hidden ⋮
+```
+
+This is so cool. We get all the information we need with the full chain of errors. The error
+messages are also stellar, nice touch Jane!
+
+We have the capacity to imagine a future with the most enjoyable and ergonomic error handling
+and informative, easily readable error reports. It's great to see there is active work on this
+front. Hopefully, Rust will continue to make our lives all a bit better, one error message at a
+time.
 
 [Error Handling Project Group]: https://github.com/rust-lang/project-error-handling
 [anyhow]: https://docs.rs/anyhow/1.0.39
 [thiserror]: https://docs.rs/thiserror/1.0.24/thiserror/
 [tokio]: https://docs.rs/tokio/1.4.0/tokio/
+[Error handling Isn't All About Errors]: https://www.youtube.com/watch?v=rAF8mLI0naQ
+[Eyre]: https://docs.rs/eyre/0.6.5/eyre/
+[Jane Lusby]: https://twitter.com/yaahc_
