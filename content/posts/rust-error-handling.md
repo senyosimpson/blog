@@ -486,6 +486,33 @@ fn main() -> Result<(), BeatMakerError> {
 }
 ```
 
+Since we've wrapped IO errors, we can write a fallible function that returns an IO error
+and it will work seamlessly with `BeatMakerError`
+
+```Rust
+use std::fs::File;
+
+fn io_raise() -> Result<(), BeatMakerError> {
+    File::open("ferris.txt")?;
+    Ok(())
+}
+
+fn main() -> Result<(), BeatMakerError> {
+    match io_raise() {
+        Ok(_) => println!("All good!"),
+        Err(e) => println!("I'd write better errors but I'm lazy. The error: {}", e)
+    }
+
+    Ok(())
+}
+```
+
+On error, this gives us the error message
+
+```
+I'd write better errors but I'm lazy. The error: No such file or directory (os error 2)
+```
+
 ## The future of errors
 
 [The future of errors]: #the-future-of-errors
