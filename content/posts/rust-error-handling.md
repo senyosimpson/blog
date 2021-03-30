@@ -34,7 +34,7 @@ was not built to handle (reasonable) failures.
 
 Error handling is such an important part of development precisely because it allows us to handle failure.
 It improves our ability to reason about our software; we understand the myriad ways it may fail. When
-encounter failures, great error messages help us diagnose problems efficiently. This in turn boosts
+we encounter failures, great error messages help us diagnose problems efficiently. This in turn boosts
 productivity and leads to an improved developer experience.
 
 ## Shifting paradigms
