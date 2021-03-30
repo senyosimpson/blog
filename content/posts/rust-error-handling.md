@@ -1,7 +1,7 @@
 ---
 title: "Ergonomic error handling with Rust"
 date: 2021-03-28
-draft: true
+draft: false
 image: https://www.kolpaper.com/wp-content/uploads/2020/07/Vaporwave-Error-Wallpaper.jpg
 ---
 
@@ -228,7 +228,7 @@ or will panic on error.
 // Notice how we don't need the return type anymore
 fn init() {
   // We use `unwrap()` to panic if it fails otherwise execution continues
-  let mut file = match File::create("ferris.txt").unwrap();
+  let mut file = File::create("ferris.txt").unwrap();
   file.write_all("Hi Ferris").unwrap();
 }
 ```
