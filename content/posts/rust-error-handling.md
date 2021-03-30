@@ -93,10 +93,10 @@ In the ML family of languages, one of the common constructs is the `Result` type
 that has two possible states: the value of the computation or an error. To get the value, you have to
 unwrap `Result`. The compiler enforces that `Result` is unwrapped before it is *used* anywhere else.
 For example, `Result<String>` is a different type to `String`. A function expecting a string as input
-will have the signature `do_something(s: String)`. Since `Result<String>` is a different type, you cannot
-use it in that function. This system enforces the handling of errors. There is no way to circumvent it
-due to it being embedded in the type system. This is why error handling in Rust is great. Let's take
-a look at basic error handling.
+will have the signature `do_something(s: String)`. We have to unwrap the `Result` to get the
+`String` in order to use that function. In the event `Result` contains an errors, we have to handle it.
+This enforces the handling of errors. There is no way to circumvent it due to it being embedded in
+the type system. This is why error handling in Rust is great. Let's take a look at basic error handling.
 
 ```Rust
 // This is the result type in the standard libray. It either contains
