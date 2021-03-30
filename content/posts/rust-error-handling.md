@@ -16,8 +16,13 @@ going on. Error handling is an ongoing and important discussion in the community
 to make error handling ergonomic and I think they've done a great job of it so far. As I started to read
 more about it, I realised there was so much I had never considered. Writing good errors and having robust
 error handling logic are core features of writing good software. Alongside this, they contribute
-immensely to developer experience. Anyone who has come across the Rust compiler will tell you the world
-of difference its error reports make. Without further ado, let's jump into the world of error handling.
+immensely to developer experience. The central theme threaded throughout this post is this:
+
+> Error handling is about communication
+
+We strive to write robust code with good error handling logic and informative errors so that we can
+accurately describe what happened and how we resolved it. Without further ado, let's jump into the world
+of error handling.
 
 ## Why you should learn about distributed systems
 
@@ -92,11 +97,11 @@ a fallible computation into the type system in a unique way.
 In the ML family of languages, one of the common constructs is the `Result` type. A `Result` is an enum
 that has two possible states: the value of the computation or an error. To get the value, you have to
 unwrap `Result`. The compiler enforces that `Result` is unwrapped before it is *used* anywhere else.
-For example, `Result<String>` is a different type to `String`. A function expecting a string as input
-will have the signature `do_something(s: String)`. We have to unwrap the `Result` to get the
-`String` in order to use that function. In the event `Result` contains an errors, we have to handle it.
-This enforces the handling of errors. There is no way to circumvent it due to it being embedded in
-the type system. This is why error handling in Rust is great. Let's take a look at basic error handling.
+For example, if we have a function `do_something(s: String)` and our input variable is currently a
+`Result<String>`, we have to unwrap it to get the `String` in order to pass it into the function.
+In the event `Result` contains an error, we have to handle it. This enforces the handling of errors.
+There is no way to circumvent it due to it being embedded in the type system. This is why error handling
+in Rust is great. Let's take a look at basic error handling.
 
 ```Rust
 // This is the result type in the standard library. It either contains
@@ -112,8 +117,8 @@ enum Result<T, E> {
 let mut f = File::create("ferris.txt");  // Returns Result<File>
 
 // To unwrap we match on the enum variants
-let file = match f {
-  Ok(file) => file,
+let mut file = match f {
+  Ok(f) => f,
   Err(e) => panic!("File could not be created")
 };
 
@@ -203,7 +208,9 @@ fn init() -> Result<(), io::Error> {
     Err(e) => return Err(e)
   };
 }
+```
 
+```Rust
 // With the `?` operator, we can write it as
 fn init() -> Result<(), io::Error> {
   let mut file = File::create("ferris.txt")?;
@@ -211,9 +218,9 @@ fn init() -> Result<(), io::Error> {
 }
 ```
 
-As you can see from the above example, our syntax is significantly less verbose while being functionally
-identical. This is one of those small things that makes a world of difference when writing Rust. It
-highlights the commitment to a friendly developer experience.
+As you can see from the above example, our code is significantly less verbose while being functionally
+identical. This is one of those small quality of life improvements that makes a world of difference when
+writing Rust. It highlights the commitment to a friendly developer experience.
 
 ### unwrap
 
@@ -315,16 +322,26 @@ rtmap.cpp:21:   instantiated from here
 E:/GCC3/include/c++/3.2/bits/stl_tree.h:1161: invalid type argument of `unary *
 ```
 
-Error messages should be highly informative and guide a developer to uncover the cause of the error
-without excessive cognitive overhead. Rust has made this core emphasis of the language. The compiler
-is an example of this. This tweet summarises it nicely
+To reiterate, error handling and error reporting is about communication. By providing highly informative
+errors, we paint the full picture of what has happened. We want to guide the developer directly to the
+problem. Rust has made good error reporting a core emphasis of the language and the larger ecosystem.
+Arguably, unintentionally.
+
+{{< tweet 1303107711928643584 >}}
+
+The Rust compiler really is a gold standard in error reporting. There's still work to do but it is one
+of the most human friendly pieces of software I have used. As an example
+
+{{< figure src="/images/rust-error-handling/rounded-compiler.png" >}}
+
+I quite like how this tweet puts it :)
 
 {{< tweet 1348669062528774148 >}}
 
-Focusing on good error messages has permeated throughout the community. There's even the
-[Error Handling Project Group] if you weren't convinced how committed the language designers are to
-getting this right. There are a number of techniques we can use to make our errors more informative.
-Along the way, we will discuss the crates that can help.
+Focusing on good error messages has permeated throughout the community. There's even the [Error Handling Project Group]
+if you weren't convinced how committed the language designers are to getting this right. There are a
+number of techniques we can use to make our errors more informative. Along the way, we will discuss the
+crates that can help.
 
 ### What are we writing?
 
@@ -434,12 +451,12 @@ fn main() -> anyhow::Result<()>{
 [Mansory](https://en.wikipedia.org/wiki/Mansory) is a luxury car modification company. Their cars are
 something to behold and I'm not even that into cars. In the same way they make crazy custom cars, we
 should strive to make crazy custom errors. Okay, maybe not *too* crazy. Libraries should have their own
-set of custom errors that are meaningful. In other cases, they should wrap standard errors. As mentioned,
-this ensures we can differentiate between similar classes of errors between libraries. You can also take
-the approach [tokio] took and [re-export types](https://docs.rs/tokio/1.4.0/tokio/io/index.html#reexports)
-so they are accessible through your library but still differentiated from another library. When you strip
-it down to its core essence, the point of all of this is communication. We want our libraries to faithfully
-communicate to the developer what is happening when things go wrong.
+set of custom errors that are meaningful given the domain they operate within. In other cases, they should
+wrap standard errors. As mentioned, this ensures we can differentiate between similar classes of errors
+between libraries. You can also take the approach [tokio] took and [re-export types](https://docs.rs/tokio/1.4.0/tokio/io/index.html#reexports)
+so they are accessible through your library but still differentiated from another library. Once again. when
+you strip it down to its core essence, the point of all of this is communication. We want our libraries to
+faithfully communicate to the developer what type of error was encountered when things go wrong.
 
 Rust requires a bit of ceremony to [define custom types](https://learning-rust.github.io/docs/e7.custom_error_types.html).
 It is worth digging into before using a library to do the heavy lifting for you. `thiserror` is a library
@@ -486,8 +503,8 @@ fn main() -> Result<(), BeatMakerError> {
 }
 ```
 
-Since we've wrapped IO errors, we can write a fallible function that returns an IO error
-and it will work seamlessly with `BeatMakerError`
+Since we've wrapped the standard library's IO errors, we can write a fallible function that returns an
+IO error and it will work seamlessly with `BeatMakerError`
 
 ```Rust
 use std::fs::File;
