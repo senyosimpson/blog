@@ -99,7 +99,7 @@ This enforces the handling of errors. There is no way to circumvent it due to it
 the type system. This is why error handling in Rust is great. Let's take a look at basic error handling.
 
 ```Rust
-// This is the result type in the standard libray. It either contains
+// This is the result type in the standard library. It either contains
 // the value of the computation Ok(T) where T is the value or an error
 // Err(E) where E is the error
 enum Result<T, E> {
