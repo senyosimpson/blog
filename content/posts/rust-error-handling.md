@@ -572,7 +572,7 @@ Suggestion: try using a file that exists next time
 ```
 
 The above error report is an example of this. There are some nice novelties. The error contains both
-the error messages and the order in which they occured in a nice format. There is also a suggestion
+the error messages and the order in which they occurred in a nice format. There is also a suggestion
 which is something we do not see often in standard error reports. The other information we are used
 to seeing but it is nicely formatted. It really contains all the information you need in a nice and
 succinct format. There's even possibilities of extending this further. If we have a chain of errors,
