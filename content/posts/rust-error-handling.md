@@ -454,7 +454,7 @@ should strive to make crazy custom errors. Okay, maybe not *too* crazy. Librarie
 set of custom errors that are meaningful given the domain they operate within. In other cases, they should
 wrap standard errors. As mentioned, this ensures we can differentiate between similar classes of errors
 between libraries. You can also take the approach [tokio] took and [re-export types](https://docs.rs/tokio/1.4.0/tokio/io/index.html#reexports)
-so they are accessible through your library but still differentiated from another library. Once again. when
+so they are accessible through your library but still differentiated from another library. Once again, when
 you strip it down to its core essence, the point of all of this is communication. We want our libraries to
 faithfully communicate to the developer what type of error was encountered when things go wrong.
 
