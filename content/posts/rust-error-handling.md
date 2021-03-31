@@ -150,7 +150,7 @@ match file.write_all("Hi Ferris") {
 
 In many cases, we do not want an error to be handled at the location it is generated. Instead, we
 would prefer to have that error be handled by the caller of the function, giving it the power to decide
-how to proceed. In programming perlance, we want to "bubble" the error to the caller. In Rust, we can
+how to proceed. In programming parlance, we want to "bubble" the error to the caller. In Rust, we can
 achieve this using matching.
 
 ```Rust
