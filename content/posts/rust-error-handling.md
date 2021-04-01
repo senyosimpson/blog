@@ -262,9 +262,9 @@ permissible (as with everything), for example if we can guarantee it won't fail 
 to panic at that location. One issue with `unwrap` is that error messages can be uninformative. We can
 do one better by using `expect`.
 
-### except
+### expect
 
-The `except()` method is identical to `unwrap()` but it allows you to set an error message. This conveys
+The `expect()` method is identical to `unwrap()` but it allows you to set an error message. This conveys
 your intent and makes debugging easier.
 
 ```Rust
