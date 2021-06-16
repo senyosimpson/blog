@@ -29,9 +29,30 @@ platforms = ["twitter", "github", "linkedin", "email"]
 tag = "tags"
 
 [params.sections_left]
-"/about" = "About"
-"/essays" = "Essays"
-"/philosophy" = "Core Philosophy"
+  [params.sections_left.about]
+    path = "/about"
+    name = "About"
+    rank = 1
+
+  [params.sections_left.essays]
+    path = "/essays"
+    name = "Essays"
+    rank = 2
+
+#  [params.sections_left.gems]
+#    path = "/gems"
+#    name = "Gems"
+#    rank = 3
+
+  [params.sections_left.talks]
+    path = "/talks"
+    name = "Talks"
+    rank = 4
+
+  [params.sections_left.philosophy]
+    path = "/philosophy"
+    name = "Core Philosophy"
+    rank = 5
 
 [markup]
   [markup.highlight]
