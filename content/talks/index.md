@@ -1,4 +1,6 @@
-# Talks
+---
+hidden: true
+---
 
 Links to some of the talks I've given 🎤
 
