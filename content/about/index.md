@@ -2,7 +2,7 @@
 hidden: true
 ---
 
-Wagwan, I'm Senyo! I am a 23 year old software engineer focusing on cloud infrastructure. I reside
+Wagwan, I'm Senyo! I am a 24 year old software engineer focusing on cloud infrastructure. I reside
 in the beautiful city Cape Town, South Africa. I work at [Aerobotics](https://aerobotics.com) where
 we are building the next generation of smart technology in the agriculture industry. I am particularly
 interested in distributed systems and the infrastructure necessary to run software reliably at scale.
