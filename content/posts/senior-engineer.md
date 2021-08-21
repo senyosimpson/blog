@@ -46,7 +46,7 @@ be one of the most valuable ways of learning for me. It helps me bootstrap my ow
 
 ## Deep thought enables great work
 
-Keeping the tweet flowing, we have another one by yours truly
+Keeping the tweets flowing, we have another one by yours truly
 
 {{< tweet 1336008654693281792 >}}
 
@@ -96,18 +96,20 @@ effectively is a necessary piece of being a great engineer.
 
 ## May the force be with you
 
-Be a multiplying force. Especially relevant at staff+ but even at senior. Mentoring juniors/mids, bridging
-communication with the business and other technical teams, delegating work, leading teams/projects,
-amplifying others work, driving initiatives across teams, being involved in hiring. In these ways and
-others, you're able to have a larger impact in the org. You're contributing more than lines of code.
+Part of seniority is enabling others to do their best work. People who do this are *force multipliers*.
 
-There's not much to say on this one on a personal level. I just think it's dope to see engineers doing
-work that has multi-team/company wide impact.
+> Be a multiplying force
 
-## Own your outages
+This is especially relevant at staff+ but even at senior. There are countless ways of doing force
+multiplying work: mentoring juniors/mids, bridging communication with the business and technical teams,
+delegating work, leading teams/projects, amplifying others work, helping team members get promoted,
+driving initiatives across teams, being involved in hiring. These have a large impact on your team
+and the organisation at large. It is often this work that moves people up into more senior positions,
+especially when it has organisation wide impact.
 
-Accept accountability.
+> As an aside, one of the best places to gain insight into real-life stories of the journey to
+> staff+ engineer is by listening to the [StaffEng podcast](https://podcast.staffeng.com/).
 
-
-Resources
-* https://skamille.medium.com/an-incomplete-list-of-skills-senior-engineers-need-beyond-coding-8ed4a521b29f
+From a personal perspective, it's great having force multipliers in the team. The best part for me is
+actually just witnessing it. It is amazing to see senior+ engineers doing great work, caring about the
+org and making a positive impact. It's just simply inspiring.
