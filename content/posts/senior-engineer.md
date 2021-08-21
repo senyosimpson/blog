@@ -29,7 +29,7 @@ and the ability to critically evaluate past successes and mistakes, it's an impo
 seniors from the rest. Remember that time you avoided a sub-optimal design decision because you started
 seeing all kinds of red flags? That's your intuition saving the day. You're able to evaluate trade-offs,
 have a good feel for why certain designs will/won't work given the context you're operating in, base
-your decisions of decent assumptions in the face of incomplete information and so on. These all help
+your decisions off decent assumptions in the face of incomplete information and so on. These all help
 in aiding your decision making process and guide yourself and your team to make more informed decisions.
 
 This is one trait I appreciate immensely. Anyone who knows me knows I love asking technical questions:
@@ -81,7 +81,7 @@ ideas of the same thing), being clear on what success looks like, being able to 
 to articulate the reasoning behind certain decisions and so on. These are all facets of being able to
 communicate effectively.
 
-This is partiuclarly relevant for me because I've been trying to learn how to communicate better within
+This is particularly relevant for me because I've been trying to learn how to communicate better within
 a technical context. I've found this to be rather challenging, however, I have grown considerably by
 watching how seniors (and even execs) communicate their ideas and concerns. To give a concrete example,
 one mistake I used to make routinely is vouching for a certain practice, for example, using type annotations
@@ -89,7 +89,7 @@ in Python, in the name of "best practice". Best in class open source projects ar
 we should too! This is *poor* communication. It doesn't even answer the first question you should ask
 yourself in this situation
 
-> What problem does using type annoatations solve for us?
+> What problem does using type annotations solve for us?
 
 It's easy to have good ideas. It is significantly more difficult to *justify* them. Being able to communicate
 effectively is a necessary piece of being a great engineer.
@@ -112,4 +112,4 @@ especially when it has organisation wide impact.
 
 From a personal perspective, it's great having force multipliers in the team. The best part for me is
 actually just witnessing it. It is amazing to see senior+ engineers doing great work, caring about the
-org and making a positive impact. It's just simply inspiring.
+org and making a positive impact. It's simply just inspiring.
