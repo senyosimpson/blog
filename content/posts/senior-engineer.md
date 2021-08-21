@@ -1,7 +1,7 @@
 ---
 title: "Expectations of senior+ engineers from a not so senior engineer"
 date: 2021-08-12
-draft: false
+draft: true
 image: https://cdn.dribbble.com/users/2131993/screenshots/15641588/media/0ced4fa58f04d8c855c082d8c8738eb1.png?compress=1&resize=400x300
 ---
 
@@ -107,3 +107,7 @@ work that has multi-team/company wide impact.
 ## Own your outages
 
 Accept accountability.
+
+
+Resources
+* https://skamille.medium.com/an-incomplete-list-of-skills-senior-engineers-need-beyond-coding-8ed4a521b29f
