@@ -1,8 +1,8 @@
 ---
 title: "Expectations of senior+ engineers from a not so senior engineer"
-date: 2021-08-12
-draft: true
-image: https://cdn.dribbble.com/users/2131993/screenshots/15641588/media/0ced4fa58f04d8c855c082d8c8738eb1.png?compress=1&resize=400x300
+date: 2021-08-26
+draft: false
+image: https://static.vecteezy.com/system/resources/previews/002/274/665/original/black-woman-working-on-laptop-freelance-remote-working-online-studying-work-from-home-concept-illustration-vector.jpg 
 ---
 
 Senior(+) engineer. One of the most coveted titles in our field. There are endless articles on the
@@ -14,7 +14,7 @@ this, I had a thought
 Fitting the bill of that description, I decided, I should write about it! Turns out, they're not so
 different from what is already in the public domain. However, I thought I would motivate them from my
 perspective. I can't speak for everyone but I think the themes will be largely applicable. I hope you
-find it valuable!
+find it valuable.
 
 ## Know it all
 
@@ -40,8 +40,7 @@ answer. As I've said before
 {{< tweet 1363729866194116608 >}}
 
 They are all contextual. However, as someone who hasn't seen enough of this play out through my own
-experiences, it is great to be able to ask and get back well justified answers. It's even better when
-I've gone on to read more about it and then can have healthy debate on the topic. I've found this to
+experiences, it is great to be able to ask and get back well justified answers. I've found this to
 be one of the most valuable ways of learning for me. It helps me bootstrap my own intuition and opinions.
 
 ## Deep thought enables great work
@@ -76,7 +75,7 @@ technical people, this is often a really difficult skill to pick up and improve.
 Humans, not so much. However, it cannot be underestimated how valuable a skill it is. Unfortunately,
 it's not as simple as putting words on paper or speaking about the matter at hand. This is what I
 believed initially. Over time, I've realised there's more to it: being able to build consensus on
-ideas/topics, being clear on outcomes and what they mean (we often underestimate how people have different
+ideas/topics, being clear on outcomes and what they mean (we underestimate how often people have different
 ideas of the same thing), being clear on what success looks like, being able to storytell, being able
 to articulate the reasoning behind certain decisions and so on. These are all facets of being able to
 communicate effectively.
@@ -97,9 +96,6 @@ effectively is a necessary piece of being a great engineer.
 ## May the force be with you
 
 Part of seniority is enabling others to do their best work. People who do this are *force multipliers*.
-
-> Be a multiplying force
-
 This is especially relevant at staff+ but even at senior. There are countless ways of doing force
 multiplying work: mentoring juniors/mids, bridging communication with the business and technical teams,
 delegating work, leading teams/projects, amplifying others work, helping team members get promoted,
@@ -107,9 +103,14 @@ driving initiatives across teams, being involved in hiring. These have a large i
 and the organisation at large. It is often this work that moves people up into more senior positions,
 especially when it has organisation wide impact.
 
-> As an aside, one of the best places to gain insight into real-life stories of the journey to
-> staff+ engineer is by listening to the [StaffEng podcast](https://podcast.staffeng.com/).
+> As an aside, check out the [StaffEng podcast](https://podcast.staffeng.com/). It is one of the best
+> places to gain insight into real-life stories of the journey to staff+ engineer
 
 From a personal perspective, it's great having force multipliers in the team. The best part for me is
 actually just witnessing it. It is amazing to see senior+ engineers doing great work, caring about the
 org and making a positive impact. It's simply just inspiring.
+
+***
+
+Shoutouts to [Ana](https://twitter.com/a_hoverbear) and [Wasim](https://twitter.com/wasimlorgat) for
+reviewing this
