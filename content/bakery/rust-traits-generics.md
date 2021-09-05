@@ -2,7 +2,7 @@
 title: "Two learnings on implementing traits"
 date: 2021-09-05
 draft: false
-hidden: true
+type: bakery
 tags: [rust]
 ---
 

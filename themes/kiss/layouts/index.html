@@ -5,7 +5,7 @@
     {{- $pages := . -}}
     {{- if .IsHome -}}
     {{- $pages = .Site.RegularPages -}}
-    {{ $paginator := .Paginate (where (where $pages "Params.hidden" "ne" true) "Params.type" "ne" "essay") }}
+    {{ $paginator := .Paginate (where (where (where $pages "Params.hidden" "ne" true) "Params.type" "ne" "essay") "Params.type" "ne" "bakery") }}
     {{- else -}}
     {{ $pages = .Pages -}}
     {{ $paginator := .Paginate (where $pages "Params.hidden" "ne" true) }}
