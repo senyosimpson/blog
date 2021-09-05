@@ -1,7 +1,8 @@
 ---
 title: "Two learnings on implementing traits"
-date: 2020-09-05
+date: 2021-09-05
 draft: false
+hidden: true
 tags: [rust]
 ---
 
