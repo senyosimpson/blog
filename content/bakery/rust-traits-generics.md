@@ -43,7 +43,7 @@ albeit in a roundabout way.
 
 ## Multiple, separate trait bounds
 
-In learning on the above, I was wondering if you could have multiple trait bounds over a generic parameter.
+In learning the above, I was wondering if you could have multiple trait bounds over a generic parameter.
 For example
 
 ```rust
@@ -51,14 +51,14 @@ impl<T: Clone + Copy> MyTrait for T {}
 impl<T: Send + Sync> MyTrait for T {}
 ```
 
-turns out, you can't do that (most of the time). Rust will complain saying there are conflicting implementations.
+Turns out, you can't do that (most of the time). Rust will complain saying there are conflicting implementations.
 Why? Well, because you cannot guarantee that these trait bounds are mutually exclusive i.e that a type
-`T` either implements `Copy + Clone` or `Send + Sync` but never both. If there is a type `T` that implements
-all those traits, then which implementation should it use? Conflict! Therefore, the only way to do the
-above is to have traits that are mutually exclusive. An example is `Unpin`. You cannot have a `T` that
-implements both `Unpin` and `!Unpin` naturally since they are in opposition. Since this is hardly ever
-true for the standard use of traits, you only have one chance at defining traits over a generic parameter.
-The natural option is to do something like
+`T` either implements `Copy + Clone` or `Send + Sync` but it cannot implement both simultaneously.
+If there is a type `T` that implements all those traits, then which implementation should it use? Conflict!
+Therefore, the only way to do the above is to have traits that are mutually exclusive. An example is
+`Unpin`. You cannot have a `T` that implements both `Unpin` and `!Unpin` (naturally since they are in
+opposition). Since this is hardly ever true for the standard use of traits, you only have one chance
+at defining traits over a generic parameter. The natural option is to do something like
 
 ```rust
 impl <T: Clone + Copy + Send + Sync> MyTrait for T {}
