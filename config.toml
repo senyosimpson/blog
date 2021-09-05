@@ -33,16 +33,16 @@ tag = "tags"
     path = "/about"
     name = "About"
     rank = 1
+  
+  [params.sections_left.bakery]
+    path = "/bakery"
+    name = "Bakery"
+    rank = 2
 
   [params.sections_left.essays]
     path = "/essays"
     name = "Essays"
-    rank = 2
-
-#  [params.sections_left.gems]
-#    path = "/gems"
-#    name = "Gems"
-#    rank = 3
+    rank = 3
 
   [params.sections_left.talks]
     path = "/talks"
