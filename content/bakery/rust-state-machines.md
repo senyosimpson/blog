@@ -2,6 +2,7 @@
 title: "State machines in Rust"
 date: 2020-09-05
 draft: false
+tags: [rust]
 ---
 
 In Rust, you often hear about state machines. Futures are state machines! I thought it would be cool

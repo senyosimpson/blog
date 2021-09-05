@@ -2,6 +2,7 @@
 title: "Two learnings on implementing traits"
 date: 2020-09-05
 draft: false
+tags: [rust]
 ---
 
 Some time ago, I came across two challenges with implemeting traits:
