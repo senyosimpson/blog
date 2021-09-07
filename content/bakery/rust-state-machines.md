@@ -4,6 +4,7 @@ date: 2021-09-05
 draft: false
 type: bakery
 tags: [rust]
+image: https://blog.statechannels.org/static/8228bd64ef4553da6c982bd55c64b867/ef9e5/state-machine.png
 ---
 
 In Rust, you often hear about state machines. Futures are state machines! I thought it would be cool
