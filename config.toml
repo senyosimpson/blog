@@ -28,31 +28,31 @@ platforms = ["twitter", "github", "linkedin", "email"]
 [taxonomies]
 tag = "tags"
 
-[params.sections_left]
-  [params.sections_left.about]
-    path = "/about"
-    name = "About"
-    rank = 1
-  
   [params.sections_left.bakery]
-    path = "/bakery"
-    name = "Bakery"
-    rank = 2
+    path = "/short-forms"
+    name = "Short Forms"
+    rank = 1
 
   [params.sections_left.essays]
     path = "/essays"
     name = "Essays"
-    rank = 3
+    rank = 2
 
   [params.sections_left.talks]
     path = "/talks"
     name = "Talks"
-    rank = 4
+    rank = 3
 
   [params.sections_left.philosophy]
     path = "/philosophy"
     name = "Core Philosophy"
-    rank = 5
+    rank = 4
+
+  [params.sections_left]
+    [params.sections_left.about]
+      path = "/about"
+      name = "About"
+      rank = 5
 
 [markup]
   [markup.highlight]
