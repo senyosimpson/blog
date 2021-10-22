@@ -19,7 +19,7 @@ Fortunately, this makes for an extremely rewarding engineering experience. As en
 
 ## Data Quality
 
-What is machine learning without data? The answer is nothing. Absolutely nothing. As the common saying goes, "garbage in, garbage out". Perhaps the most important aspect of machine learning is the data used to train models. Without quality data, no amount of sophistication and creativity will help your machine learning model perform accurately. Whether you agree with the below tweet or not, it does provide an interesting angle on what a model is - a view of the data it was trained on. {{< tweet 1260658763687538688 >}} 
+What is machine learning without data? The answer is nothing. Absolutely nothing. As the common saying goes, "garbage in, garbage out". Perhaps the most important aspect of machine learning is the data used to train models. Without quality data, no amount of sophistication and creativity will help your machine learning model perform accurately. Whether you agree with the below tweet or not, it does provide an interesting angle on what a model is - a view of the data it was trained on.
 
 Data is the source of truth for your model. Every phenomenon it learns is encompassed by that data. Given this stance, you'd be crazy to not ensure that your model is trained on the highest quality data you can create or get your hands on. Unfortunately, ensuring data quality is difficult, expensive and laborious. Rather than trying to circumvent this, it should be incorporated into the company/team strategy. Making the necessary capacity and budget provisions will make this manageable. Ideally, ensuring data quality should be reduced to a mere nuisance as opposed to a blocking point to deploying machine learning models.
 
