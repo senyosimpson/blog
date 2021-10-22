@@ -19,28 +19,7 @@ my mind 🤯 So here I am, writing about it. Buckle in 💺.
 
 ## Setting the scene
 
-We have a struct, `RawTask` defined as
-
-```rust
-struct RawTask {
-  ptr: NonNull<Header>
-}
-```
-
-A `RawTask` is roughly initialised like so (this is psuedo-code)
-
-```rust
-fn new() -> RawTask {
-  let ptr = Cell::new(); // this returns a raw pointer to a Cell
-
-  // Cast this pointer to one that points to a Header
-  let header_ptr = ptr as *mut Header;
-  let ptr = NonNull::new(header_ptr); 
-  RawTask { ptr }
-}
-```
-
-The type `Cell` is defined as (taken directly from Tokio source)
+We have a type `Cell` that is defined as (taken directly from Tokio source)
 
 ```rust
 #[repr(C)]
@@ -56,9 +35,29 @@ pub(super) struct Cell<T: Future, S> {
 }
 ```
 
+It's used when initialising a struct `RawTask`
+
+```rust
+struct RawTask {
+  ptr: NonNull<Header>
+}
+
+// This is pseudocode
+impl RawTask {
+    fn new() -> RawTask {
+        let ptr = Cell::new(); // returns a raw pointer to a Cell
+
+        // Cast pointer to one that points to a Header
+        let header_ptr = ptr as *mut Header;
+        let ptr = NonNull::new(header_ptr); 
+        RawTask { ptr }
+    }
+}
+```
+
 ## What is so interesting?
 
-First, a necessary detour! Rust can represent structs in memory in multiple different ways. It's covered
+First, a necessary detour! Rust can represent structs in memory in multiple ways. It's covered
 in detail in the [The Rust Reference](https://doc.rust-lang.org/reference/type-layout.html#representations).
 By default, Rust offers *no guarantee* on the memory layout of your struct. This means it is free to
 modify the layout however it wants. From a developer perspective, it means you cannot write any code
