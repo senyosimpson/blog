@@ -1,7 +1,7 @@
 ---
 title: "Pointer Fu: An adventure in the Tokio code base"
-date: 2021-10-22
-draft: true
+date: 2021-10-24
+draft: false
 type: bakery
 tags: [rust]
 image: https://render.fineartamerica.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/1/native-arrows-bri-b.jpg
@@ -15,7 +15,7 @@ source code. I've still got a long way to go but it has been a great journey so 
 {{< tweet 1450127351917027332 >}}
 
 Raw pointers are used all over Tokio. In one particular instance, the way they used them really blew
-my mind 🤯 So here I am, writing about it. Buckle in 💺.
+my mind 🤯. So here I am, writing about it. Buckle in 💺.
 
 ## Setting the scene
 
@@ -59,7 +59,7 @@ impl RawTask {
 
 First, a necessary detour! Rust can represent structs in memory in multiple ways. It's covered
 in detail in the [The Rust Reference](https://doc.rust-lang.org/reference/type-layout.html#representations).
-By default, Rust offers *no guarantee* on the memory layout of your struct. This means it is free to
+By default, Rust offers *no guarantee* on the memory layout of your struct; it is free to
 modify the layout however it wants. From a developer perspective, it means you cannot write any code
 that makes assumptions on the memory layout of your struct. To change the representation of the struct,
 you can use the `repr` attribute (as shown in the above definition of `Cell`).
