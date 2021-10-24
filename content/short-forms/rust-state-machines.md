@@ -10,7 +10,7 @@ image: https://blog.statechannels.org/static/8228bd64ef4553da6c982bd55c64b867/ef
 In Rust, you often hear about state machines. Futures are state machines! I thought it would be cool
 to read more about it. I came across [this blog post](https://hoverbear.org/blog/rust-state-machine-pattern/)
 (funnily enough, by a friend and mentor of mine) which really helped me! I highly recommend reading it.
-In this bakery post, I'm just noting the part I found relevant. The example here is from her blog post.
+In this post, I'm just noting the part I found relevant. The example here is from her blog post.
 
 > P.S.A: Go and read that post 😆
 

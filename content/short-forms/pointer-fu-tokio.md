@@ -74,12 +74,12 @@ Now, here's where it gets good! I omitted the comment for the `Cell` struct, whi
 ```
 
 Hopefully some alarm bells started ringing in your head 🚨. `Header` has to be the first field in the
-struct. This is so that you can dereference a pointer to `Cell` into either a `Cell` or a `Header` (if
-this doesn't make sense to you, check out the [addendum](#addendum)). However, by default, Rust provides
-no guarantee that `Header` will remain the first struct field! Instead, as you can see, they've changed
-the representation to the `C` layout. In `C`, struct fields are stored in the order they are declared.
-This gives us the guarantee we need. Now we can go around dereferencing the pointer to `Header` without
-any worry!
+struct, so that you can dereference a pointer to `Cell` into either a `Cell` or a `Header` (if this
+doesn't make sense to you, check out the [addendum](#addendum)). However, Rust's default representation
+provides no guarantee that `Header` will remain the first struct field! Instead, as you can see, they've
+changed the representation to the `C` layout. In `C`, struct fields are stored in the order they are
+declared. This gives us the guarantee we need. Now we can go around dereferencing the pointer to `Header`
+without any worry!
 
 ```rust
 let cell = Cell::new();
@@ -91,7 +91,7 @@ let header = unsafe { *header_ptr };
 
 ## Addendum
 
-View in [Rust playground](https://play.rust-lang.org/?version=nightly&mode=debug&edition=2021&gist=8451396f7892fb3330900d1b5a086997)
+View in [Rust playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=147f74ccb012c0ef292ffe6e781c685a)
 
 ```rust
 #[derive(Debug, Clone, Copy)]
@@ -105,6 +105,7 @@ struct Core {
 }
 
 #[derive(Debug, Clone, Copy)]
+#[repr(C)]
 struct Task {
     header: Header,
     core: Core
@@ -113,11 +114,6 @@ struct Task {
 fn main() {
     let header = Header { x: 256 };
     let core = Core { y: 10 };
-    
-    // Even though there is no guarantee on memory layout, it should
-    // be stored in order of declaration because there is no other
-    // way to store the struct that would result in more efficient
-    // memory usage
     let task = Task { header, core };
     
     // Create raw pointer to task
@@ -128,7 +124,7 @@ fn main() {
     // Dereference header_ptr
     // We expect this to give us our Header struct as defined above.
     // Because Header is the first field and the pointer is pointing
-    // to the beginning of the Task struct , it is valid to perform
+    // to the beginning of the Task struct, it is valid to perform
     // this dereference
     let header_from_ptr_deref = unsafe { *header_ptr };
     
@@ -149,7 +145,7 @@ fn main() {
 }
 ```
 
-The output of running this gives you. Note that `Core` we obtained from dereferencing has `y=0`
+The output of running this is shown below. Note that `Core` we obtained from dereferencing has `y=0`
 instead of `y=10`.
 
 ```
@@ -170,3 +166,7 @@ Core from deref: Core {
     y: 0,
 }
 ```
+
+***
+
+Shoutouts to [Ana](https://twitter.com/a_hoverbear) for reviewing this post.
