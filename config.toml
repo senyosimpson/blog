@@ -9,8 +9,8 @@ MetaDataFormat = "yaml"
 DefaultContentLanguage = "en"
 
 [params.info]
+homeTitle = "Undefined Behaviour" # Title for home page
 enableSocial = true # Adds OpenGraph and Twitter cards
-homeTitle = "Bloom" # Title for home page
 poweredby = true # Adds powered by hugo and kiss below Copyright
 related = false # Includes related articles at the bottom of the article
 codeCopy = true # Add copy button above code blocks
