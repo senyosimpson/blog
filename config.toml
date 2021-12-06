@@ -1,6 +1,6 @@
 baseURL = "https://senyosimpson.com"
 languageCode = "en-us"
-title = "Bloom 🌹"
+title = "Undefined Behaviour"
 theme = "kiss"
 googleAnalytics = ""
 Paginate = 10 # Number of posts per page
