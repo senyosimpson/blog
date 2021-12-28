@@ -3,13 +3,15 @@ hidden: true
 ---
 
 [Cape Town]: https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/View_from_the_Rocks_Cape_Town_1.jpg/1600px-View_from_the_Rocks_Cape_Town_1.jpg
+[Wagwan]: https://www.dictionary.com/e/slang/wagwan/
 
-Wagwan 👋🏾, I'm Senyo. I reside in the beautiful city of [Cape Town], South Africa. I work as a
-software engineer focusing on cloud infrastructure, developer tooling and operating software systems.
-I have a particular interest in distributed systems and the weird, wacky and wonderful ways they fail.
+[Wagwan] 👋🏾, I'm Senyo. I reside in the beautiful city of [Cape Town], South Africa. I am a software
+engineer focusing on cloud infrastructure & platforms and developer tooling. My interests are a beautiful
+confusion between software engineering and operations. I find joy in both building infrastructural components
+and designing and operating distributed software systems.
 
 I consider myself an enabler. I strive to enable others to do their best work. This bleeds into a passion
-and care for developers and their productivity. I like to spend my energy building easy to use, joyful,
+and care for developers and their productivity. I like to spend my energy building easy to use,
 frictionless software and software systems that substantially increase developer productivity.
 
 I have a growing passion for the African tech scene. African startups are facing our continent's challenges
