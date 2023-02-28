@@ -2,8 +2,6 @@
 hidden: true
 ---
 
-Links to some of the talks I've given 🎤
-
 ## Conferences
 
 * [Embracing Rust at Fly.io](https://youtu.be/-O31eFqBmf4) at [Rust Nation UK (2023)](https://www.rustnationuk.com/)
