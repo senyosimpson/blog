@@ -2,7 +2,7 @@
 title: "Earning the right"
 date: 2023-04-23
 draft: false
-# image: 
+image: https://cdn.dribbble.com/users/1338391/screenshots/17135751/media/cfb1061ac514f7a82d3fb02ccbde9fff.jpg
 ---
 
 If you’re like me, you’re overly interested in the technical details of software. It’s not long before
